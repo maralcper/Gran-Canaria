@@ -106,7 +106,6 @@
             color: white;
         }
 
-        /* Google Maps Button Style */
         .btn-maps {
             display: inline-flex;
             align-items: center;
@@ -128,56 +127,6 @@
             border-color: #4338ca;
         }
 
-        /* Day Summary Grid */
-        .day-summary-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
-            gap: 10px;
-            background: rgba(255, 255, 255, 0.7);
-            border: 1px solid var(--border-color);
-            padding: 12px;
-            border-radius: var(--radius-sm);
-            margin-bottom: 16px;
-        }
-        .day-summary-item {
-            display: flex;
-            flex-direction: column;
-            font-size: 0.8rem;
-        }
-        .day-summary-label {
-            font-weight: 700;
-            color: var(--text-muted);
-            font-size: 0.72rem;
-            text-transform: uppercase;
-        }
-        .day-summary-val {
-            font-weight: 800;
-            color: var(--primary-dark);
-        }
-
-        /* Additional Day Details Boxes */
-        .extra-details-box {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 10px;
-            margin-top: 16px;
-            padding-top: 16px;
-            border-top: 1px dashed var(--border-color);
-        }
-        .extra-detail-card {
-            background: #fcfcfd;
-            border: 1px solid var(--border-color);
-            border-radius: var(--radius-sm);
-            padding: 10px 12px;
-            font-size: 0.82rem;
-        }
-        .extra-detail-card strong {
-            color: var(--primary-dark);
-            display: block;
-            margin-bottom: 2px;
-        }
-
-        /* Nav Horizontal Scroller */
         nav {
             background: white;
             border-bottom: 1px solid var(--border-color);
@@ -214,14 +163,12 @@
             color: white;
         }
 
-        /* Container Layout */
         .container {
             max-width: 1100px;
             margin: 0 auto;
             padding: 16px;
         }
 
-        /* SECTION TILES & HEADERS */
         .section-block {
             margin-bottom: 32px;
             scroll-margin-top: 110px;
@@ -298,54 +245,53 @@
             border-left: 5px solid var(--accent-sun);
         }
 
-        .itinerary-day {
-            background: white;
-            border-radius: var(--radius-md);
+        .day-summary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+            gap: 10px;
+            background: rgba(255, 255, 255, 0.7);
             border: 1px solid var(--border-color);
-            margin-bottom: 14px;
-            overflow: hidden;
-            box-shadow: var(--shadow-sm);
+            padding: 12px;
+            border-radius: var(--radius-sm);
+            margin-bottom: 16px;
         }
 
-        .itinerary-header {
-            padding: 16px;
-            background: #fff;
-            cursor: pointer;
+        .day-summary-item {
             display: flex;
-            align-items: center;
-            justify-content: space-between;
-            user-select: none;
-        }
-
-        .itinerary-header:hover {
-            background: var(--bg-main);
-        }
-
-        .itinerary-title-box {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .day-tag {
-            background: var(--primary-dark);
-            color: white;
-            padding: 6px 12px;
-            border-radius: 20px;
+            flex-direction: column;
             font-size: 0.8rem;
+        }
+        .day-summary-label {
+            font-weight: 700;
+            color: var(--text-muted);
+            font-size: 0.72rem;
+            text-transform: uppercase;
+        }
+        .day-summary-val {
             font-weight: 800;
-            white-space: nowrap;
+            color: var(--primary-dark);
         }
 
-        .itinerary-body {
-            padding: 0 16px 16px 16px;
-            display: none;
-            border-top: 1px solid var(--border-color);
-            background: #fcfbfa;
+        .extra-details-box {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 10px;
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 1px dashed var(--border-color);
         }
 
-        .itinerary-body.open {
+        .extra-detail-card {
+            background: #fcfcfd;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-sm);
+            padding: 10px 12px;
+            font-size: 0.82rem;
+        }
+        .extra-detail-card strong {
+            color: var(--primary-dark);
             display: block;
+            margin-bottom: 2px;
         }
 
         .timeline {
@@ -476,11 +422,6 @@
         .place-card:hover {
             transform: translateY(-2px);
             box-shadow: var(--shadow-md);
-        }
-
-        .place-card.visited {
-            background: #f0fdf4;
-            border-color: #bbf7d0;
         }
 
         .place-header {
@@ -622,10 +563,7 @@
                 max-width: 100%;
                 padding: 0;
             }
-            .itinerary-body {
-                display: block !important;
-            }
-            .card, .itinerary-day, .place-card {
+            .card, .place-card {
                 break-inside: avoid;
                 box-shadow: none;
                 border: 1px solid #ccc;
@@ -637,7 +575,7 @@
 
     <header>
         <div class="header-top">
-            <a href="#hoy" class="brand">
+            <a href="#itinerario" class="brand">
                 🏝️ Gran Canaria <span class="brand-badge">2026</span>
             </a>
             <div class="header-actions">
@@ -648,8 +586,8 @@
         </div>
         <nav>
             <div class="nav-inner">
-                <a href="#hoy" class="nav-link active">📍 Hoy</a>
-                <a href="#itinerario" class="nav-link">📅 Itinerario</a>
+                <a href="#itinerario" class="nav-link active">📅 Itinerario por Días</a>
+                <a href="#resumen" class="nav-link">🗺️ Mapa por Zonas</a>
                 <a href="#buscador" class="nav-link">🔍 Explorador</a>
                 <a href="#restaurantes-tabla" class="nav-link">🍽️ Restaurantes</a>
                 <a href="#playas-tabla" class="nav-link">🏖️ Playas</a>
@@ -661,23 +599,23 @@
 
     <main class="container">
 
-        <section id="hoy" class="section-block">
-            <div class="section-title">📍 Modo Viaje: Plan para "Hoy"</div>
-            <div class="section-subtitle">Selecciona el día de tu viaje para ver la hoja de ruta rápida:</div>
+        <section id="itinerario" class="section-block">
+            <div class="section-title">📅 Itinerario Día a Día Optimizado</div>
+            <div class="section-subtitle">Selecciona un día para ver la hoja de ruta detallada con horarios, enlaces a Google Maps, planes B y restaurantes optimizados:</div>
             
-            <div class="day-selector">
-                <button class="day-btn active" onclick="selectToday(1)">Día 1 (11/09)</button>
-                <button class="day-btn" onclick="selectToday(2)">Día 2 (12/09)</button>
-                <button class="day-btn" onclick="selectToday(3)">Día 3 (13/09)</button>
-                <button class="day-btn" onclick="selectToday(4)">Día 4 (14/09)</button>
-                <button class="day-btn" onclick="selectToday(5)">Día 5 (15/09)</button>
-                <button class="day-btn" onclick="selectToday(6)">Día 6 (16/09)</button>
-                <button class="day-btn" onclick="selectToday(7)">Día 7 (17/09)</button>
-                <button class="day-btn" onclick="selectToday(8)">Día 8 (18/09)</button>
+            <div class="day-selector" id="daySelectorContainer">
+                <button class="day-btn active" onclick="selectDay(1)">Día 1 (11/09)</button>
+                <button class="day-btn" onclick="selectDay(2)">Día 2 (12/09)</button>
+                <button class="day-btn" onclick="selectDay(3)">Día 3 (13/09)</button>
+                <button class="day-btn" onclick="selectDay(4)">Día 4 (14/09)</button>
+                <button class="day-btn" onclick="selectDay(5)">Día 5 (15/09)</button>
+                <button class="day-btn" onclick="selectDay(6)">Día 6 (16/09)</button>
+                <button class="day-btn" onclick="selectDay(7)">Día 7 (17/09)</button>
+                <button class="day-btn" onclick="selectDay(8)">Día 8 (18/09)</button>
             </div>
 
-            <div class="card today-card" id="today-content">
-                <!-- Injected dynamically via JS -->
+            <div class="card today-card" id="day-detail-card">
+                <!-- Injected dynamically via JavaScript -->
             </div>
         </section>
 
@@ -686,29 +624,20 @@
             <div class="zone-grid">
                 <div class="zone-card">
                     <h4>🏙️ Zona 1: La Isleta y Las Palmas</h4>
-                    <p>Base del viaje. Pescado fresco, snorkel urbano en Las Canteras y atardeceres en El Confital.</p>
+                    <p>Base del viaje. Pescado fresco en La Isleta, snorkel urbano en Las Canteras y atardeceres volcánicos en El Confital.</p>
                 </div>
                 <div class="zone-card">
-                    <h4>🌊 Zona 2: Costa Norte / Agaete</h4>
-                    <p>Piscinas naturales (Las Salinas, Agujero), mejor snorkel en Sardina y café de Europa en el Valle de Agaete.</p>
+                    <h4>🌊 Zona 2: Costa Norte y Agaete</h4>
+                    <p>Piscinas naturales (Las Salinas, El Agujero), el mejor snorkel en Sardina y café de Europa en el Valle de Agaete.</p>
                 </div>
                 <div class="zone-card">
                     <h4>⛰️ Zona 3: La Cumbre Volcánica</h4>
-                    <p>Roque Nublo, Pico de las Nieves, Tejeda y Artenara. Paisaje de montañas, almendros y cuevas.</p>
+                    <p>Roque Nublo, Pico de las Nieves, Tejeda y Artenara. Paisaje de montañas, almendros y poblados cueva.</p>
                 </div>
                 <div class="zone-card">
                     <h4>🌵 Zona 4: Este y Sur Auténtico</h4>
-                    <p>Tobas de colores en Las Vacas, casas cueva en Guayadeque, pueblo marinero de Tufia y Dunas de Maspalomas.</p>
+                    <p>Tobas de colores en Las Vacas, casas cueva en Guayadeque, cala marinera de Tufia y Dunas de Maspalomas.</p>
                 </div>
-            </div>
-        </section>
-
-        <section id="itinerario" class="section-block">
-            <div class="section-title">📅 Itinerario Día a Día Optimizado</div>
-            <div class="section-subtitle">Toca cada día para desplegar los detalles completos de horas, ruta y restaurantes.</div>
-
-            <div id="itinerary-accordion-container">
-                <!-- Injected via JS -->
             </div>
         </section>
 
@@ -732,7 +661,7 @@
             </div>
 
             <div class="places-grid" id="placesGrid">
-                <!-- Injected dynamically via JS -->
+                <!-- Injected dynamically via JavaScript -->
             </div>
         </section>
 
@@ -747,11 +676,11 @@
                             <th>Precio</th>
                             <th>Especialidad / Qué Pedir</th>
                             <th>Reservar</th>
-                            <th>Desvío</th>
+                            <th>Estado / Días de Cierre</th>
                         </tr>
                     </thead>
                     <tbody id="restaurantsTableBody">
-                        <!-- Injected via JS -->
+                        <!-- Injected via JavaScript -->
                     </tbody>
                 </table>
             </div>
@@ -771,7 +700,7 @@
                         </tr>
                     </thead>
                     <tbody id="beachesTableBody">
-                        <!-- Injected via JS -->
+                        <!-- Injected via JavaScript -->
                     </tbody>
                 </table>
             </div>
@@ -783,17 +712,22 @@
                 <div class="card">
                     <h3 style="color:var(--primary-dark); font-size:1rem; margin-bottom:6px;">1. Sardina del Norte (Gáldar)</h3>
                     <p style="font-size:0.83rem; color:var(--text-muted); margin-bottom:8px;"><strong>Fauna:</strong> Angelotes (tiburón ángel), rayas, caballitos de mar y pulpos.</p>
-                    <p style="font-size:0.83rem;"><strong>Clave:</strong> Entrar por la rampa del muelle viejo y nadar a la izquierda. No depende críticamente de la marea.</p>
+                    <p style="font-size:0.83rem;"><strong>Clave:</strong> Entrar por la rampa del muelle viejo y nadar a la izquierda. Muy resguardado, no depende críticamente de la marea.</p>
                 </div>
                 <div class="card">
-                    <h3 style="color:var(--primary-dark); font-size:1rem; margin-bottom:6px;">2. La Barra de Las Canteras (Las Palmas)</h3>
-                    <p style="font-size:0.83rem; color:var(--text-muted); margin-bottom:8px;"><strong>Fauna:</strong> Viejas, peinadas, salemas y erizos de lima en grietas.</p>
-                    <p style="font-size:0.83rem;"><strong>Clave:</strong> IMPRESCINDIBLE ir durante la bajamar (marea baja). Salir desde Playa Chica.</p>
+                    <h3 style="color:var(--primary-dark); font-size:1rem; margin-bottom:6px;">2. Reserva Marina El Cabrón (Arinaga)</h3>
+                    <p style="font-size:0.83rem; color:var(--text-muted); margin-bottom:8px;"><strong>Fauna:</strong> Mantelinas, murenas, bancos de viejas, roncadores y gorgonias.</p>
+                    <p style="font-size:0.83rem;"><strong>Clave:</strong> Acceso por la cala de roca/arena. Imprescindible llevar escarpines. Es uno de los mejores fondos marinos de Canarias.</p>
                 </div>
                 <div class="card">
-                    <h3 style="color:var(--primary-dark); font-size:1rem; margin-bottom:6px;">3. Cala de Tufia (Telde)</h3>
+                    <h3 style="color:var(--primary-dark); font-size:1rem; margin-bottom:6px;">3. La Barra de Las Canteras (Las Palmas)</h3>
+                    <p style="font-size:0.83rem; color:var(--text-muted); margin-bottom:8px;"><strong>Fauna:</strong> Viejas, peinadas, salemas y erizos de lima en las grietas del arrecife.</p>
+                    <p style="font-size:0.83rem;"><strong>Clave:</strong> IMPRESCINDIBLE ir en la BAJAMAR (marea baja). Salir desde Playa Chica nadando 100 metros.</p>
+                </div>
+                <div class="card">
+                    <h3 style="color:var(--primary-dark); font-size:1rem; margin-bottom:6px;">4. Cala de Tufia (Telde)</h3>
                     <p style="font-size:0.83rem; color:var(--text-muted); margin-bottom:8px;"><strong>Fauna:</strong> Fulgias, gorgonias y murenas en arrecife volcánico.</p>
-                    <p style="font-size:0.83rem;"><strong>Clave:</strong> Excelente protección contra el viento alisio del noreste. Usar escarpines.</p>
+                    <p style="font-size:0.83rem;"><strong>Clave:</strong> Protección perfecta contra el viento alisio del noreste. Usar escarpines por las rocas de la orilla.</p>
                 </div>
             </div>
         </section>
@@ -801,14 +735,13 @@
         <section id="secretos" class="section-block">
             <div class="section-title">💡 15 Experiencias que NO están en Google Maps</div>
             <div class="secrets-list" id="secretsContainer">
-                <!-- Injected via JS -->
+                <!-- Injected via JavaScript -->
             </div>
         </section>
 
     </main>
 
     <script>
-        
         const placesData = [
             {
                 id: "roque-nublo",
@@ -820,9 +753,23 @@
                 time: "2h",
                 bestHour: "09:00",
                 price: "Gratis",
-                parking: "Duro (Goleta se llena a las 10:00)",
+                parking: "Duro (Aparcamiento La Goleta se llena a las 10:00)",
                 difficulty: "Media-Baja (3km ida/vuelta)",
                 tip: "Llevad abrigo/cortavientos; a 1.800m hace entre 8°C y 10°C menos que en la costa."
+            },
+            {
+                id: "el-cabron",
+                name: "Reserva Marina El Cabrón",
+                category: "Snorkel",
+                municipality: "Agüimes (Arinaga)",
+                stars: 5,
+                essential: true,
+                time: "2.5h",
+                bestHour: "10:00",
+                price: "Gratis",
+                parking: "Fácil en la zona de tierra de Playa del Cabrón",
+                difficulty: "Media",
+                tip: "Top 3 de fondos marinos de Canarias. Usar escarpines para entrar por las rocas."
             },
             {
                 id: "las-vacas",
@@ -834,9 +781,9 @@
                 time: "45 min",
                 bestHour: "08:30",
                 price: "Gratis",
-                parking: "Muy difícil (4-5 plazas en la GC-550)",
-                difficulty: "Fácil (10 min walking)",
-                tip: "En Google Maps poned 'Tobas de Colores de Agüimes' en lugar del nombre del barranco."
+                parking: "Muy difícil (sólo 4-5 plazas en la GC-550 km 14)",
+                difficulty: "Fácil (10 min caminando)",
+                tip: "En Google Maps poned 'Tobas de Colores de Agüimes' en lugar del nombre genérico del barranco."
             },
             {
                 id: "sardina",
@@ -848,9 +795,23 @@
                 time: "2.5h",
                 bestHour: "08:30",
                 price: "Gratis",
-                parking: "Aparcar en la zona del muelle",
+                parking: "Aparcar en la zona del muelle viejo",
                 difficulty: "Baja",
                 tip: "Nadad hacia el extremo izquierdo junto al muelle viejo para ver angelotes y rayas."
+            },
+            {
+                id: "arucas-casco",
+                name: "Iglesia de San Juan Bautista (Arucas)",
+                category: "Pueblos",
+                municipality: "Arucas",
+                stars: 5,
+                essential: true,
+                time: "1.5h",
+                bestHour: "13:30 / 16:00 (Cerrada los Lunes)",
+                price: "Gratis",
+                parking: "Parking de la entrada del parque municipal",
+                difficulty: "Nula",
+                tip: "Templo neogótico esculpido en cantería azul. Importante: ¡Cerrado a visitas los lunes! Ir de martes a domingo."
             },
             {
                 id: "dunas-maspalomas",
@@ -862,23 +823,23 @@
                 time: "1.5h",
                 bestHour: "18:30 (Atardecer)",
                 price: "Gratis",
-                parking: "Fácil en el entorno del Hotel Riu",
+                parking: "Fácil en el entorno del Hotel Riu Palace",
                 difficulty: "Baja",
-                tip: "Acceded a pie desde el Mirador del Hotel Riu Palace para no pisar zonas masificadas."
+                tip: "Acceded a pie desde el Mirador del Hotel Riu Palace para recorrer las dunas tranquilamente."
             },
             {
                 id: "pico-nieves",
                 name: "Pico de las Nieves",
                 category: "Miradores",
-                municipality: "San Mateo",
+                municipality: "San Mateo / Tejeda",
                 stars: 5,
                 essential: true,
                 time: "1h",
-                bestHour: "19:00 (Atardecer)",
+                bestHour: "18:30 (Atardecer)",
                 price: "Gratis",
                 parking: "Fácil en el mirador",
                 difficulty: "Nula",
-                tip: "El mejor lugar de Canarias para ver la puesta de sol sobre el mar de nubes y el Teide."
+                tip: "El mejor lugar para ver la puesta de sol sobre el mar de nubes y la silueta del Teide."
             },
             {
                 id: "las-salinas",
@@ -888,9 +849,9 @@
                 stars: 5,
                 essential: true,
                 time: "2h",
-                bestHour: "Media marea (16:00)",
+                bestHour: "Media marea (16:30)",
                 price: "Gratis",
-                parking: "Amplio aparcamiento de tierra",
+                parking: "Amplio aparcamiento de tierra habilitado",
                 difficulty: "Nula",
                 tip: "Llevad gafas de bucear; los tres charcos están unidos por túneles submarinos."
             },
@@ -904,9 +865,9 @@
                 time: "1.5h",
                 bestHour: "12:45 o 20:15",
                 price: "€€",
-                parking: "Aparcar en El Confital o calle",
+                parking: "Aparcar en El Confital o calles de La Isleta",
                 difficulty: "N/A",
-                tip: "No aceptan reserva. Pedid cherne a la espalda o lapas nada más sentaros."
+                tip: "No aceptan reserva. Pedid cherne o sama a la espalda y lapas con mojo nada más sentaros."
             },
             {
                 id: "triciclo",
@@ -918,23 +879,23 @@
                 time: "2h",
                 bestHour: "Comida / Cena",
                 price: "€€",
-                parking: "Parking de San Bernardo",
+                parking: "Parking subterráneo de San Bernardo",
                 difficulty: "N/A",
                 tip: "Reservad con semanas de antelación. Pedid la ensaladilla de batata y langostinos."
             },
             {
-                id: "tejeda-pueblo",
-                name: "Pueblo de Tejeda",
-                category: "Pueblos",
-                municipality: "Tejeda",
+                id: "cueva-vega",
+                name: "Restaurante Cueva Vega",
+                category: "Restaurantes",
+                municipality: "Agüimes (Guayadeque)",
                 stars: 5,
                 essential: true,
-                time: "2h",
-                bestHour: "12:00",
-                price: "Gratis",
-                parking: "Aparcamiento municipal",
-                difficulty: "Fácil",
-                tip: "Probad el bienmesabe en la Dulcería Nublo."
+                time: "1.5h",
+                bestHour: "13:30 (Cerrado LUNES y MARTES)",
+                price: "€",
+                parking: "Aparcamiento del barranco de Guayadeque",
+                difficulty: "N/A",
+                tip: "¡CERRADO LUNES Y MARTES! Abierto de miércoles a domingo. Comeréis dentro de una cueva natural. Pedid costillas con piña."
             },
             {
                 id: "tufia",
@@ -946,151 +907,50 @@
                 time: "2h",
                 bestHour: "09:30",
                 price: "Gratis",
-                parking: "Muy reducido en la entrada",
+                parking: "Muy reducido en la entrada de la urbanización",
                 difficulty: "Fácil",
-                tip: "Pueblo marinero blanco encajonado. Venid muy temprano para poder aparcar."
-            },
-            {
-                id: "confital",
-                name: "El Confital",
-                category: "Miradores",
-                municipality: "Las Palmas",
-                stars: 4,
-                essential: false,
-                time: "2h",
-                bestHour: "18:30",
-                price: "Gratis",
-                parking: "Aparcamiento de tierra a la entrada",
-                difficulty: "Muy fácil",
-                tip: "Llevad calzado cerrado para caminar por la pista de tierra sin cortaros."
-            },
-            {
-                id: "cueva-vega",
-                name: "Restaurante Cueva Vega",
-                category: "Restaurantes",
-                municipality: "Agüimes (Guayadeque)",
-                stars: 5,
-                essential: true,
-                time: "1.5h",
-                bestHour: "13:30",
-                price: "€",
-                parking: "Aparcamiento del barranco",
-                difficulty: "N/A",
-                tip: "Comeréis literalmente en una cueva excavada en la roca. Pedid costillas con piña."
-            },
-            {
-                id: "tilos-moya",
-                name: "Los Tilos de Moya",
-                category: "Senderismo",
-                municipality: "Moya",
-                stars: 4,
-                essential: false,
-                time: "1h",
-                bestHour: "17:00",
-                price: "Gratis",
-                parking: "Junto al Centro de Interpretación",
-                difficulty: "Muy fácil (1.8km)",
-                tip: "Plan perfecto de sombra si hay calima o mucho sol en la costa."
-            },
-            {
-                id: "deliciosa-marta",
-                name: "Restaurante Deliciosa Marta",
-                category: "Restaurantes",
-                municipality: "Las Palmas (Triana)",
-                stars: 5,
-                essential: true,
-                time: "2.5h",
-                bestHour: "Cena",
-                price: "€€€€",
-                parking: "Parking de San Bernardo",
-                difficulty: "N/A",
-                tip: "El gran homenaje del viaje. Reservad con 1 o 2 meses de antelación."
+                tip: "Pueblo marinero blanco encajonado. Venid temprano para poder aparcar cerca de la cala."
             }
         ];
 
         const restaurantsTableData = [
-            { name: "Amigo Camilo", mun: "Las Palmas (La Isleta)", price: "€€", type: "Pescado Fresco", reserve: "No (llegar 12:45)", detour: "Imprescindible" },
-            { name: "Triciclo", mun: "Las Palmas (Vegueta)", price: "€€", type: "Tapas de Autor", reserve: "Sí (semanas antes)", detour: "Imprescindible" },
-            { name: "Deliciosa Marta", mun: "Las Palmas (Triana)", price: "€€€€", type: "Alta Cocina", reserve: "Sí (1-2 meses)", detour: "Homenaje Top" },
-            { name: "Cueva Vega", mun: "Agüimes (Guayadeque)", price: "€", type: "Canaria en Cueva", reserve: "Recomendada", detour: "Sí" },
-            { name: "Bar Terraza Angor", mun: "Agaete", price: "€€", type: "Pescado / Chocos", reserve: "Recomendada", detour: "Sí" },
-            { name: "Bar Playa El Boya", mun: "Arguineguín", price: "€", type: "Pescado Económico", reserve: "No (cola rápida)", detour: "Sí" },
-            { name: "Bochinche El Chato", mun: "San Mateo", price: "€", type: "Bochinche Tradicional", reserve: "Fines de semana", detour: "Sí" },
-            { name: "Bodegón Lagunetas", mun: "Las Palmas (Vegueta)", price: "€", type: "Pata / Ropa Vieja", reserve: "No", detour: "Si estás cerca" },
-            { name: "Mirador La Cilla", mun: "Artenara", price: "€€", type: "Canaria con vistas", reserve: "Recomendada", detour: "Sí" },
-            { name: "Dulcería Nublo", mun: "Tejeda", price: "€", type: "Bienmesabe / Dulces", reserve: "No", detour: "Imprescindible" }
+            { name: "Amigo Camilo", municipality: "Las Palmas (La Isleta)", price: "€€", specialty: "Cherne a la espalda, lapas, pulpo frito", reserve: "No (llegar 12:45 / 20:15)", notes: "Abierto todos los días" },
+            { name: "Bar Terraza Angor", municipality: "Agaete (Puerto Nieves)", price: "€€", specialty: "Morena frita, chocos, parrochas", reserve: "Recomendada", notes: "Abierto todos los días" },
+            { name: "Restaurante Cueva Vega", municipality: "Agüimes (Guayadeque)", price: "€", specialty: "Costillas con piña y batata, cochino frito", reserve: "Recomendada", notes: "❌ CERRADO LUNES Y MARTES (Abierto Mié-Dom)" },
+            { name: "Triciclo", municipality: "Las Palmas (Vegueta)", price: "€€", specialty: "Ensaladilla batata/langostinos, brioche", reserve: "Sí (Semanas antes)", notes: "Abierto todos los días" },
+            { name: "Bodegón Lagunetas", municipality: "Las Palmas (Vegueta)", price: "€", specialty: "Ropa vieja, pata asada, potaje berros", reserve: "No", notes: "Abierto todos los días" },
+            { name: "Bochinche El Chato", municipality: "San Mateo / Tafira", price: "€", specialty: "Carne de fiesta, queso de flor, papas mojo", reserve: "Recomendada fin de semana", notes: "Cocina tradicional rural" },
+            { name: "Bar Playa El Boya", municipality: "Arguineguín", price: "€", specialty: "Chocos fritos, pulpo, pescado del día", reserve: "No (Turno por llegada)", notes: "Precio popular junto al mar" },
+            { name: "Deliciosa Marta", municipality: "Las Palmas (Triana)", price: "€€€€", specialty: "Gnocchi trufa, solomillo Rossini", reserve: "Sí (1-2 meses antes)", notes: "Gourmet de referencia" }
         ];
 
         const beachesTableData = [
-            { name: "Las Canteras (La Puntilla)", type: "Playa Urbana", best: "Baño tranquilo", snorkel: "Excelente (La Barra)", service: "Paseo, duchas, socorristas" },
-            { name: "Sardina del Norte", type: "Cala de Arena", best: "Snorkel top", snorkel: "Santuario marino", service: "Restaurantes cerca" },
-            { name: "Las Salinas (Agaete)", type: "Piscinas Naturales", best: "Relax y nadar", snorkel: "Bueno (túneles)", service: "Solárium, escaleras" },
-            { name: "Playa de Tufia", type: "Cala de Piedra/Arena", best: "Tranquilidad local", snorkel: "Muy bueno", service: "Ninguno (pueblo virgen)" },
-            { name: "Guayedra", type: "Playa Salvaje", best: "Paisaje y fotos", snorkel: "Moderado", service: "Ninguno (acceso a pie)" },
-            { name: "Piscinas El Agujero", type: "Piscinas Volcánicas", best: "Baño en mar abierto", snorkel: "Aceptable", service: "Paseo marítimo" }
+            { name: "Las Canteras (La Puntilla)", type: "Playa Urbana", best: "Baño tranquilo y paseos", snorkel: "Excelente en La Barra (bajamar)", service: "Paseo marítimo, duchas, socorristas" },
+            { name: "Sardina del Norte", type: "Cala de Arena Dorada", best: "Snorkel top y aguas turquesas", snorkel: "Santuario marino (Angelotes/Rayas)", service: "Restaurantes cerca, rampa de acceso" },
+            { name: "Reserva Marina El Cabrón", type: "Cala Volcánica", best: "Buceo y Snorkel Profesional", snorkel: "Impresionante biodiversidad", service: "Ninguno (Zona protegida salvaje)" },
+            { name: "Las Salinas (Agaete)", type: "Piscinas Naturales", best: "Relax y nadar seguro", snorkel: "Bueno (Túneles bajo el agua)", service: "Solárium, escaleras, aparcamiento" },
+            { name: "Playa de Tufia", type: "Cala Marinera", best: "Tranquilidad y encanto local", snorkel: "Muy bueno (Zona protegida del viento)", service: "Pueblo marinero sin chiringuitos" },
+            { name: "Guayedra", type: "Playa Salvaje", best: "Fotografía y paisaje virgen", snorkel: "Moderado (Suelo de callaos)", service: "Ninguno (Acceso caminando)" }
         ];
 
         const secretsData = [
-            { q: "1. Mejor amanecer", a: "En la pasarela de La Cícer (Playa de Las Canteras) viendo reflejarse el sol naciente en la arena mojada." },
-            { q: "2. Mejor atardecer", a: "En el Pico de las Nieves mirando al Teide flotando sobre el mar de nubes." },
-            { q: "3. Dónde tomar un barraquito", a: "En la terraza de la Plaza del Pino en Teror (pídelo 'con todo')." },
-            { q: "4. Dónde comprar queso", a: "Quesería Cortijo de Caideros o Mercado de San Mateo (Queso de Flor de Guía)." },
-            { q: "5. Dónde comprar bienmesabe", a: "Ventinilla artesanal de la Dulcería Nublo en Tejeda." },
-            { q: "6. Mejor bocadillo de pata", a: "Cafetería Del Real o Montaditos Hermanos García en Las Palmas." },
-            { q: "7. Dónde comer tras Roque Nublo", a: "Restaurante Cueva de la Tea en Tejeda." },
-            { q: "8. Dónde desayunan los locales", a: "Churrería Moya o bocadillo de chorizo blando en Teror los domingos." },
-            { q: "9. La carretera más bonita", a: "La GC-210 (Ruta de las Presas) entre Artenara y La Aldea." },
-            { q: "10. Mejor mirador estelar", a: "Esplanada de los Llanos de la Pez en la Cumbre Central." },
-            { q: "11. Piscina natural poco conocida", a: "Charco de la Furnia en la costa de Gáldar." },
-            { q: "12. Sitio perfecto si hace viento", a: "Fondo del Valle de Agaete o Barranco de Guayadeque." },
-            { q: "13. Sitio si llueve en el norte", a: "Escapa al sur cruzando la cumbre hacia Fataga y Maspalomas." },
-            { q: "14. Rincón secreto de snorkel", a: "Cala Martorell entre Sardina y Gáldar." },
-            { q: "15. Lugar que casi todos se saltan", a: "Pueblo marinero de San Cristóbal al sur de Las Palmas." }
+            { q: "1. ¿El mejor sitio para ver el amanecer?", a: "En la pasarela de madera de La Cícer (Las Canteras), viendo reflejarse las primeras luces sobre la arena húmeda junto a los surfistas." },
+            { q: "2. ¿El mejor sitio para ver el atardecer?", a: "El Pico de las Nieves (1.949 m) observando el mar de nubes teñirse de rojo frente al Teide." },
+            { q: "3. ¿Dónde tomar el mejor barraquito?", a: "En la terraza de la Plaza del Pino en Teror. Pídelo expresamente 'con todo' (leche condensada, Licor 43, café, canela y limón)." },
+            { q: "4. ¿Dónde comprar el mejor queso local?", a: "En el Cortijo de Caideros o el Mercado de San Mateo. Pedid 'Queso de Flor de Guía' semicurado." },
+            { q: "5. ¿Dónde comprar bienmesabe auténtico?", a: "En la Dulcería Nublo en Tejeda. Elaborado artesanalmente solo con almendras, yema de huevo y limón." },
+            { q: "6. ¿Dónde probar el mejor bocadillo de pata?", a: "En la Cafetería Del Real en Las Palmas. Pedidlo de pata asada recién cortada con queso tierno de cabra." },
+            { q: "7. ¿Dónde comer tras el Roque Nublo?", a: "En Restaurante Cueva de la Tea (Tejeda) o en el pueblo de Artenara en el Mirador La Cilla." },
+            { q: "8. ¿Dónde desayunan los locales los domingos?", a: "Churrería Moya comiendo churros de lazo o en Teror con bocadillo de chorizo de Teror blando." },
+            { q: "9. ¿La carretera más bonita de la isla?", a: "La GC-210 (Ruta de las Presas) entre Artenara y La Aldea de San Nicolás bordeando tres embalses." },
+            { q: "10. ¿El mejor sitio para ver estrellas?", a: "Llanos de la Pez en la Cumbre Central. Al estar por encima del mar de nubes la Vía Láctea es nítida." },
+            { q: "11. ¿Una piscina natural poco conocida?", a: "El Charco de la Furnia en la costa de Gáldar. Mucho más tranquila y salvaje que las del sur." },
+            { q: "12. ¿Lugar perfecto si hace mucho viento?", a: "El Valle de Agaete o el Barranco de Guayadeque, protegidos por imponentes paredes rocosas de 500m." },
+            { q: "13. ¿Lugar perfecto si llueve en el norte?", a: "Cruzar la cumbre hacia Maspalomas o Tufia en el sur; los alisios retienen la lluvia solo en el norte." },
+            { q: "14. ¿Rincón poco conocido de snorkel?", a: "La Cala de Martorell (Gáldar), un pequeño rincón entre rocas con presencia de caballitos de mar." },
+            { q: "15. ¿Lugar que la mayoría de turistas se salta?", a: "El barrio marinero de San Cristóbal en Las Palmas, con sus casas coloridas al borde del oleaje." }
         ];
 
-        let activeFilter = 'all';
-        let showOnlyEssential = false;
-
-        function renderPlaces() {
-            const container = document.getElementById('placesGrid');
-            const searchVal = document.getElementById('searchInput').value.toLowerCase();
-
-            const filtered = placesData.filter(p => {
-                const matchesSearch = p.name.toLowerCase().includes(searchVal) || 
-                                      p.municipality.toLowerCase().includes(searchVal) ||
-                                      p.category.toLowerCase().includes(searchVal);
-                const matchesCat = (activeFilter === 'all') || (p.category === activeFilter);
-                const matchesStar = !showOnlyEssential || p.essential;
-
-                return matchesSearch && matchesCat && matchesStar;
-            });
-
-            container.innerHTML = filtered.map(p => {
-                return `
-                    <div class="place-card">
-                        <div>
-                            <div class="place-header">
-                                <div class="place-title">${p.name}</div>
-                                <span class="badge badge-star">${'⭐'.repeat(p.stars)}</span>
-                            </div>
-                            <div class="place-meta">
-                                <span class="badge badge-municipio">📍 ${p.municipality}</span>
-                                <span class="badge badge-tag">${p.category}</span>
-                                <span class="badge badge-price">${p.price}</span>
-                            </div>
-                            <div class="place-details">
-                                <div>⏱️ ${p.time}</div>
-                                <div>🌅 ${p.bestHour}</div>
-                                <div>🅿️ ${p.parking}</div>
-                                ${p.difficulty ? `<div>🥾 ${p.difficulty}</div>` : ''}
-                            </div>
-                            <div class="place-tip">💡 <strong>Tip Local:</strong> ${p.tip}</div>
-                            <a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(p.name + ' ' + p.municipality + ' Gran Canaria')}" target="_blank" class="btn-maps">🗺️ Abrir en Google Maps</a>
-                        </div>
-                    </div>
-                `;
-            }).join('');
-        }
         const itineraryData = [
             {
                 day: 1,
@@ -1108,7 +968,7 @@
                 dinner: "Restaurante La Marinera (La Puntilla) - Pescado fresco a 5 min caminando de vuestra base.",
                 nightPlan: "Helado artesanal en Peña La Vieja y paseo tranquilo por la pasarela nocturna de Las Canteras.",
                 planBWeather: "Visita al Castillo de la Luz (La Isleta) y picoteo a resguardo en el Mercado del Puerto.",
-                planBSnorkel: "Paseo por el extremo norte de Las Canteras hasta la Plaza del Puntilla.",
+                planBSnorkel: "Paseo por el extremo norte de Las Canteras hasta la Plaza de La Puntilla.",
                 timeline: [
                     { time: "12:30 - 13:30", title: "Llegada al Aeropuerto y Coche", desc: "Recogida del vehículo en el aeropuerto y trayecto directo a La Isleta.", drive: "25 min por GC-1", parking: "Fácil en C/ Albareda o parking público de La Isleta", maps: "Aeropuerto de Gran Canaria" },
                     { time: "14:00 - 15:30", title: "Almuerzo de Bienvenida", desc: "Pescado fresco del día a la espalda en Amigo Camilo.", drive: "0 min (A pie desde el apto)", parking: "A pie", maps: "Restaurante Amigo Camilo Las Palmas" },
@@ -1130,7 +990,7 @@
                 lunch: "Bar Terraza Angor (Puerto de las Nieves) - Morena frita, chocos y parrochas.",
                 sunset: "Mirador de Guayedra observando los acantilados verticales del noroeste bañados en luz dorada.",
                 dinner: "Tasca La Picadita (Gáldar) o cena ligera en La Isleta (Bodeguita de la Pepa).",
-                nightPlan: "Cerveza artesanal canaria (Jaque Mate) en la animada Plaza de Santiago en Gáldar.",
+                nightPlan: "Cerveza artesanal canaria en la animada Plaza de Santiago en Gáldar.",
                 planBWeather: "Visita guiada al Museo y Parque Arqueológico Cueva Pintada de Gáldar (interior cubierto).",
                 planBSnorkel: "Sustituir snorkel por ruta cultural por el casco histórico de Gáldar y sus calles coloniales.",
                 timeline: [
@@ -1156,7 +1016,7 @@
                 sunset: "Pico de las Nieves (1.949 m) viendo el mar de nubes teñirse de rojo frente al Teide.",
                 dinner: "Cena reconfortante de vuelta en La Isleta (Bodegón Lagunetas en Vegueta o El Arrosar).",
                 nightPlan: "Copa tranquila o infusión en la terraza del Paseo de Las Canteras tras el descenso de la cumbre.",
-                planBWeather: "Si hay niebla muy densa en la cumbre, intercambiar este día con el Día 4 (Arucas y Firgas en cota baja).",
+                planBWeather: "Si hay niebla densa en la cumbre, intercambiar con el día de Arucas y Firgas en cota baja.",
                 planBSnorkel: "N/A (Día 100% montaña y senderismo).",
                 timeline: [
                     { time: "07:30 - 08:30", title: "Subida por Teror", desc: "Desayuno con bocadillo de chorizo de Teror en la Plaza del Pino.", drive: "30 min por GC-21", parking: "Aparcamiento subterráneo de Teror", maps: "Teror Gran Canaria" },
@@ -1169,57 +1029,7 @@
             {
                 day: 4,
                 date: "Lunes 14/09",
-                title: "Cráteres, Jardín Botánico y Laurisilva de Moya",
-                km: "65 km",
-                driving: "1h 20m",
-                walking: "2 horas",
-                fatigue: "⭐⭐",
-                photoSpot: "Vista panorámica del inmenso cráter de la Caldera de Bandama desde el pico",
-                budget: "~45€ - 55€ / persona",
-                pack: "Ropa cómoda de paseo, zapatillas deportivas para el sendero de los Tilos, cámara fotográfica.",
-                lunch: "Bochinche El Chato (Sataute) - Carne de fiesta, queso asado y vino local.",
-                sunset: "Mirador del Parque Municipal de Arucas con la catedral de piedra negra en primer plano.",
-                dinner: "Tasca Jamón Jamón o Dorotea (Vegueta/Triana) a 10 min de vuestra base.",
-                nightPlan: "Paseo por la calle peatonal Mayor de Triana con parada para un vermú en Dorotea.",
-                planBWeather: "Visita interior a la histórica Destilería de Ron Arehucas con degustación guiada.",
-                planBSnorkel: "N/A (Día de naturaleza verde e interior).",
-                timeline: [
-                    { time: "08:30 - 10:30", title: "Caldera de Bandama", desc: "Borde del gigantesco cráter volcánico de 200m de profundidad.", drive: "20 min por GC-800", parking: "Pico de Bandama (Fácil a primera hora)", maps: "Caldera de Bandama" },
-                    { time: "11:00 - 13:30", title: "Jardín Botánico Viera y Clavijo", desc: "El jardín botánico más grande de España con flora macaronésica.", drive: "15 min por GC-110", parking: "Parking del acceso inferior (Tafira Baja)", maps: "Jardin Botanico Viera y Clavijo" },
-                    { time: "13:30 - 15:30", title: "Almuerzo Tradicional en Bochinche", desc: "Comida canaria auténtica en Bochinche El Chato o Restaurante Jardín Canario.", drive: "10 min", parking: "Aparcamiento del local", maps: "Bochinche El Chato" },
-                    { time: "16:00 - 17:30", title: "Arucas Monumental", desc: "Arquitectura de piedra volcánica e Iglesia neogótica de San Juan.", drive: "20 min por GC-3", parking: "Parking junto al Parque Municipal de Arucas", maps: "Arucas Gran Canaria" },
-                    { time: "18:00 - 19:30", title: "Los Tilos de Moya", desc: "Ruta circular fácil de 1,8 km por el último reducto de laurisilva.", drive: "15 min por GC-75", parking: "Centro de Interpretación de Los Tilos", maps: "Los Tilos de Moya" }
-                ]
-            },
-            {
-                day: 5,
-                date: "Martes 15/09",
-                title: "Tobas de Colores, Casas Cueva y Dunas al Atardecer",
-                km: "115 km",
-                driving: "1h 40m",
-                walking: "2 horas",
-                fatigue: "⭐⭐⭐",
-                photoSpot: "Las sinuosas ondulaciones del mar de Dunas de Maspalomas teñidas de dorado",
-                budget: "~50€ - 65€ / persona",
-                pack: "Bañador, escarpines, toalla, kit de snorkel, calzado cerrado para bajar a Las Vacas, crema solar.",
-                lunch: "Restaurante Cueva Vega (Guayadeque) - Costillas con piña, batata y mojo en la cueva.",
-                sunset: "Desde lo alto de la gran duna central de Maspalomas o junto al histórico Faro.",
-                dinner: "Bar Playa El Boya (Arguineguín) - Pescado frito y chocos a precio popular.",
-                nightPlan: "Paseo escuchando las olas por el Boulevard de Meloneras antes de tomar la autovía directa a La Isleta.",
-                planBWeather: "Si hay calima densa en el sur, visitar el Museo Arqueológico de Guayadeque y Agüimes casco.",
-                planBSnorkel: "Si en Tufia hay oleaje de fondo, cambiar por paseo y baño en la resguardada Playa de San Agustín.",
-                timeline: [
-                    { time: "08:00 - 09:30", title: "Barranco de Las Vacas", desc: "Fotografía en el cañón de tobas de colores (Antelope Canyon canario).", drive: "35 min por GC-1 / GC-550", parking: "Arcén km 14 GC-550 (CRÍTICO: sólo 5 plazas)", maps: "Tobas de Colores de Agüimes" },
-                    { time: "10:00 - 12:00", title: "Snorkel en Cala de Tufia", desc: "Pueblo marinero blanco con aguas cristalinas resguardadas del viento.", drive: "20 min por GC-1", parking: "Explanada a la entrada del poblado de Tufia", maps: "Playa de Tufia" },
-                    { time: "12:30 - 15:00", title: "Barranco de Guayadeque", desc: "Almuerzo dentro de una cueva natural en Cueva Vega o Tagoror.", drive: "20 min por GC-100", parking: "Aparcamiento de Cueva Vega", maps: "Restaurante Cueva Vega Guayadeque" },
-                    { time: "16:30 - 18:30", title: "Dunas de Maspalomas", desc: "Recorrido a pie saliendo desde el Mirador del Hotel Riu Palace.", drive: "30 min por GC-1", parking: "Mirador Riu Palace Maspalomas", maps: "Dunas de Maspalomas" },
-                    { time: "18:30 - 20:00", title: "Faro de Maspalomas & Atardecer", desc: "Paseo marítimo bordeando el charco y el faro histórico.", drive: "5 min o a pie", parking: "Parking subterráneo de Meloneras", maps: "Faro de Maspalomas" }
-                ]
-            },
-            {
-                day: 6,
-                date: "Miércoles 16/09",
-                title: "Pinar de Tamadaba y la Costa del Noroeste",
+                title: "Pinar de Tamadaba, Acantilados del Oeste y Las Salinas",
                 km: "95 km",
                 driving: "1h 35m",
                 walking: "1.5 horas",
@@ -1228,16 +1038,66 @@
                 budget: "~45€ - 60€ / persona",
                 pack: "Ropa ligera de senderismo, bañador, escarpines, sudadera fina para la altura del pinar.",
                 lunch: "Cofradía de Pescadores de Agaete o Bar Terraza Angor.",
-                sunset: "Piscinas Naturales de Las Salinas viendo los reflejos del sol sobre las pozas de agua marina.",
-                dinner: "Amigo Camilo (si queréis repetir cerca del apto) o Triciclo en Vegueta.",
+                sunset: "Piscinas Naturales de Las Salinas viendo los reflejos del sol sobre las pozas volcánicas.",
+                dinner: "Amigo Camilo (La Isleta) o picoteo marinero en La Puntilla.",
                 nightPlan: "Cerveza artesanal local en la terraza de La Puntilla escuchando el mar.",
-                planBWeather: "Visita a la Bodega Los Berrazales (Valle de Agaete) con cata de vino y queso bajo techado.",
+                planBWeather: "Visita a la Finca Los Bermejales (Valle de Agaete) o cata de quesos bajo techo.",
                 planBSnorkel: "Si Las Salinas tienen fuerte marejada, sustituir por paseo relajado en Agaete casco.",
                 timeline: [
                     { time: "08:30 - 11:30", title: "Pinar de Tamadaba & Llanos de la Mimbre", desc: "Ruta en coche y paseo entre pinos canarios con vistas aéreas al océano.", drive: "45 min por GC-2 / GC-216", parking: "Área recreativa Tamadaba", maps: "Pinar de Tamadaba" },
                     { time: "12:00 - 13:30", title: "Mirador del Balcón y La Aldea", desc: "Pasarela con vistas a los paredones verticales de la costa oeste.", drive: "25 min por túneles GC-2", parking: "Aparcamiento del Mirador del Balcón", maps: "Mirador del Balcon La Aldea" },
                     { time: "14:00 - 16:00", title: "Almuerzo Marinero en Agaete", desc: "Pescado fresco del día frente al muelle del Puerto de las Nieves.", drive: "20 min", parking: "Parking de tierra del Puerto de las Nieves", maps: "Bar Terraza Angor Agaete" },
                     { time: "16:30 - 19:30", title: "Piscinas Naturales de Las Salinas", desc: "Tarde de baño en los tres charcos volcánicos interconectados.", drive: "5 min", parking: "Aparcamiento habilitado de Las Salinas", maps: "Las Salinas de Agaete" }
+                ]
+            },
+            {
+                day: 5,
+                date: "Martes 15/09",
+                title: "Cráteres, Jardín Botánico, Arucas Monumental y Laurisilva",
+                km: "65 km",
+                driving: "1h 20m",
+                walking: "2 horas",
+                fatigue: "⭐⭐",
+                photoSpot: "La espectacular Iglesia de San Juan Bautista de Arucas en la plaza de piedra",
+                budget: "~45€ - 55€ / persona",
+                pack: "Ropa cómoda de paseo, zapatillas deportivas para el sendero de los Tilos, cámara fotográfica.",
+                lunch: "Bochinche El Chato (Sataute) o Tasca Jamón Jamón en Arucas.",
+                sunset: "Mirador del Parque Municipal de Arucas con la catedral de piedra negra al frente.",
+                dinner: "Tasca Jamón Jamón o Dorotea (Vegueta/Triana) a 10 min de vuestra base.",
+                nightPlan: "Paseo por la calle peatonal Mayor de Triana con parada para un vermú en Dorotea.",
+                planBWeather: "Visita interior a la histórica Destilería de Ron Arehucas con degustación guiada.",
+                planBSnorkel: "N/A (Día de arquitectura, cráteres y laurisilva).",
+                timeline: [
+                    { time: "08:30 - 10:30", title: "Caldera de Bandama", desc: "Borde del gigantesco cráter volcánico de 200m de profundidad.", drive: "20 min por GC-800", parking: "Pico de Bandama (Fácil a primera hora)", maps: "Caldera de Bandama" },
+                    { time: "11:00 - 13:00", title: "Jardín Botánico Viera y Clavijo", desc: "El jardín botánico más grande de España con flora macaronésica.", drive: "15 min por GC-110", parking: "Parking del acceso inferior (Tafira Baja)", maps: "Jardin Botanico Viera y Clavijo" },
+                    { time: "13:30 - 15:00", title: "Arucas Monumental (¡Iglesia Abierta HOY!)", desc: "Visita a la Iglesia neogótica de cantería azul (¡Abierta hoy martes!).", drive: "20 min por GC-3", parking: "Parking junto al Parque Municipal de Arucas", maps: "Iglesia de San Juan Bautista Arucas" },
+                    { time: "15:00 - 16:30", title: "Almuerzo en Bochinche / Arucas", desc: "Comida canaria auténtica en Bochinche El Chato o Tasca Jamón Jamón.", drive: "10 min", parking: "Aparcamiento del local", maps: "Bochinche El Chato" },
+                    { time: "17:00 - 18:30", title: "Los Tilos de Moya & Firgas", desc: "Ruta circular fácil de 1,8 km por laurisilva y paseo de las fuentes en Firgas.", drive: "15 min por GC-75", parking: "Centro de Interpretación de Los Tilos", maps: "Los Tilos de Moya" }
+                ]
+            },
+            {
+                day: 6,
+                date: "Miércoles 16/09",
+                title: "Las Vacas, Snorkel El Cabrón, Guayadeque (Cueva Vega ¡Abierto!) y Maspalomas",
+                km: "115 km",
+                driving: "1h 40m",
+                walking: "2 horas",
+                fatigue: "⭐⭐⭐",
+                photoSpot: "Las sinuosas ondulaciones del mar de Dunas de Maspalomas teñidas de dorado",
+                budget: "~50€ - 65€ / persona",
+                pack: "Bañador, escarpines, toalla, kit de snorkel, calzado cerrado para bajar a Las Vacas, crema solar.",
+                lunch: "Restaurante Cueva Vega (Guayadeque) - ¡Abierto hoy Miércoles! Costillas con piña dentro de la cueva.",
+                sunset: "Desde lo alto de la gran duna central de Maspalomas o junto al histórico Faro.",
+                dinner: "Bar Playa El Boya (Arguineguín) - Pescado frito y chocos a precio popular.",
+                nightPlan: "Paseo escuchando las olas por el Boulevard de Meloneras antes de tomar la autovía a La Isleta.",
+                planBWeather: "Si hay calima densa en el sur, visitar el Museo Arqueológico de Guayadeque y Agüimes casco.",
+                planBSnorkel: "Si en Arinaga hay fuerte viento del Este, cambiar snorkel por la resguardada Cala de Tufia.",
+                timeline: [
+                    { time: "08:00 - 09:30", title: "Barranco de Las Vacas", desc: "Fotografía en el cañón de tobas de colores (Antelope Canyon canario).", drive: "35 min por GC-1 / GC-550", parking: "Arcén km 14 GC-550 (CRÍTICO: sólo 5 plazas)", maps: "Tobas de Colores de Agüimes" },
+                    { time: "10:00 - 12:00", title: "Snorkel en Reserva Marina El Cabrón", desc: "Inmersión en uno de los 3 mejores fondos marinos de Canarias (Arinaga).", drive: "20 min por GC-1", parking: "Aparcamiento de tierra junto a Playa del Cabrón", maps: "Playa del Cabron Arinaga" },
+                    { time: "12:30 - 15:00", title: "Barranco de Guayadeque & Cueva Vega", desc: "Almuerzo auténtico dentro de la cueva natural en Restaurante Cueva Vega (¡Abierto hoy!).", drive: "20 min por GC-100", parking: "Aparcamiento de Cueva Vega", maps: "Restaurante Cueva Vega Guayadeque" },
+                    { time: "16:30 - 18:30", title: "Dunas de Maspalomas", desc: "Recorrido a pie saliendo desde el Mirador del Hotel Riu Palace.", drive: "30 min por GC-1", parking: "Mirador Riu Palace Maspalomas", maps: "Dunas de Maspalomas" },
+                    { time: "18:30 - 20:00", title: "Faro de Maspalomas & Atardecer", desc: "Paseo marítimo bordeando el charco y el faro histórico.", drive: "5 min o a pie", parking: "Parking subterráneo de Meloneras", maps: "Faro de Maspalomas" }
                 ]
             },
             {
@@ -1252,11 +1112,11 @@
                 budget: "~85€ - 110€ / persona (Cena homenaje incluida)",
                 pack: "Ropa elegante-casual para la cena, bañador y kit de snorkel para la tarde.",
                 lunch: "Triciclo (Vegueta) - Tapas creativas de autor.",
-                sunset: "Copa de vino de la tierra en la terraza del Hotel Santa Catalina o Plaza de Santa Ana.",
+                sunset: "Copa de vino de la tierra en la terraza de la Plaza de Santa Ana.",
                 dinner: "Deliciosa Marta (Triana) - La cena estrella del viaje (Reserva previa obligatoria).",
                 nightPlan: "Cóctel en El Patio de Enmedio o paseo bajo la iluminación nocturna de Vegueta.",
                 planBWeather: "Visita a la Casa de Colón y Museo Canario en Vegueta (exposiciones bajo techo).",
-                planBSnorkel: "Si la marea no permite nadar a la Barra, alquiler de paddle surf en la bahía de Las Canteras.",
+                planBSnorkel: "Si la marea no permite nadar a la Barra, paseo marítimo y relajación en la playa.",
                 timeline: [
                     { time: "09:00 - 12:30", title: "Vegueta y Triana Histórico", desc: "Plaza de Santa Ana, calles coloniales y Mercado de Vegueta.", drive: "10 min por Av. Marítima", parking: "Parking San Bernardo o Mercado Vegueta", maps: "Plaza de Santa Ana Las Palmas" },
                     { time: "13:00 - 15:00", title: "Almuerzo de Tapas Creativas", desc: "Gastronomía canaria reinventada en Triciclo o Dorotea.", drive: "0 min (A pie en Vegueta)", parking: "A pie", maps: "Restaurante Triciclo Las Palmas" },
@@ -1290,13 +1150,16 @@
             }
         ];
 
-        function selectToday(dayNum) {
-            document.querySelectorAll('.day-btn').forEach((b, idx) => {
+        let currentFilter = 'all';
+        let showOnlyEssential = false;
+
+        function selectDay(dayNum) {
+            document.querySelectorAll('#daySelectorContainer .day-btn').forEach((b, idx) => {
                 b.classList.toggle('active', (idx + 1) === dayNum);
             });
 
             const dayData = itineraryData.find(d => d.day === dayNum);
-            const container = document.getElementById('today-content');
+            const container = document.getElementById('day-detail-card');
 
             container.innerHTML = `
                 <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; flex-wrap:wrap; gap:8px;">
@@ -1374,129 +1237,93 @@
             `;
         }
 
-        function renderItineraryAccordions() {
-            const container = document.getElementById('itinerary-accordion-container');
-            container.innerHTML = itineraryData.map((d, idx) => `
-                <div class="itinerary-day">
-                    <div class="itinerary-header" onclick="toggleAccordion(${idx})">
-                        <div class="itinerary-title-box">
-                            <span class="day-tag">Día ${d.day}</span>
-                            <div>
-                                <div style="font-weight:800; font-size:0.95rem;">${d.title}</div>
-                                <div style="font-size:0.78rem; color:var(--text-muted);">${d.date} • 🚗 ${d.km} (${d.driving}) • Cansancio: ${d.fatigue}</div>
-                            </div>
+        function renderPlaces() {
+            const container = document.getElementById('placesGrid');
+            const searchVal = document.getElementById('searchInput').value.toLowerCase();
+
+            const filtered = placesData.filter(p => {
+                const matchCategory = (currentFilter === 'all') || (p.category === currentFilter);
+                const matchEssential = !showOnlyEssential || p.essential;
+                const matchSearch = p.name.toLowerCase().includes(searchVal) ||
+                                    p.municipality.toLowerCase().includes(searchVal) ||
+                                    p.category.toLowerCase().includes(searchVal) ||
+                                    p.tip.toLowerCase().includes(searchVal);
+                return matchCategory && matchEssential && matchSearch;
+            });
+
+            container.innerHTML = filtered.map(p => `
+                <div class="place-card">
+                    <div>
+                        <div class="place-header">
+                            <div class="place-title">${p.name}</div>
+                            <span class="badge badge-star">⭐ ${p.stars}.0</span>
                         </div>
-                        <span id="acc-icon-${idx}" style="font-weight:bold; font-size:1.1rem;">+</span>
+                        <div class="place-meta">
+                            <span class="badge badge-municipio">📍 ${p.municipality}</span>
+                            <span class="badge badge-tag">${p.category}</span>
+                            ${p.essential ? '<span class="badge badge-star">⭐ Imprescindible</span>' : ''}
+                        </div>
+                        <div class="place-details">
+                            <div>⏱️ <strong>Tiempo:</strong> ${p.time}</div>
+                            <div>🌅 <strong>Mejor hora:</strong> ${p.bestHour}</div>
+                            <div>💰 <strong>Precio:</strong> ${p.price}</div>
+                            <div>🥾 <strong>Dificultad:</strong> ${p.difficulty}</div>
+                        </div>
+                        <div style="font-size:0.8rem; color:var(--text-muted); margin-bottom:8px;">
+                            🅿️ <strong>Parking:</strong> ${p.parking}
+                        </div>
+                        <div class="place-tip">
+                            💡 <strong>Consejo Local:</strong> ${p.tip}
+                        </div>
                     </div>
-                    <div class="itinerary-body" id="acc-body-${idx}">
-                        <div class="day-summary-grid" style="margin-top:12px;">
-                            <div class="day-summary-item">
-                                <span class="day-summary-label">🚗 Conducción</span>
-                                <span class="day-summary-val">${d.km} (${d.driving})</span>
-                            </div>
-                            <div class="day-summary-item">
-                                <span class="day-summary-label">🥾 Caminando</span>
-                                <span class="day-summary-val">${d.walking}</span>
-                            </div>
-                            <div class="day-summary-item">
-                                <span class="day-summary-label">⚡ Cansancio</span>
-                                <span class="day-summary-val">${d.fatigue}</span>
-                            </div>
-                            <div class="day-summary-item">
-                                <span class="day-summary-label">💰 Presupuesto</span>
-                                <span class="day-summary-val">${d.budget}</span>
-                            </div>
-                        </div>
-
-                        <div style="font-size:0.82rem; background:#eff6ff; padding:8px 12px; border-radius:6px; border-left:3px solid #3b82f6; margin-bottom:12px;">
-                            📸 <strong>Foto TOP:</strong> ${d.photoSpot}
-                        </div>
-
-                        <div class="timeline">
-                            ${d.timeline.map(t => `
-                                <div class="timeline-item">
-                                    <div class="timeline-time">${t.time}</div>
-                                    <div class="timeline-title">${t.title}</div>
-                                    <div class="timeline-desc">${t.desc}</div>
-                                    <div style="font-size:0.78rem; color:var(--text-muted); margin-top:2px;">
-                                        🚗 ${t.drive} | 🅿️ ${t.parking}
-                                    </div>
-                                    <a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(t.maps || t.title + ' Gran Canaria')}" target="_blank" class="btn-maps">🗺️ Ver en Google Maps</a>
-                                </div>
-                            `).join('')}
-                        </div>
-
-                        <div class="extra-details-box">
-                            <div class="extra-detail-card">
-                                <strong>🍽️ Almuerzo</strong>
-                                ${d.lunch}
-                            </div>
-                            <div class="extra-detail-card">
-                                <strong>🌅 Atardecer</strong>
-                                ${d.sunset}
-                            </div>
-                            <div class="extra-detail-card">
-                                <strong>🍷 Cena Cercana</strong>
-                                ${d.dinner}
-                            </div>
-                            <div class="extra-detail-card">
-                                <strong>🍸 Copa / Paseo</strong>
-                                ${d.nightPlan}
-                            </div>
-                            <div class="extra-detail-card">
-                                <strong>☔ Plan B (Lluvia)</strong>
-                                ${d.planBWeather}
-                            </div>
-                            <div class="extra-detail-card">
-                                <strong>🌊 Plan B (Mar)</strong>
-                                ${d.planBSnorkel}
-                            </div>
-                        </div>
-
-                        <div style="margin-top:12px; font-size:0.82rem; background:#fffbe3; border-left:3px solid var(--accent-sand); padding:8px 12px; border-radius:4px; color:#744210;">
-                            🎒 <strong>Qué llevar:</strong> ${d.pack}
-                        </div>
+                    <div>
+                        <a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(p.name + ' ' + p.municipality + ' Gran Canaria')}" target="_blank" class="btn-maps" style="width:100%; justify-content:center; padding:8px;">🗺️ Abrir en Google Maps</a>
                     </div>
                 </div>
             `).join('');
         }
 
-        function toggleAccordion(idx) {
-            const body = document.getElementById(`acc-body-${idx}`);
-            const icon = document.getElementById(`acc-icon-${idx}`);
-            const isOpen = body.classList.contains('open');
+        function setFilter(cat, btn) {
+            currentFilter = cat;
+            document.querySelectorAll('.filters-wrapper .filter-chip:not(.toggle-essential)').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            renderPlaces();
+        }
 
-            body.classList.toggle('open', !isOpen);
-            icon.innerText = isOpen ? '+' : '−';
+        function toggleEssential(btn) {
+            showOnlyEssential = !showOnlyEssential;
+            btn.classList.toggle('active', showOnlyEssential);
+            renderPlaces();
+        }
+
+        function filterPlaces() {
+            renderPlaces();
         }
 
         function renderTables() {
-            // Restaurants
             const restBody = document.getElementById('restaurantsTableBody');
             restBody.innerHTML = restaurantsTableData.map(r => `
                 <tr>
                     <td><strong>${r.name}</strong></td>
-                    <td>${r.mun}</td>
+                    <td>${r.municipality}</td>
                     <td><span class="badge badge-price">${r.price}</span></td>
-                    <td>${r.type}</td>
+                    <td>${r.specialty}</td>
                     <td>${r.reserve}</td>
-                    <td><strong>${r.detour}</strong></td>
+                    <td><span style="font-size:0.78rem; font-weight:700; color:var(--primary-dark);">${r.notes}</span></td>
                 </tr>
             `).join('');
 
-            // Beaches
             const beachBody = document.getElementById('beachesTableBody');
             beachBody.innerHTML = beachesTableData.map(b => `
                 <tr>
                     <td><strong>${b.name}</strong></td>
-                    <td>${b.type}</td>
+                    <td><span class="badge badge-municipio">${b.type}</span></td>
                     <td>${b.best}</td>
                     <td>${b.snorkel}</td>
                     <td>${b.service}</td>
                 </tr>
             `).join('');
 
-            // Secrets
             const secretsContainer = document.getElementById('secretsContainer');
             secretsContainer.innerHTML = secretsData.map(s => `
                 <div class="secret-item">
@@ -1506,13 +1333,8 @@
             `).join('');
         }
 
-        function filterPlaces() {
-            renderPlaces();
-        }
-
         window.onload = function() {
-            selectToday(1);
-            renderItineraryAccordions();
+            selectDay(1);
             renderTables();
             renderPlaces();
         };
