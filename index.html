@@ -576,7 +576,7 @@
     <header>
         <div class="header-top">
             <a href="#itinerario" class="brand">
-                🏝️ Gran Canaria <span class="brand-badge">2026</span>
+                🏝️ Gran Canaria <span class="brand-badge">2026 - Guía Pro</span>
             </a>
             <div class="header-actions">
                 <button class="btn-header" onclick="window.print()">
@@ -600,8 +600,8 @@
     <main class="container">
 
         <section id="itinerario" class="section-block">
-            <div class="section-title">📅 Itinerario Día a Día Optimizado</div>
-            <div class="section-subtitle">Selecciona un día para ver la hoja de ruta detallada con horarios, enlaces a Google Maps, planes B y restaurantes optimizados:</div>
+            <div class="section-title">📅 Itinerario Día a Día Perfeccionado</div>
+            <div class="section-subtitle">Selecciona un día para ver la hoja de ruta optimizada sin kilómetros de más, con horarios de apertura verificados, enlaces a Google Maps, planes B y gastronomía local:</div>
             
             <div class="day-selector" id="daySelectorContainer">
                 <button class="day-btn active" onclick="selectDay(1)">Día 1 (11/09)</button>
@@ -624,7 +624,7 @@
             <div class="zone-grid">
                 <div class="zone-card">
                     <h4>🏙️ Zona 1: La Isleta y Las Palmas</h4>
-                    <p>Base del viaje. Pescado fresco en La Isleta, snorkel urbano en Las Canteras y atardeceres volcánicos en El Confital.</p>
+                    <p>Base del viaje. Pescado fresco en La Isleta, Poema del Mar, snorkel urbano en Las Canteras y atardeceres volcánicos en El Confital.</p>
                 </div>
                 <div class="zone-card">
                     <h4>🌊 Zona 2: Costa Norte y Agaete</h4>
@@ -632,11 +632,11 @@
                 </div>
                 <div class="zone-card">
                     <h4>⛰️ Zona 3: La Cumbre Volcánica</h4>
-                    <p>Roque Nublo, Pico de las Nieves, Tejeda y Artenara. Paisaje de montañas, almendros y poblados cueva.</p>
+                    <p>Roque Nublo, Pico de las Nieves, Mercado del Pino en Teror, Tejeda y Artenara. Paisaje de montañas y cumbres.</p>
                 </div>
                 <div class="zone-card">
                     <h4>🌵 Zona 4: Este y Sur Auténtico</h4>
-                    <p>Tobas de colores en Las Vacas, casas cueva en Guayadeque, cala marinera de Tufia y Dunas de Maspalomas.</p>
+                    <p>Tobas de colores en Las Vacas, casas cueva en Guayadeque (Cueva Vega), cala marinera de Tufia y Dunas de Maspalomas.</p>
                 </div>
             </div>
         </section>
@@ -646,7 +646,7 @@
             
             <div class="search-box">
                 <span class="search-icon">🔍</span>
-                <input type="text" id="searchInput" class="search-input" placeholder="Buscar lugar, municipio, plato, playa..." oninput="filterPlaces()">
+                <input type="text" id="searchInput" class="search-input" placeholder="Buscar lugar, municipio, plato, playa, acuario..." oninput="filterPlaces()">
             </div>
 
             <div class="filters-wrapper">
@@ -657,7 +657,7 @@
                 <button class="filter-chip" onclick="setFilter('Snorkel', this)">🏓 Snorkel</button>
                 <button class="filter-chip" onclick="setFilter('Miradores', this)">🌅 Miradores</button>
                 <button class="filter-chip" onclick="setFilter('Senderismo', this)">🥾 Senderismo</button>
-                <button class="filter-chip" onclick="setFilter('Pueblos', this)">🏘️ Pueblos</button>
+                <button class="filter-chip" onclick="setFilter('Pueblos', this)">🏘️ Pueblos / Cultura</button>
             </div>
 
             <div class="places-grid" id="placesGrid">
@@ -751,11 +751,25 @@
                 stars: 5,
                 essential: true,
                 time: "2h",
-                bestHour: "09:00",
+                bestHour: "10:15",
                 price: "Gratis",
-                parking: "Duro (Aparcamiento La Goleta se llena a las 10:00)",
+                parking: "Aparcamiento La Goleta (llegar antes de las 10:30)",
                 difficulty: "Media-Baja (3km ida/vuelta)",
                 tip: "Llevad abrigo/cortavientos; a 1.800m hace entre 8°C y 10°C menos que en la costa."
+            },
+            {
+                id: "poema-del-mar",
+                name: "Acuario Poema del Mar",
+                category: "Pueblos",
+                municipality: "Las Palmas (Muelle Sanapú)",
+                stars: 5,
+                essential: true,
+                time: "2.5h",
+                bestHour: "10:00 (Apertura)",
+                price: "27€ (Entrada Online)",
+                parking: "Aparcamiento del centro comercial El Muelle o Muelle Sanapú",
+                difficulty: "Nula",
+                tip: "Comprad la entrada online por adelantado para saltaros la cola de taquilla. Alberga la pantalla curva de exhibición marina más grande del mundo."
             },
             {
                 id: "el-cabron",
@@ -779,7 +793,7 @@
                 stars: 5,
                 essential: true,
                 time: "45 min",
-                bestHour: "08:30",
+                bestHour: "08:00 (Madrugón obligado)",
                 price: "Gratis",
                 parking: "Muy difícil (sólo 4-5 plazas en la GC-550 km 14)",
                 difficulty: "Fácil (10 min caminando)",
@@ -807,11 +821,11 @@
                 stars: 5,
                 essential: true,
                 time: "1.5h",
-                bestHour: "13:30 / 16:00 (Cerrada los Lunes)",
+                bestHour: "13:30 (Abierta los Martes)",
                 price: "Gratis",
                 parking: "Parking de la entrada del parque municipal",
                 difficulty: "Nula",
-                tip: "Templo neogótico esculpido en cantería azul. Importante: ¡Cerrado a visitas los lunes! Ir de martes a domingo."
+                tip: "Templo neogótico esculpido en cantería azul. Cierra los lunes a visitas turísticas, ¡por eso la visitamos en MARTES!"
             },
             {
                 id: "dunas-maspalomas",
@@ -891,7 +905,7 @@
                 stars: 5,
                 essential: true,
                 time: "1.5h",
-                bestHour: "13:30 (Cerrado LUNES y MARTES)",
+                bestHour: "13:00 (Abierto Miércoles)",
                 price: "€",
                 parking: "Aparcamiento del barranco de Guayadeque",
                 difficulty: "N/A",
@@ -910,6 +924,20 @@
                 parking: "Muy reducido en la entrada de la urbanización",
                 difficulty: "Fácil",
                 tip: "Pueblo marinero blanco encajonado. Venid temprano para poder aparcar cerca de la cala."
+            },
+            {
+                id: "tilos-moya",
+                name: "Los Tilos de Moya",
+                category: "Senderismo",
+                municipality: "Moya",
+                stars: 4,
+                essential: true,
+                time: "1h",
+                bestHour: "17:00",
+                price: "Gratis",
+                parking: "Parking junto al centro de interpretación",
+                difficulty: "Fácil (1,8 km)",
+                tip: "Sendero circular bajo el bosque de laurisilva. Ideal si hace mucho sol o aire en la costa."
             }
         ];
 
@@ -941,7 +969,7 @@
             { q: "5. ¿Dónde comprar bienmesabe auténtico?", a: "En la Dulcería Nublo en Tejeda. Elaborado artesanalmente solo con almendras, yema de huevo y limón." },
             { q: "6. ¿Dónde probar el mejor bocadillo de pata?", a: "En la Cafetería Del Real en Las Palmas. Pedidlo de pata asada recién cortada con queso tierno de cabra." },
             { q: "7. ¿Dónde comer tras el Roque Nublo?", a: "En Restaurante Cueva de la Tea (Tejeda) o en el pueblo de Artenara en el Mirador La Cilla." },
-            { q: "8. ¿Dónde desayunan los locales los domingos?", a: "Churrería Moya comiendo churros de lazo o en Teror con bocadillo de chorizo de Teror blando." },
+            { q: "8. ¿Dónde desayunan los locales los domingos?", a: "En el Mercado del Pino de Teror comiendo un bocadillo calentito de chorizo de Teror blando con queso tierno." },
             { q: "9. ¿La carretera más bonita de la isla?", a: "La GC-210 (Ruta de las Presas) entre Artenara y La Aldea de San Nicolás bordeando tres embalses." },
             { q: "10. ¿El mejor sitio para ver estrellas?", a: "Llanos de la Pez en la Cumbre Central. Al estar por encima del mar de nubes la Vía Láctea es nítida." },
             { q: "11. ¿Una piscina natural poco conocida?", a: "El Charco de la Furnia en la costa de Gáldar. Mucho más tranquila y salvaje que las del sur." },
@@ -979,15 +1007,15 @@
             {
                 day: 2,
                 date: "Sábado 12/09",
-                title: "Snorkel en Sardina, Piscinas de Gáldar y Valle de Agaete",
-                km: "75 km",
-                driving: "1h 15m",
-                walking: "1 hora",
+                title: "Snorkel en Sardina, Casco de Gáldar y Valle de Agaete",
+                km: "85 km",
+                driving: "1h 30m",
+                walking: "1.5 horas",
                 fatigue: "⭐⭐⭐",
-                photoSpot: "Casas de colores encajonadas y agua turquesa en la rampa de Sardina del Norte",
+                photoSpot: "Plaza de Santiago en Gáldar y acantilados de Guayedra en Agaete",
                 budget: "~55€ - 70€ / persona",
                 pack: "Bañador, escarpines (imprescindibles en El Agujero), tubo y gafas de snorkel, toalla de secado rápido, crema solar biodegradable.",
-                lunch: "Bar Terraza Angor (Puerto de las Nieves) - Morena frita, chocos y parrochas.",
+                lunch: "Bar Terraza Angor o Cofradía de Pescadores de Agaete - Morena frita y chocos.",
                 sunset: "Mirador de Guayedra observando los acantilados verticales del noroeste bañados en luz dorada.",
                 dinner: "Tasca La Picadita (Gáldar) o cena ligera en La Isleta (Bodeguita de la Pepa).",
                 nightPlan: "Cerveza artesanal canaria en la animada Plaza de Santiago en Gáldar.",
@@ -995,18 +1023,19 @@
                 planBSnorkel: "Sustituir snorkel por ruta cultural por el casco histórico de Gáldar y sus calles coloniales.",
                 timeline: [
                     { time: "08:00 - 10:30", title: "Snorkel en Sardina del Norte", desc: "Buceo matutino en la meca marina del noroeste (angelotes y rayas).", drive: "30 min por GC-2 desde La Isleta", parking: "Rampa del muelle viejo (Aparcar antes de las 09:30)", maps: "Playa de Sardina del Norte" },
-                    { time: "11:00 - 12:30", title: "Piscinas Naturales de El Agujero", desc: "Baño en mar abierto resguardado por roca volcánica en Gáldar.", drive: "15 min por GC-202", parking: "Explanada de la avenida marítima (Fácil)", maps: "Piscinas Naturales El Agujero Gáldar" },
-                    { time: "13:00 - 15:00", title: "Almuerzo Marinero en Agaete", desc: "Pescado fresco recién desembarcado en el Puerto de las Nieves.", drive: "15 min por GC-2", parking: "Aparcamiento amplio de tierra a la entrada de Agaete", maps: "Puerto de las Nieves Agaete" },
-                    { time: "15:30 - 17:30", title: "Valle de Agaete y Café", desc: "Visita a las únicas plantaciones de café cultivadas en Europa (Finca Los Bermejales).", drive: "10 min por GC-231", parking: "Aparcamiento privado de la finca", maps: "Finca Los Bermejales Valle de Agaete" },
-                    { time: "18:00 - 19:30", title: "Mirador de Guayedra", desc: "Puesta de sol frente a los acantilados salvajes de la costa oeste.", drive: "10 min por GC-200", parking: "Apartadero pequeño en el arcén", maps: "Mirador de Guayedra Agaete" }
+                    { time: "10:30 - 11:45", title: "Piscinas de El Agujero / Martorell", desc: "Baño en mar abierto resguardado por roca volcánica en Gáldar.", drive: "10 min por GC-202", parking: "Explanada de la avenida marítima (Fácil)", maps: "Piscinas Naturales El Agujero Gáldar" },
+                    { time: "11:45 - 12:45", title: "Plaza de Santiago y Casco de Gáldar", desc: "Paseo por la antigua capital prehispánica y café bajo los laureles.", drive: "5 min", parking: "Parking subterráneo de Gáldar", maps: "Plaza de Santiago Galdar" },
+                    { time: "13:00 - 15:00", title: "Almuerzo Marinero en Agaete", desc: "Pescado fresco recién desembarcado en el Puerto de las Nieves.", drive: "10 min por GC-2", parking: "Aparcamiento amplio de tierra a la entrada de Agaete", maps: "Puerto de las Nieves Agaete" },
+                    { time: "15:30 - 17:30", title: "Valle de Agaete y Café (Los Berrazales)", desc: "Visita a la Bodega Los Berrazales para probar el único café de Europa.", drive: "10 min por GC-231", parking: "Aparcamiento privado de la finca", maps: "Bodega Los Berrazales Valle de Agaete" },
+                    { time: "18:00 - 19:30", title: "Mirador del Barranco de Guayedra", desc: "Puesta de sol frente a los acantilados salvajes de la costa oeste.", drive: "10 min por GC-200", parking: "Apartadero pequeño en el arcén", maps: "Mirador de Guayedra Agaete" }
                 ]
             },
             {
                 day: 3,
                 date: "Domingo 13/09",
-                title: "El Corazón Volcánico y el Rey de la Cumbre",
+                title: "Mercado del Pino (Teror), Roque Nublo y el Rey de la Cumbre",
                 km: "110 km",
-                driving: "2h 20m (Montaña)",
+                driving: "2h 30m (Montaña)",
                 walking: "2.5 horas",
                 fatigue: "⭐⭐⭐⭐",
                 photoSpot: "Vista del Roque Bentayga y el Teide sobre el mar de nubes desde la cumbre del Roque Nublo",
@@ -1019,11 +1048,11 @@
                 planBWeather: "Si hay niebla densa en la cumbre, intercambiar con el día de Arucas y Firgas en cota baja.",
                 planBSnorkel: "N/A (Día 100% montaña y senderismo).",
                 timeline: [
-                    { time: "07:30 - 08:30", title: "Subida por Teror", desc: "Desayuno con bocadillo de chorizo de Teror en la Plaza del Pino.", drive: "30 min por GC-21", parking: "Aparcamiento subterráneo de Teror", maps: "Teror Gran Canaria" },
-                    { time: "09:15 - 11:45", title: "Senderismo al Roque Nublo", desc: "Ruta imprescindible de 3 km ida/vuelta desde La Goleta.", drive: "35 min por GC-15/GC-600", parking: "Aparcamiento La Goleta (CRÍTICO: llegar antes de las 09:30)", maps: "Aparcamiento La Goleta Roque Nublo" },
-                    { time: "12:15 - 14:30", title: "Pueblo de Tejeda & Almuerzo", desc: "Paseo por uno de los pueblos más bonitos de España y compra de dulces.", drive: "15 min por GC-60", parking: "Aparcamiento municipal de Tejeda", maps: "Tejeda Gran Canaria" },
-                    { time: "15:00 - 17:00", title: "Artenara y Mirador La Cilla", desc: "Vistas panorámicas tras atravesar el túnel excavado en la montaña.", drive: "15 min por GC-210", parking: "Entrada del pueblo de Artenara", maps: "Mirador de La Cilla Artenara" },
-                    { time: "17:30 - 19:30", title: "Atardecer en Pico de las Nieves", desc: "El punto más alto de Gran Canaria contemplando el mar de nubes.", drive: "25 min por GC-130", parking: "Aparcamiento del Mirador del Pico de las Nieves", maps: "Pico de las Nieves Gran Canaria" }
+                    { time: "07:45 - 09:30", title: "Madrugón: Teror & Mercado del Pino", desc: "Aparcar sin colas a primera hora. Desayuno estrella con bocadillo de chorizo de Teror blando y queso tierno en la Plaza del Pino.", drive: "30 min por GC-21", parking: "Parking subterráneo de Teror (Vacío a las 08:15)", maps: "Teror Gran Canaria" },
+                    { time: "10:15 - 12:30", title: "Senderismo al Roque Nublo", desc: "Ruta imprescindible de 3 km ida/vuelta desde La Goleta antes de la masificación de mediodía.", drive: "35 min por GC-15/GC-600", parking: "Aparcamiento La Goleta (Llegar máximo a las 10:15)", maps: "Aparcamiento La Goleta Roque Nublo" },
+                    { time: "12:45 - 14:30", title: "Pueblo de Tejeda & Almuerzo", desc: "Paseo por uno de los pueblos más bonitos de España y compra de dulce bienmesabe en Dulcería Nublo.", drive: "15 min por GC-60", parking: "Aparcamiento municipal de Tejeda", maps: "Tejeda Gran Canaria" },
+                    { time: "15:00 - 17:00", title: "Artenara y Mirador La Cilla", desc: "Vistas panorámicas espectaculares colgadas sobre el precipicio.", drive: "15 min por GC-210", parking: "Entrada del pueblo de Artenara", maps: "Mirador de La Cilla Artenara" },
+                    { time: "17:30 - 19:30", title: "Atardecer en Pico de las Nieves", desc: "El punto más alto de Gran Canaria contemplando el mar de nubes sobre el Teide.", drive: "25 min por GC-130", parking: "Aparcamiento del Mirador del Pico de las Nieves", maps: "Pico de las Nieves Gran Canaria" }
                 ]
             },
             {
@@ -1045,20 +1074,20 @@
                 planBSnorkel: "Si Las Salinas tienen fuerte marejada, sustituir por paseo relajado en Agaete casco.",
                 timeline: [
                     { time: "08:30 - 11:30", title: "Pinar de Tamadaba & Llanos de la Mimbre", desc: "Ruta en coche y paseo entre pinos canarios con vistas aéreas al océano.", drive: "45 min por GC-2 / GC-216", parking: "Área recreativa Tamadaba", maps: "Pinar de Tamadaba" },
-                    { time: "12:00 - 13:30", title: "Mirador del Balcón y La Aldea", desc: "Pasarela con vistas a los paredones verticales de la costa oeste.", drive: "25 min por túneles GC-2", parking: "Aparcamiento del Mirador del Balcón", maps: "Mirador del Balcon La Aldea" },
+                    { time: "12:00 - 13:30", title: "Mirador del Balcón y La Aldea", desc: "Pasarela con vistas a los paredones verticales de la costa oeste (acceso por nuevos túneles GC-2).", drive: "25 min por túneles GC-2", parking: "Aparcamiento del Mirador del Balcón", maps: "Mirador del Balcon La Aldea" },
                     { time: "14:00 - 16:00", title: "Almuerzo Marinero en Agaete", desc: "Pescado fresco del día frente al muelle del Puerto de las Nieves.", drive: "20 min", parking: "Parking de tierra del Puerto de las Nieves", maps: "Bar Terraza Angor Agaete" },
-                    { time: "16:30 - 19:30", title: "Piscinas Naturales de Las Salinas", desc: "Tarde de baño en los tres charcos volcánicos interconectados.", drive: "5 min", parking: "Aparcamiento habilitado de Las Salinas", maps: "Las Salinas de Agaete" }
+                    { time: "16:30 - 19:30", title: "Piscinas Naturales de Las Salinas", desc: "Tarde de baño en los tres charcos volcánicos interconectados por túneles submarinos.", drive: "5 min", parking: "Aparcamiento habilitado de Las Salinas", maps: "Las Salinas de Agaete" }
                 ]
             },
             {
                 day: 5,
                 date: "Martes 15/09",
-                title: "Cráteres, Jardín Botánico, Arucas Monumental y Laurisilva",
-                km: "65 km",
-                driving: "1h 20m",
+                title: "Cráteres, Botánica, Arucas Monumental (¡Iglesia Abierta!) y Laurisilva",
+                km: "70 km",
+                driving: "1h 25m",
                 walking: "2 horas",
                 fatigue: "⭐⭐",
-                photoSpot: "La espectacular Iglesia de San Juan Bautista de Arucas en la plaza de piedra",
+                photoSpot: "La espectacular Iglesia de San Juan Bautista de Arucas esculpida en cantería azul",
                 budget: "~45€ - 55€ / persona",
                 pack: "Ropa cómoda de paseo, zapatillas deportivas para el sendero de los Tilos, cámara fotográfica.",
                 lunch: "Bochinche El Chato (Sataute) o Tasca Jamón Jamón en Arucas.",
@@ -1070,7 +1099,7 @@
                 timeline: [
                     { time: "08:30 - 10:30", title: "Caldera de Bandama", desc: "Borde del gigantesco cráter volcánico de 200m de profundidad.", drive: "20 min por GC-800", parking: "Pico de Bandama (Fácil a primera hora)", maps: "Caldera de Bandama" },
                     { time: "11:00 - 13:00", title: "Jardín Botánico Viera y Clavijo", desc: "El jardín botánico más grande de España con flora macaronésica.", drive: "15 min por GC-110", parking: "Parking del acceso inferior (Tafira Baja)", maps: "Jardin Botanico Viera y Clavijo" },
-                    { time: "13:30 - 15:00", title: "Arucas Monumental (¡Iglesia Abierta HOY!)", desc: "Visita a la Iglesia neogótica de cantería azul (¡Abierta hoy martes!).", drive: "20 min por GC-3", parking: "Parking junto al Parque Municipal de Arucas", maps: "Iglesia de San Juan Bautista Arucas" },
+                    { time: "13:30 - 15:00", title: "Arucas Monumental (¡Iglesia Abierta HOY!)", desc: "Visita a la Iglesia neogótica de cantería azul (Abierta hoy martes; los lunes cierra a visitas).", drive: "20 min por GC-3", parking: "Parking junto al Parque Municipal de Arucas", maps: "Iglesia de San Juan Bautista Arucas" },
                     { time: "15:00 - 16:30", title: "Almuerzo en Bochinche / Arucas", desc: "Comida canaria auténtica en Bochinche El Chato o Tasca Jamón Jamón.", drive: "10 min", parking: "Aparcamiento del local", maps: "Bochinche El Chato" },
                     { time: "17:00 - 18:30", title: "Los Tilos de Moya & Firgas", desc: "Ruta circular fácil de 1,8 km por laurisilva y paseo de las fuentes en Firgas.", drive: "15 min por GC-75", parking: "Centro de Interpretación de Los Tilos", maps: "Los Tilos de Moya" }
                 ]
@@ -1078,9 +1107,9 @@
             {
                 day: 6,
                 date: "Miércoles 16/09",
-                title: "Las Vacas, Snorkel El Cabrón, Guayadeque (Cueva Vega ¡Abierto!) y Maspalomas",
-                km: "115 km",
-                driving: "1h 40m",
+                title: "Las Vacas (Madrugón), Snorkel El Cabrón, Guayadeque (Cueva Vega ¡Abierto!) y Dunas",
+                km: "120 km",
+                driving: "1h 45m",
                 walking: "2 horas",
                 fatigue: "⭐⭐⭐",
                 photoSpot: "Las sinuosas ondulaciones del mar de Dunas de Maspalomas teñidas de dorado",
@@ -1093,9 +1122,9 @@
                 planBWeather: "Si hay calima densa en el sur, visitar el Museo Arqueológico de Guayadeque y Agüimes casco.",
                 planBSnorkel: "Si en Arinaga hay fuerte viento del Este, cambiar snorkel por la resguardada Cala de Tufia.",
                 timeline: [
-                    { time: "08:00 - 09:30", title: "Barranco de Las Vacas", desc: "Fotografía en el cañón de tobas de colores (Antelope Canyon canario).", drive: "35 min por GC-1 / GC-550", parking: "Arcén km 14 GC-550 (CRÍTICO: sólo 5 plazas)", maps: "Tobas de Colores de Agüimes" },
-                    { time: "10:00 - 12:00", title: "Snorkel en Reserva Marina El Cabrón", desc: "Inmersión en uno de los 3 mejores fondos marinos de Canarias (Arinaga).", drive: "20 min por GC-1", parking: "Aparcamiento de tierra junto a Playa del Cabrón", maps: "Playa del Cabron Arinaga" },
-                    { time: "12:30 - 15:00", title: "Barranco de Guayadeque & Cueva Vega", desc: "Almuerzo auténtico dentro de la cueva natural en Restaurante Cueva Vega (¡Abierto hoy!).", drive: "20 min por GC-100", parking: "Aparcamiento de Cueva Vega", maps: "Restaurante Cueva Vega Guayadeque" },
+                    { time: "08:00 - 09:30", title: "Barranco de Las Vacas (Madrugón)", desc: "Fotografía en el cañón de tobas de colores. Indispensable llegar a las 08:30 para aparcar.", drive: "35 min por GC-1 / GC-550", parking: "Arcén km 14 GC-550 (CRÍTICO: sólo 5 plazas)", maps: "Tobas de Colores de Agüimes" },
+                    { time: "10:00 - 12:00", title: "Snorkel en Reserva Marina El Cabrón o Tufia", desc: "Inmersión en los mejores fondos marinos de la isla (Arinaga / Tufia).", drive: "20 min por GC-1", parking: "Aparcamiento de tierra junto a Playa del Cabrón / Tufia", maps: "Playa del Cabron Arinaga" },
+                    { time: "12:30 - 15:00", title: "Barranco de Guayadeque & Cueva Vega", desc: "Almuerzo auténtico dentro de la cueva natural en Restaurante Cueva Vega (¡Abierto hoy mié!).", drive: "20 min por GC-100", parking: "Aparcamiento de Cueva Vega", maps: "Restaurante Cueva Vega Guayadeque" },
                     { time: "16:30 - 18:30", title: "Dunas de Maspalomas", desc: "Recorrido a pie saliendo desde el Mirador del Hotel Riu Palace.", drive: "30 min por GC-1", parking: "Mirador Riu Palace Maspalomas", maps: "Dunas de Maspalomas" },
                     { time: "18:30 - 20:00", title: "Faro de Maspalomas & Atardecer", desc: "Paseo marítimo bordeando el charco y el faro histórico.", drive: "5 min o a pie", parking: "Parking subterráneo de Meloneras", maps: "Faro de Maspalomas" }
                 ]
@@ -1103,49 +1132,50 @@
             {
                 day: 7,
                 date: "Jueves 17/09",
-                title: "Vegueta Colonial, Snorkel Urbano y Cena Especial",
+                title: "Vegueta & Triana Colonial, Snorkel Urbano y Cena Homenaje",
                 km: "15 km",
-                driving: "20 min",
-                walking: "2 horas",
+                driving: "20 min (o 0 min en guagua/pie)",
+                walking: "3 horas",
                 fatigue: "⭐⭐",
                 photoSpot: "Los arcos de la Plaza de Santa Ana con la Catedral de Canarias al fondo",
                 budget: "~85€ - 110€ / persona (Cena homenaje incluida)",
                 pack: "Ropa elegante-casual para la cena, bañador y kit de snorkel para la tarde.",
-                lunch: "Triciclo (Vegueta) - Tapas creativas de autor.",
+                lunch: "Triciclo o Dorotea (Vegueta/Triana) - Tapas creativas de autor.",
                 sunset: "Copa de vino de la tierra en la terraza de la Plaza de Santa Ana.",
                 dinner: "Deliciosa Marta (Triana) - La cena estrella del viaje (Reserva previa obligatoria).",
                 nightPlan: "Cóctel en El Patio de Enmedio o paseo bajo la iluminación nocturna de Vegueta.",
                 planBWeather: "Visita a la Casa de Colón y Museo Canario en Vegueta (exposiciones bajo techo).",
                 planBSnorkel: "Si la marea no permite nadar a la Barra, paseo marítimo y relajación en la playa.",
                 timeline: [
-                    { time: "09:00 - 12:30", title: "Vegueta y Triana Histórico", desc: "Plaza de Santa Ana, calles coloniales y Mercado de Vegueta.", drive: "10 min por Av. Marítima", parking: "Parking San Bernardo o Mercado Vegueta", maps: "Plaza de Santa Ana Las Palmas" },
+                    { time: "09:00 - 12:30", title: "Vegueta y Triana Histórico", desc: "Plaza de Santa Ana, Casa de Colón, calles coloniales y Mercado de Vegueta.", drive: "10 min por Av. Marítima", parking: "Parking San Bernardo o Mercado Vegueta", maps: "Plaza de Santa Ana Las Palmas" },
                     { time: "13:00 - 15:00", title: "Almuerzo de Tapas Creativas", desc: "Gastronomía canaria reinventada en Triciclo o Dorotea.", drive: "0 min (A pie en Vegueta)", parking: "A pie", maps: "Restaurante Triciclo Las Palmas" },
-                    { time: "15:30 - 18:00", title: "Snorkel en La Barra de Las Canteras", desc: "Nadar hasta el arrecife natural desde Playa Chica durante la bajamar.", drive: "10 min de regreso a La Isleta", parking: "Parking público cerca de Playa Chica", maps: "Playa Chica Las Canteras" },
+                    { time: "15:30 - 18:00", title: "Snorkel en La Barra de Las Canteras", desc: "Nadar hasta el arrecife natural desde Playa Chica coincidiendo con la bajamar.", drive: "10 min de regreso a La Isleta", parking: "Parking público cerca de Playa Chica", maps: "Playa Chica Las Canteras" },
                     { time: "20:30 - 23:00", title: "Cena Homenaje de Despedida", desc: "Experiencia gastronómica estelar en Deliciosa Marta.", drive: "10 min", parking: "Parking San Bernardo", maps: "Restaurante Deliciosa Marta" }
                 ]
             },
             {
                 day: 8,
                 date: "Viernes 18/09",
-                title: "Mercado del Puerto, La Isleta y Regreso",
-                km: "25 km",
-                driving: "25 min",
-                walking: "1 hora",
+                title: "Acuario Poema del Mar, Mercado del Puerto y Regreso",
+                km: "28 km",
+                driving: "30 min",
+                walking: "1.5 horas",
                 fatigue: "⭐",
-                photoSpot: "Vista de la bahía de Las Canteras desde el mirador del barranco de La Isleta",
-                budget: "~35€ - 50€ / persona (+ compras de queso)",
-                pack: "Ropa cómoda para viajar en avión, espacio en el equipaje para queso de Flor de Guía.",
-                lunch: "Picoteo de tapas en los puestos tradicionales del Mercado del Puerto.",
+                photoSpot: "La colosal ventana marina de exhibición curva en el Acuario Poema del Mar",
+                budget: "~55€ - 70€ / persona (+ compras de queso)",
+                pack: "Entradas online descargadas del acuario, ropa cómoda de viaje, espacio en maleta para queso de Flor de Guía.",
+                lunch: "Picoteo de tapas y vinos de la tierra en el Mercado del Puerto.",
                 sunset: "A bordo del avión despegando sobre el Atlántico.",
                 dinner: "Cena ligera en la terminal del aeropuerto antes del embarque.",
-                nightPlan: "N/A (Vuelo de regreso a las 20:25).",
-                planBWeather: "Compras y paseo cubierto en el Centro Comercial Las Arenas.",
+                nightPlan: "N/A (Vuelo Vueling VY 3051 de regreso a las 20:30).",
+                planBWeather: "El día está 100% resguardado bajo techo (Acuario + Mercado del Puerto).",
                 planBSnorkel: "N/A (Día de regreso).",
                 timeline: [
-                    { time: "09:00 - 11:30", title: "Paseo Matutino por La Isleta", desc: "Últimas vistas al mar desde el entorno de El Confital y La Puntilla.", drive: "0 min (A pie)", parking: "A pie", maps: "La Isleta Las Palmas" },
-                    { time: "12:00 - 14:30", title: "Mercado del Puerto & Compras", desc: "Picoteo final y compra de queso de Flor de Guía y vinos de la tierra.", drive: "0 min (A pie)", parking: "A pie", maps: "Mercado del Puerto Las Palmas" },
-                    { time: "15:00 - 17:00", title: "Último Baño en Las Canteras", desc: "Despedida en las aguas tranquilas de La Puntilla.", drive: "0 min (A pie)", parking: "A pie", maps: "Playa de Las Canteras" },
-                    { time: "18:00 - 19:00", title: "Trayecto y Devolución del Coche", desc: "Regreso al aeropuerto por la GC-1 y entrega del vehículo a las 19:00.", drive: "20 min por GC-1", parking: "Devolución en Rent a Car Aeropuerto", maps: "Aeropuerto de Gran Canaria" }
+                    { time: "09:00 - 09:45", title: "Check-out y Desplazamiento", desc: "Cierre de maletas y trayecto corto al Muelle Sanapú (a 5 min de La Isleta).", drive: "5 min", parking: "Aparcamiento Muelle Sanapú / El Muelle", maps: "Acuario Poema del Mar" },
+                    { time: "10:00 - 12:30", title: "Acuario Poema del Mar (Apertura)", desc: "Visita estelar al acuario de referencia mundial con la pantalla curva de exhibición más grande del planeta.", drive: "0 min", parking: "En el parking del recinto", maps: "Acuario Poema del Mar" },
+                    { time: "12:45 - 14:30", title: "Mercado del Puerto & Compras de Queso", desc: "Picoteo de despedida y compra de Queso de Flor de Guía y vinos canarios.", drive: "3 min", parking: "Parking público de La Isleta / Mercado", maps: "Mercado del Puerto Las Palmas" },
+                    { time: "15:00 - 17:00", title: "Último Baño y Paseo en Las Canteras", desc: "Despedida junto al mar en la zona de La Puntilla.", drive: "0 min (A pie)", parking: "A pie", maps: "Playa de Las Canteras" },
+                    { time: "18:00 - 19:00", title: "Trayecto al Aeropuerto y Devolución", desc: "Llegada al aeropuerto por la GC-1 y entrega del coche en Europcar a las 19:00.", drive: "20 min por GC-1", parking: "Devolución en Rent a Car Aeropuerto", maps: "Aeropuerto de Gran Canaria" }
                 ]
             }
         ];
