@@ -37,6 +37,12 @@
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
         .glass-header { backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
         .custom-checkbox:checked + label { text-decoration: line-through; opacity: 0.6; }
+        .bottom-tab-btn.active { color: #0284c7; }
+        .dark .bottom-tab-btn.active { color: #38bdf8; }
+        .bottom-tab-btn.active span:first-child { transform: scale(1.15); }
+        .bottom-tab-btn span:first-child { transition: transform 0.15s ease; display: inline-block; }
+        #placeDetailOverlay, #modoViajeOverlay { animation: fadeIn 0.15s ease; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
         @media print {
             .no-print { display: none !important; }
             body { background: white !important; color: black !important; padding: 0 !important; }
@@ -46,24 +52,24 @@
 </head>
 <body class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-100 min-h-screen pb-24 transition-colors duration-200">
 
-    <header class="sticky top-0 z-50 glass-header bg-white/90 dark:bg-slate-900/90 border-b border-slate-200 dark:border-slate-800 no-print transition-colors duration-200">
-        <div class="max-w-4xl mx-auto px-4 py-3 flex items-center justify-between">
+    <header class="sticky top-0 z-40 glass-header bg-white/90 dark:bg-slate-900/90 border-b border-slate-200 dark:border-slate-800 no-print transition-colors duration-200">
+        <div class="max-w-4xl mx-auto px-4 py-2.5 flex items-center justify-between">
             <div class="flex items-center gap-2">
                 <span class="text-2xl">🏝️</span>
                 <div>
-                    <h1 class="font-extrabold text-base md:text-lg text-slate-900 dark:text-white leading-tight">Gran Canaria 2026</h1>
-                    <p class="text-xs text-ocean-600 dark:text-ocean-400 font-semibold">11 - 18 Sep • Copiloto de Viaje</p>
+                    <h1 class="font-extrabold text-sm md:text-lg text-slate-900 dark:text-white leading-tight">Gran Canaria 2026</h1>
+                    <p class="text-[11px] text-ocean-600 dark:text-ocean-400 font-semibold">11-18 Sep · Copiloto de Viaje</p>
                 </div>
             </div>
-            <div class="flex items-center gap-2">
+            <div class="flex items-center gap-1.5">
                 <button onclick="handleInstallClick()" id="installBtn" class="hidden p-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition" title="Instalar como aplicación">
                     📲
                 </button>
                 <button onclick="toggleDarkMode()" id="themeToggleBtn" class="p-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition" title="Cambiar tema">
                     🌙
                 </button>
-                <button onclick="window.print()" class="px-3 py-2 text-xs font-bold rounded-xl bg-ocean-50 dark:bg-slate-800 text-ocean-700 dark:text-ocean-300 hover:bg-ocean-100 transition flex items-center gap-1">
-                    🖨️ <span class="hidden sm:inline">PDF</span>
+                <button onclick="openMoreSheet()" id="moreHeaderBtn" class="p-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition" title="Más opciones">
+                    ⋯
                 </button>
             </div>
         </div>
@@ -77,33 +83,70 @@
                 <div id="tripProgressFill" class="h-full bg-gradient-to-r from-ocean-500 to-terracotta-500 rounded-full transition-all duration-500" style="width:0%"></div>
             </div>
         </div>
-        
-        <nav class="bg-slate-100/80 dark:bg-slate-800/80 border-t border-slate-200 dark:border-slate-700/60 overflow-x-auto no-scrollbar">
-            <div class="max-w-4xl mx-auto px-2 py-1.5 flex gap-1.5 text-xs font-bold whitespace-nowrap">
-                <button onclick="switchTab('hoy')" id="tab-hoy" class="tab-btn px-3 py-1.5 rounded-lg bg-ocean-500 text-white shadow-sm">⚡ Hoy</button>
-                <button onclick="switchTab('itinerario')" id="tab-itinerario" class="tab-btn px-3 py-1.5 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700">📅 Itinerario</button>
-                <button onclick="switchTab('reservas')" id="tab-reservas" class="tab-btn px-3 py-1.5 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700">📋 Reservas</button>
-                <button onclick="switchTab('maleta')" id="tab-maleta" class="tab-btn px-3 py-1.5 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700">🧳 Maleta</button>
-                <button onclick="switchTab('explorador')" id="tab-explorador" class="tab-btn px-3 py-1.5 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700">🔍 Explorador</button>
-                <button onclick="switchTab('comida')" id="tab-comida" class="tab-btn px-3 py-1.5 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700">🍽️ Comer</button>
-                <button onclick="switchTab('playas')" id="tab-playas" class="tab-btn px-3 py-1.5 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700">🏖️ Playas/Snorkel</button>
-                <button onclick="switchTab('consejos')" id="tab-consejos" class="tab-btn px-3 py-1.5 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700">💡 Consejos</button>
-                <button onclick="switchTab('info')" id="tab-info" class="tab-btn px-3 py-1.5 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700">ℹ️ Info Útil</button>
-            </div>
-        </nav>
     </header>
+
+    <!-- BARRA INFERIOR DE NAVEGACIÓN (mobile-first) -->
+    <nav class="fixed bottom-0 left-0 right-0 z-50 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-t border-slate-200 dark:border-slate-800 no-print" style="padding-bottom: env(safe-area-inset-bottom);">
+        <div class="max-w-4xl mx-auto grid grid-cols-5 text-center">
+            <button onclick="switchTab('hoy')" id="tab-hoy" class="bottom-tab-btn active flex flex-col items-center justify-center gap-0.5 py-2 text-ocean-600 dark:text-ocean-400">
+                <span class="text-xl">⚡</span><span class="text-[10px] font-bold">Hoy</span>
+            </button>
+            <button onclick="switchTab('itinerario')" id="tab-itinerario" class="bottom-tab-btn flex flex-col items-center justify-center gap-0.5 py-2 text-slate-500 dark:text-slate-400">
+                <span class="text-xl">📅</span><span class="text-[10px] font-bold">Itinerario</span>
+            </button>
+            <button onclick="switchTab('explorador')" id="tab-explorador" class="bottom-tab-btn flex flex-col items-center justify-center gap-0.5 py-2 text-slate-500 dark:text-slate-400">
+                <span class="text-xl">🔍</span><span class="text-[10px] font-bold">Lugares</span>
+            </button>
+            <button onclick="switchTab('maleta')" id="tab-maleta" class="bottom-tab-btn flex flex-col items-center justify-center gap-0.5 py-2 text-slate-500 dark:text-slate-400">
+                <span class="text-xl">🧳</span><span class="text-[10px] font-bold">Equipo</span>
+            </button>
+            <button onclick="openMoreSheet()" id="tab-more" class="bottom-tab-btn flex flex-col items-center justify-center gap-0.5 py-2 text-slate-500 dark:text-slate-400">
+                <span class="text-xl">⋯</span><span class="text-[10px] font-bold">Más</span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- HOJA "MÁS" (Reservas, Comer, Playas/Snorkel, Consejos, Info) -->
+    <div id="moreSheetOverlay" class="hidden fixed inset-0 z-[60] bg-black/50 no-print" onclick="closeMoreSheet(event)">
+        <div class="absolute bottom-0 left-0 right-0 bg-white dark:bg-slate-900 rounded-t-3xl p-4 pb-8 space-y-2 max-w-4xl mx-auto" style="padding-bottom: calc(env(safe-area-inset-bottom) + 1.5rem);" onclick="event.stopPropagation()">
+            <div class="w-10 h-1.5 bg-slate-300 dark:bg-slate-700 rounded-full mx-auto mb-2"></div>
+            <h3 class="font-extrabold text-slate-900 dark:text-white text-sm px-1 mb-1">Más utilidades</h3>
+            <button onclick="switchTab('reservas'); closeMoreSheet();" class="w-full flex items-center gap-3 p-3.5 bg-slate-50 dark:bg-slate-800 rounded-2xl text-left hover:bg-slate-100 dark:hover:bg-slate-700 transition">
+                <span class="text-xl">📋</span><span class="font-bold text-sm text-slate-800 dark:text-slate-100">Reservas & Documentación</span>
+            </button>
+            <button onclick="switchTab('comida'); closeMoreSheet();" class="w-full flex items-center gap-3 p-3.5 bg-slate-50 dark:bg-slate-800 rounded-2xl text-left hover:bg-slate-100 dark:hover:bg-slate-700 transition">
+                <span class="text-xl">🍽️</span><span class="font-bold text-sm text-slate-800 dark:text-slate-100">Guía Gastronómica completa</span>
+            </button>
+            <button onclick="switchTab('playas'); closeMoreSheet();" class="w-full flex items-center gap-3 p-3.5 bg-slate-50 dark:bg-slate-800 rounded-2xl text-left hover:bg-slate-100 dark:hover:bg-slate-700 transition">
+                <span class="text-xl">🏖️</span><span class="font-bold text-sm text-slate-800 dark:text-slate-100">Tabla Playas & Snorkel</span>
+            </button>
+            <button onclick="switchTab('consejos'); closeMoreSheet();" class="w-full flex items-center gap-3 p-3.5 bg-slate-50 dark:bg-slate-800 rounded-2xl text-left hover:bg-slate-100 dark:hover:bg-slate-700 transition">
+                <span class="text-xl">💡</span><span class="font-bold text-sm text-slate-800 dark:text-slate-100">Consejos de Experto Local</span>
+            </button>
+            <button onclick="switchTab('info'); closeMoreSheet();" class="w-full flex items-center gap-3 p-3.5 bg-slate-50 dark:bg-slate-800 rounded-2xl text-left hover:bg-slate-100 dark:hover:bg-slate-700 transition">
+                <span class="text-xl">ℹ️</span><span class="font-bold text-sm text-slate-800 dark:text-slate-100">Teléfonos, Tiempo, Info Útil</span>
+            </button>
+            <button onclick="window.print(); closeMoreSheet();" class="w-full flex items-center gap-3 p-3.5 bg-slate-50 dark:bg-slate-800 rounded-2xl text-left hover:bg-slate-100 dark:hover:bg-slate-700 transition">
+                <span class="text-xl">🖨️</span><span class="font-bold text-sm text-slate-800 dark:text-slate-100">Exportar / Imprimir PDF</span>
+            </button>
+        </div>
+    </div>
 
     <main class="max-w-4xl mx-auto px-4 pt-4">
 
         <!-- TAB 1: HOY / ASISTENTE DIARIO -->
         <section id="view-hoy" class="space-y-4">
             <div class="bg-gradient-to-r from-ocean-700 via-ocean-600 to-terracotta-500 rounded-2xl p-5 text-white shadow-lg relative overflow-hidden">
-                <div class="flex justify-between items-start">
+                <div class="flex justify-between items-start gap-2">
                     <div>
                         <span class="inline-block bg-white/20 backdrop-blur-md text-white text-xs font-extrabold px-2.5 py-1 rounded-full uppercase tracking-wider mb-2">Asistente Copiloto</span>
                         <h2 id="hoy-date-title" class="text-2xl font-black">Cargando día...</h2>
                         <p id="hoy-subtitle" class="text-sm text-ocean-100 font-medium mt-0.5">Selecciona el día actual para ver tu hoja de ruta completa.</p>
                     </div>
+                    <button onclick="startModoViaje()" class="shrink-0 flex flex-col items-center gap-1 bg-white text-ocean-700 font-extrabold text-xs px-3 py-2.5 rounded-2xl shadow-lg active:scale-95 transition">
+                        <span class="text-xl leading-none">▶️</span>
+                        Empezar<br>el día
+                    </button>
                 </div>
                 
                 <div class="mt-4 flex gap-2 overflow-x-auto no-scrollbar py-1">
@@ -199,7 +242,7 @@
 
                     <div class="p-3 bg-amber-50 dark:bg-amber-900/20 rounded-xl border border-amber-200 dark:border-amber-800 flex justify-between items-center">
                         <div>
-                            <span class="text-xs font-bold text-amber-700 dark:text-amber-400">☕ Finca Los Bermejales (Valle Agaete)</span>
+                            <span class="text-xs font-bold text-amber-700 dark:text-amber-400">☕ Finca La Laja / Los Berrazales (Valle Agaete)</span>
                             <h4 class="font-bold text-slate-900 dark:text-white">Visita y Cata de Café (Sáb 12 Sep 15:30)</h4>
                             <p class="text-xs text-slate-500">Reservar plaza por web/teléfono con 2-3 días de antelación.</p>
                         </div>
@@ -426,22 +469,74 @@
 
     </main>
 
+    <!-- FICHA DETALLE DE LUGAR -->
+    <div id="placeDetailOverlay" class="hidden fixed inset-0 z-[95] bg-black/60 no-print" onclick="closePlaceDetail(event)">
+        <div class="absolute bottom-0 left-0 right-0 top-10 sm:top-16 bg-white dark:bg-slate-900 rounded-t-3xl overflow-y-auto max-w-2xl mx-auto" onclick="event.stopPropagation()">
+            <div id="placeDetailContent" class="p-5 pb-10 space-y-4"></div>
+        </div>
+    </div>
+
+    <!-- MODO VIAJE: EMPEZAR EL DÍA -->
+    <div id="modoViajeOverlay" class="hidden fixed inset-0 z-[80] bg-white dark:bg-slate-900 no-print flex flex-col">
+        <div class="flex items-center justify-between px-4 py-3 border-b border-slate-200 dark:border-white/10 shrink-0">
+            <div>
+                <span class="text-[10px] font-bold text-ocean-600 dark:text-ocean-300 uppercase tracking-wide">Modo Viaje</span>
+                <h3 id="modoViajeDayTitle" class="text-slate-900 dark:text-white font-extrabold text-sm leading-tight">Día X</h3>
+            </div>
+            <button onclick="exitModoViaje()" class="text-slate-400 dark:text-white/70 hover:text-slate-700 dark:hover:text-white text-2xl leading-none px-2">✕</button>
+        </div>
+        <div id="modoViajeDots" class="flex gap-1.5 px-4 py-2 shrink-0"></div>
+        <div id="modoViajeStepContent" class="flex-1 overflow-y-auto px-4 pb-4"></div>
+        <div class="shrink-0 border-t border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900 px-3 pt-2" style="padding-bottom: calc(env(safe-area-inset-bottom) + 0.5rem);">
+            <div class="grid grid-cols-4 gap-1.5 mb-2">
+                <button onclick="toggleMvPanel('mochila')" class="mv-quick-btn flex flex-col items-center gap-0.5 py-2 rounded-xl bg-slate-100 dark:bg-white/10 text-slate-700 dark:text-white text-[10px] font-bold">🎒 Mochila</button>
+                <button onclick="toggleMvPanel('ropa')" class="mv-quick-btn flex flex-col items-center gap-0.5 py-2 rounded-xl bg-slate-100 dark:bg-white/10 text-slate-700 dark:text-white text-[10px] font-bold">👕 Ropa</button>
+                <button onclick="toggleMvPanel('comer')" class="mv-quick-btn flex flex-col items-center gap-0.5 py-2 rounded-xl bg-slate-100 dark:bg-white/10 text-slate-700 dark:text-white text-[10px] font-bold">🍽️ Comer</button>
+                <button onclick="toggleMvPanel('tarde')" class="mv-quick-btn flex flex-col items-center gap-0.5 py-2 rounded-xl bg-slate-100 dark:bg-white/10 text-slate-700 dark:text-white text-[10px] font-bold">⏰ Voy tarde</button>
+            </div>
+            <div id="mvPanelContent" class="hidden mb-2 p-3 bg-slate-100 dark:bg-white/10 rounded-xl text-slate-700 dark:text-white text-xs space-y-1"></div>
+            <div class="flex gap-2">
+                <button onclick="mvPrevStep()" id="mvPrevBtn" class="flex-1 py-3.5 rounded-2xl bg-slate-100 dark:bg-white/10 text-slate-700 dark:text-white font-bold text-sm active:scale-95 transition">◀ Anterior</button>
+                <button onclick="mvNextStep()" id="mvNextBtn" class="flex-[2] py-3.5 rounded-2xl bg-ocean-500 text-white font-extrabold text-sm active:scale-95 transition">Siguiente parada ▶</button>
+            </div>
+        </div>
+    </div>
+
     <script>
         const ALL_PLACES = [
-            { id: "roque-nublo", name: "Roque Nublo", category: "Senderismo", municipality: "Tejeda", stars: 5, essential: true, time: "2h", bestHour: "10:15", price: "Gratis", parking: "Aparcamiento La Goleta", difficulty: "Media-Baja", tip: "Llevad abrigo; a 1.800m hace 10°C menos que en la costa." },
-            { id: "poema-mar", name: "Acuario Poema del Mar", category: "Pueblos", municipality: "Las Palmas (Muelle Sanapú)", stars: 5, essential: true, time: "2.5h", bestHour: "10:00", price: "27€", parking: "Parking Muelle Sanapú / CC El Muelle", difficulty: "Nula", tip: "Comprar entrada online previa. Pantalla curva marina más grande del mundo." },
-            { id: "el-cabron", name: "Reserva Marina El Cabrón", category: "Snorkel", municipality: "Agüimes (Arinaga)", stars: 5, essential: true, time: "2.5h", bestHour: "10:00", price: "Gratis", parking: "Explanada de tierra Playa del Cabrón", difficulty: "Media", tip: "Top 3 de fondos marinos de Canarias. Usar escarpines obligatorios." },
-            { id: "las-vacas", name: "Barranco de Las Vacas", category: "Senderismo", municipality: "Agüimes", stars: 5, essential: true, time: "45 min", bestHour: "08:30", price: "Gratis", parking: "SÓLO 5 plazas en GC-550 km 14", difficulty: "Fácil", tip: "En Maps poned 'Tobas de Colores de Agüimes'." },
-            { id: "sardina", name: "Playa de Sardina del Norte", category: "Snorkel", municipality: "Gáldar", stars: 5, essential: true, time: "2.5h", bestHour: "08:30", price: "Gratis", parking: "Rampa del muelle viejo", difficulty: "Baja", tip: "Nadar a la izquierda del muelle viejo para ver angelotes y rayas." },
-            { id: "arucas-casco", name: "Iglesia San Juan Bautista (Arucas)", category: "Pueblos", municipality: "Arucas", stars: 5, essential: true, time: "1.5h", bestHour: "13:30 (Abierta hoy Mar)", price: "Gratis", parking: "Parque Municipal de Arucas", difficulty: "Nula", tip: "Catedral de cantería azul. Cerrada lunes a visitas turísticas." },
-            { id: "dunas-maspalomas", name: "Dunas de Maspalomas", category: "Playas", municipality: "San Bartolomé", stars: 5, essential: true, time: "1.5h", bestHour: "18:30 (Atardecer)", price: "Gratis", parking: "Entorno Hotel Riu Palace", difficulty: "Baja", tip: "Entrar a pie desde el Mirador Riu Palace al atardecer." },
-            { id: "pico-nieves", name: "Pico de las Nieves", category: "Miradores", municipality: "San Mateo / Tejeda", stars: 5, essential: true, time: "1h", bestHour: "18:30 (Atardecer)", price: "Gratis", parking: "Mirador del Pico", difficulty: "Nula", tip: "Punto más alto de la isla. Atardecer sobre el mar de nubes y el Teide." },
-            { id: "las-salinas", name: "Piscinas de Las Salinas", category: "Playas", municipality: "Agaete", stars: 5, essential: true, time: "2h", bestHour: "16:30 (Media marea)", price: "Gratis", parking: "Aparcamiento de tierra", difficulty: "Nula", tip: "Tres charcos unidos por túneles submarinos. Llevad gafas." },
-            { id: "amigo-camilo", name: "Restaurante Amigo Camilo", category: "Restaurantes", municipality: "Las Palmas (La Isleta)", stars: 5, essential: true, time: "1.5h", bestHour: "12:45 / 20:15", price: "€€", parking: "El Confital o La Isleta", difficulty: "N/A", tip: "No reservan. Pedir cherne a la espalda y lapas nada más sentaros." },
-            { id: "triciclo", name: "Restaurante Triciclo", category: "Restaurantes", municipality: "Las Palmas (Vegueta)", stars: 5, essential: true, time: "2h", bestHour: "Comida / Cena", price: "€€", parking: "San Bernardo", difficulty: "N/A", tip: "Reservar semanas antes. Ensaladilla de batata y langostinos estelar." },
-            { id: "cueva-vega", name: "Restaurante Cueva Vega", category: "Restaurantes", municipality: "Agüimes (Guayadeque)", stars: 5, essential: true, time: "1.5h", bestHour: "13:00 (Abierto hoy Mié)", price: "€", parking: "Barranco Guayadeque", difficulty: "N/A", tip: "¡Cerrado Lun y Mar! Comer dentro de cueva natural. Costillas con piña." },
-            { id: "tufia", name: "Playa de Tufia", category: "Playas", municipality: "Telde", stars: 5, essential: true, time: "2h", bestHour: "09:30", price: "Gratis", parking: "Muy reducido en entrada", difficulty: "Fácil", tip: "Pueblo marinero blanco encajonado. Venir temprano." },
-            { id: "tilos-moya", name: "Los Tilos de Moya", category: "Senderismo", municipality: "Moya", stars: 4, essential: true, time: "1h", bestHour: "17:00", price: "Gratis", parking: "Centro de interpretación", difficulty: "Fácil (1.8km)", tip: "Bosque de laurisilva fresco y sombreado." }
+            { id: "roque-nublo", name: "Roque Nublo", category: "Senderismo", municipality: "Tejeda", stars: 5, essential: true, time: "2h", bestHour: "10:15", price: "Gratis", parking: "Aparcamiento La Goleta", parkingQuery: "Aparcamiento La Goleta Roque Nublo", difficulty: "Media-Baja", worthDetour: "Sí, imprescindible del viaje.", tip: "Llevad abrigo; a 1.800m hace 10°C menos que en la costa.", desc: "Sendero corto y sencillo (≈3km ida y vuelta) hasta el monolito volcánico más icónico de la isla.", why: "Es uno de los mayores monolitos naturales del mundo: casi 80m desde su base, a 1.813m sobre el mar. Fue lugar sagrado de los aborígenes canarios.", curiosity: "La roca es de 'brecha Roque Nublo', formada por la consolidación de nubes ardientes volcánicas hace millones de años.", photoTip: "Desde el mirador de Degollada Blanca, a media mañana con luz lateral, se ve el roque completo con el Teide al fondo en días claros.", type: "nature", crowd: "Se llena a media mañana en temporada alta; ir a primera hora para aparcar sin agobios.", avoid: "No os salgáis del sendero señalizado ni os acerquéis al borde del roque sin agarre firme." },
+            { id: "poema-mar", name: "Acuario Poema del Mar", category: "Pueblos", municipality: "Las Palmas (Muelle Sanapú)", stars: 5, essential: true, time: "2.5h", bestHour: "10:00", price: "27€", parking: "Parking Muelle Sanapú / CC El Muelle", parkingQuery: "Parking CC El Muelle Las Palmas", difficulty: "Nula", worthDetour: "Sí, si os gusta la vida marina; se puede hacer camino al aeropuerto.", tip: "Comprar entrada online previa. Pantalla curva marina más grande del mundo.", desc: "Acuario moderno junto al Puerto de La Luz con más de 350 especies marinas en 35 ecosistemas distintos.", why: "Su tanque Deep Sea (8,5m de profundidad) tiene una de las mayores ventanas curvas de acuario del mundo: sensación real de estar bajo el mar.", curiosity: "El nombre rinde homenaje al cuadro 'Poema del Atlántico' del pintor grancanario Néstor Martín-Fernández de la Torre.", photoTip: "Ponte justo frente al cristal curvo del Deep Sea cuando pase un banco de rayas o tiburones para la foto más espectacular.", type: "attraction", reservation: "Entrada online recomendada para evitar colas, sobre todo en temporada alta.", crowd: "Más tranquilo a primera hora de la apertura." },
+            { id: "el-cabron", name: "Reserva Marina El Cabrón", category: "Snorkel", municipality: "Agüimes (Arinaga)", stars: 5, essential: true, time: "2.5h", bestHour: "10:00", price: "Gratis", parking: "Explanada de tierra Playa del Cabrón", parkingQuery: "Explanada Playa del Cabron Arinaga", difficulty: "Media", worthDetour: "Sí, de lo mejor de la isla para snorkel.", tip: "Top 3 de fondos marinos de Canarias. Usar escarpines obligatorios.", desc: "Reserva marina de aguas cristalinas con fondos volcánicos, ideal para snorkel y buceo.", why: "Considerada una de las mejores inmersiones de Canarias por su biodiversidad: meros, morenas, angelotes y tortugas conviven aquí.", curiosity: "Es zona de veda de pesca desde hace décadas, por eso los peces son grandes y apenas huyen de los bañistas.", photoTip: "Entra al agua a media mañana con el sol alto: mejor visibilidad y luz para fotografiar el fondo marino con cámara acuática.", type: "beach", beachType: "Reserva marina / cala volcánica", surface: "Roca", waves: "Variable, a veces con corriente — recomendado solo con experiencia", tide: "Indiferente, mejor con mar en calma", shoes: "Sí, escarpines obligatorios", calm: "Media — zona de buceo/snorkel activo, no de relax", snorkelQuality: "Excelente — top 3 de la isla: meros, morenas, angelotes y tortugas", showers: "No hay", shade: "Ninguna, llevad sombrilla o toldo propio" },
+            { id: "las-vacas", name: "Barranco de Las Vacas", category: "Senderismo", municipality: "Agüimes", stars: 5, essential: true, time: "45 min", bestHour: "08:30", price: "Gratis", parking: "SÓLO 5 plazas en GC-550 km 14", parkingQuery: "Tobas de Colores de Agüimes aparcamiento", difficulty: "Fácil", worthDetour: "Sí, está a 20 min de Vegueta y apenas lleva tiempo.", tip: "En Maps poned 'Tobas de Colores de Agüimes'.", desc: "Cañón corto y estrecho con paredes de toba volcánica de colores ocres, rosados y blancos.", why: "Un pequeño 'Antelope Canyon' canario a solo 20 min de Vegueta, con formaciones geológicas espectaculares en un paseo de menos de 1h.", curiosity: "Las franjas de color se deben a distintas capas de cenizas volcánicas depositadas en distintas erupciones a lo largo de miles de años.", photoTip: "Ve a primera hora: el sol entra en vertical al mediodía, pero temprano las paredes tienen sombras que resaltan las texturas.", type: "nature", crowd: "Solo 5 plazas de aparcamiento en el arcén: si no llegáis sobre las 08:30 puede que no quede sitio.", avoid: "No aparquéis fuera de las plazas señaladas ni bloqueéis el arcén de la carretera." },
+            { id: "sardina", name: "Playa de Sardina del Norte", category: "Snorkel", municipality: "Gáldar", stars: 5, essential: true, time: "2.5h", bestHour: "08:30", price: "Gratis", parking: "Rampa del muelle viejo", parkingQuery: "Rampa muelle viejo Sardina del Norte", difficulty: "Baja", worthDetour: "Sí, imprescindible para snorkel en familia.", tip: "Nadar a la izquierda del muelle viejo para ver angelotes y rayas.", desc: "Cala tranquila de pescadores con aguas muy claras y poco oleaje, perfecta para snorkel en familia.", why: "Menos masificada que las playas del sur, con fondo rocoso rico en vida marina justo al lado del pueblo.", curiosity: "El pueblo de Sardina del Norte sigue viviendo en parte de la pesca artesanal; verás las barcas junto a la playa.", photoTip: "El muelle viejo de piedra al atardecer, con las barcas de colores en primer plano, es la estampa más fotogénica del pueblo.", type: "beach", beachType: "Cala de pescadores", surface: "Arena y roca", waves: "Poco oleaje, protegida", tide: "Indiferente", shoes: "Recomendados junto al muelle viejo", calm: "Alta — ideal para familias", snorkelQuality: "Muy bueno para ir en familia: angelotes y rayas junto al muelle viejo", showers: "Ducha básica junto al muelle", shade: "Poca; algo en el paseo junto al pueblo" },
+            { id: "arucas-casco", name: "Iglesia San Juan Bautista (Arucas)", category: "Pueblos", municipality: "Arucas", stars: 5, essential: true, time: "1.5h", bestHour: "13:30 (Abierta hoy Mar)", price: "Gratis", parking: "Parque Municipal de Arucas", parkingQuery: "Parque Municipal de Arucas", difficulty: "Nula", worthDetour: "Sí, es de los pueblos más bonitos de la isla.", tip: "Catedral de cantería azul. Cerrada lunes a visitas turísticas.", desc: "Templo neogótico construido en piedra volcánica azulada, el edificio más monumental de Arucas.", why: "Su cantería labrada a mano y sus vidrieras son de un nivel artesanal excepcional para un pueblo de este tamaño.", curiosity: "Se la conoce como la 'Catedral de Arucas' aunque nunca ha sido catedral oficial: es una parroquia de gran tamaño.", photoTip: "Sube al Mirador de Arucas (Montaña de Arucas) para fotografiar la iglesia asomando entre los tejados del pueblo.", type: "village", walk: "La Plaza y fachada de la Iglesia de San Juan Bautista, y el casco antiguo de alrededor.", buy: "Ron Arehucas, destilado en el propio pueblo.", eat: "Tasca Jamón Jamón, cocina canaria de barrio." },
+            { id: "dunas-maspalomas", name: "Dunas de Maspalomas", category: "Playas", municipality: "San Bartolomé", stars: 5, essential: true, time: "1.5h", bestHour: "18:30 (Atardecer)", price: "Gratis", parking: "Entorno Hotel Riu Palace", parkingQuery: "Mirador Riu Palace Maspalomas", difficulty: "Baja", worthDetour: "Sí, imprescindible del viaje.", tip: "Entrar a pie desde el Mirador Riu Palace al atardecer.", desc: "Reserva Natural Especial de 404 hectáreas de dunas móviles junto al mar, única en la isla.", why: "Un auténtico paisaje desértico con dunas de hasta 10m que caminan con el viento, a un paso del Atlántico: sensación de otro planeta.", curiosity: "La arena procede tanto de restos de conchas marinas trituradas como de polvo sahariano arrastrado por el viento desde África.", photoTip: "Sube a la primera duna grande cerca del mirador al atardecer: las sombras largas dibujan las curvas de arena como en un desierto.", type: "beach", beachType: "Playa junto a reserva de dunas", surface: "Arena", waves: "Oleaje moderado-alto, típico del sur", tide: "Indiferente para pasear las dunas", shoes: "No necesarios", calm: "Media-alta, salvo por el viento de media tarde", snorkelQuality: "No aplica: es zona de dunas y playa abierta, sin fondo de interés", showers: "Sí, en el paseo marítimo cercano", shade: "Ninguna en las dunas; sí en el paseo" },
+            { id: "pico-nieves", name: "Pico de las Nieves", category: "Miradores", municipality: "San Mateo / Tejeda", stars: 5, essential: true, time: "1h", bestHour: "18:30 (Atardecer)", price: "Gratis", parking: "Mirador del Pico", parkingQuery: "Mirador Pico de las Nieves", difficulty: "Nula", worthDetour: "Sí, imprescindible del viaje.", tip: "Punto más alto de la isla. Atardecer sobre el mar de nubes y el Teide.", desc: "Mirador en el punto más elevado de Gran Canaria (~1.949m), con vistas de 360° sobre toda la isla.", why: "En días claros se ve el Teide (Tenerife) flotando sobre un 'mar de nubes' al atardecer: uno de los mejores atardeceres de Canarias.", curiosity: "En los inviernos más fríos es de los pocos puntos de la isla donde puede llegar a nevar.", photoTip: "Llega 30 min antes de la puesta de sol para coger sitio: el mar de nubes suele formarse por debajo, entre las 18:00 y 19:00 en septiembre.", type: "nature", orientation: "Vistas de 360°; el mar de nubes se aprecia mejor mirando al norte/noreste.", withClouds: "Sí — el 'mar de nubes' bajo el mirador es parte del espectáculo, siempre que el propio pico esté despejado.", crowd: "Se llena al atardecer en días despejados; llegar con margen para aparcar.", avoid: "No os acerquéis al borde sin cuidado; hace bastante más frío que en la costa." },
+            { id: "las-salinas", name: "Piscinas de Las Salinas", category: "Playas", municipality: "Agaete", stars: 5, essential: true, time: "2h", bestHour: "16:30 (Media marea)", price: "Gratis", parking: "Aparcamiento de tierra", parkingQuery: "Aparcamiento Las Salinas de Agaete", difficulty: "Nula", worthDetour: "Sí, muy recomendable para nadar seguro.", tip: "Tres charcos unidos por túneles submarinos. Llevad gafas.", desc: "Piscinas naturales volcánicas excavadas en la roca junto al mar, con distintos charcos conectados.", why: "Agua templada y protegida del oleaje directo, ideal para nadar y bucear con gafas por los túneles entre charcos sin el riesgo del mar abierto.", curiosity: "Se formaron por la erosión del mar sobre coladas de lava antiguas, creando piscinas naturales que se rellenan con cada marea.", photoTip: "A media marea, con el charco lleno pero sin olas rompiendo dentro, se ve el fondo con más claridad para fotos submarinas.", type: "beach", beachType: "Piscinas naturales volcánicas", surface: "Roca", waves: "Protegida del oleaje directo", tide: "Media marea, para que los charcos estén llenos pero tranquilos", shoes: "Recomendados", calm: "Alta", avoid: "No os metáis en el charco mayor si hay oleaje de fondo.", snorkelQuality: "Bueno con gafas, nadando por los túneles entre charcos", showers: "No hay", shade: "Escasa; alguna roca alta da algo de sombra" },
+            { id: "amigo-camilo", name: "Restaurante Amigo Camilo", category: "Restaurantes", municipality: "Las Palmas (La Isleta)", stars: 5, essential: true, time: "1.5h", bestHour: "12:45 / 20:15", price: "€€", parking: "El Confital o La Isleta", parkingQuery: "Parking El Confital Las Palmas", difficulty: "N/A", worthDetour: "Sí, del mejor pescado fresco de la isla.", tip: "No reservan. Pedir cherne a la espalda y lapas nada más sentaros.", desc: "Bar-restaurante marinero de barrio, sin pretensiones, con pescado del día recién desembarcado.", why: "Pescado de una frescura difícil de igualar en zonas turísticas, a precio de barrio y ambiente 100% local.", curiosity: "Muchos vecinos de La Isleta llevan yendo desde hace generaciones; no encontraréis carta en varios idiomas ni fotos de platos.", photoTip: "No hay gran 'postal' aquí — el plato de cherne recién hecho es la foto que querréis guardar.", type: "restaurant", mustOrder: "Cherne a la espalda y lapas, nada más sentaros.", reservation: "No reservan; llegar a las 12:45 o 20:15 para evitar cola." },
+            { id: "triciclo", name: "Restaurante Triciclo", category: "Restaurantes", municipality: "Las Palmas (Vegueta)", stars: 5, essential: true, time: "2h", bestHour: "Comida / Cena", price: "€€", parking: "San Bernardo", parkingQuery: "Parking San Bernardo Las Palmas", difficulty: "N/A", worthDetour: "Sí, muy recomendable si vais a Vegueta.", tip: "Reservar semanas antes. Ensaladilla de batata y langostinos estelar.", desc: "Cocina canaria de autor en pleno casco histórico de Vegueta, ambiente cuidado y de mesa larga.", why: "Reinterpreta platos tradicionales canarios con técnica actual sin perder el sabor de origen: de los mejores de Las Palmas.", curiosity: "Está en una de las calles empedradas de Vegueta, el barrio fundacional de la ciudad, declarado Conjunto Histórico-Artístico.", photoTip: "La fachada y calle empedrada de Vegueta al llegar son ya parte de la experiencia fotográfica.", type: "restaurant", mustOrder: "Ensaladilla de batata y langostinos.", reservation: "Sí, reservar con varias semanas de antelación." },
+            { id: "cueva-vega", name: "Restaurante Cueva Vega", category: "Restaurantes", municipality: "Agüimes (Guayadeque)", stars: 5, essential: true, time: "1.5h", bestHour: "13:00 (Abierto hoy Mié)", price: "€", parking: "Barranco Guayadeque", parkingQuery: "Restaurante Cueva Vega Guayadeque parking", difficulty: "N/A", worthDetour: "Sí, experiencia única imposible de repetir en otro sitio.", tip: "¡Cerrado Lun y Mar! Comer dentro de cueva natural. Costillas con piña.", desc: "Restaurante excavado literalmente en la roca del Barranco de Guayadeque.", why: "Comer dentro de una cueva natural, fresca todo el año, es una experiencia única que no vas a repetir en ningún otro sitio de la isla.", curiosity: "El barranco de Guayadeque conserva viviendas-cueva habitadas desde época aborigen y todavía usadas hoy en día.", photoTip: "El interior abovedado de roca natural, con las mesas dispuestas dentro, es la imagen más singular del barranco.", type: "restaurant", mustOrder: "Costillas con piña.", reservation: "Recomendable reservar. Abre de miércoles a domingo (cerrado lunes y martes)." },
+            { id: "tufia", name: "Playa de Tufia", category: "Playas", municipality: "Telde", stars: 5, essential: true, time: "2h", bestHour: "09:30", price: "Gratis", parking: "Muy reducido en entrada", parkingQuery: "Playa de Tufia Telde aparcamiento", difficulty: "Fácil", worthDetour: "Solo si tenéis tiempo extra; algo alejada de la ruta principal.", tip: "Muy reducido en entrada; venir temprano.", desc: "Pequeño pueblo marinero de casas blancas encajado entre roques volcánicos junto a una cala tranquila.", why: "Uno de los rincones más pintorescos y menos masificados de la costa este: parece un pueblo pesquero detenido en el tiempo.", curiosity: "El asentamiento se ubica junto a un yacimiento arqueológico aborigen, con restos de poblado prehispánico.", photoTip: "Las casitas blancas con el mar y los roques al fondo, desde la entrada del pueblo, son la postal clásica de Tufia.", type: "beach", beachType: "Cala marinera", surface: "Arena y roca", waves: "Poco oleaje", tide: "Indiferente", shoes: "Recomendados", calm: "Alta", snorkelQuality: "Discreto; mejor para baño tranquilo que para ver fauna", showers: "No hay", shade: "Poca, junto a las casas del pueblo" },
+            { id: "tilos-moya", name: "Los Tilos de Moya", category: "Senderismo", municipality: "Moya", stars: 4, essential: true, time: "1h", bestHour: "17:00", price: "Gratis", parking: "Centro de interpretación", parkingQuery: "Centro de Interpretacion Los Tilos de Moya", difficulty: "Fácil (1.8km)", worthDetour: "Sí, contraste verde muy fácil de encajar en ruta.", tip: "Bosque de laurisilva fresco y sombreado.", desc: "Uno de los últimos reductos de bosque de laurisilva (bosque de niebla) que quedan en Gran Canaria.", why: "Un ecosistema relicto de millones de años, fresco y verde, muy distinto al paisaje volcánico del resto de la isla.", curiosity: "La laurisilva es un bosque subtropical húmedo que cubría gran parte de la cuenca mediterránea hace millones de años y hoy solo sobrevive en Canarias y Madeira.", photoTip: "La luz filtrada entre las copas a media tarde crea una neblina verde muy fotogénica en el sendero principal.", type: "nature", crowd: "Tranquilo casi a cualquier hora; no es una ruta masificada.", avoid: "No os salgáis de la senda marcada para no dañar el sotobosque de laurisilva." },
+            { id: "confital", name: "Playa y Malpaís de El Confital", category: "Playas", municipality: "Las Palmas (La Isleta)", stars: 4, essential: true, time: "1.5h", bestHour: "18:30 (Atardecer)", price: "Gratis", parking: "Aparcamiento de tierra de El Confital", parkingQuery: "Aparcamiento El Confital Las Palmas", difficulty: "Fácil", worthDetour: "Sí, es el mejor atardecer accesible desde La Isleta.", tip: "La pasarela de tierra protege el malpaís volcánico; no os salgáis de ella.", desc: "Extenso arenal virgen al final de Las Canteras, rodeado de un campo de lava (malpaís) protegido.", why: "Es el tramo salvaje y sin urbanizar de la bahía, con uno de los mejores atardeceres de Las Palmas y ambiente surfero.", curiosity: "Es una de las mejores olas de surf de Europa; verás siempre surfistas al atardecer aunque el resto de la playa esté tranquila.", photoTip: "Camina hasta la mitad de la pasarela de tierra a la puesta de sol: el contraste de la lava negra con el cielo naranja es espectacular.", type: "beach", beachType: "Arenal y malpaís junto a zona de surf", surface: "Arena", waves: "Presente — zona de surf en un extremo", tide: "Indiferente", shoes: "No necesarios en la arena; sí en el malpaís", calm: "Media, más animada al atardecer por el surf", avoid: "No os salgáis de la pasarela de tierra; el malpaís volcánico es zona protegida.", snorkelQuality: "No es su fuerte, es zona de surf; mejor snorkel en el resto de Las Canteras", showers: "No hay en el propio Confital", shade: "Ninguna" },
+            { id: "agujero", name: "Piscinas Naturales de El Agujero", category: "Playas", municipality: "Gáldar", stars: 4, essential: true, time: "1.5h", bestHour: "11:00 (Media marea)", price: "Gratis", parking: "Avenida marítima de El Agujero", parkingQuery: "Piscinas Naturales El Agujero Galdar", difficulty: "Baja", worthDetour: "Sí, muy cerca de Sardina, se combina perfecto.", tip: "Los charcos grandes están abiertos al océano: evitar con mar de fondo.", desc: "Grandes charcos volcánicos naturales abiertos al Atlántico, en pleno pueblo de Gáldar.", why: "Piscinas amplias y profundas talladas por el mar en la roca, perfectas para un baño tranquilo tras el snorkel de Sardina.", curiosity: "El nombre viene de un antiguo orificio natural en la roca por el que entraba y salía el agua con fuerza en marea alta.", photoTip: "Desde las rocas altas del lateral se ve todo el conjunto de charcos con el pueblo de fondo.", type: "beach", beachType: "Piscinas naturales volcánicas", surface: "Roca", waves: "Charcos grandes abiertos al mar — evitar con mar de fondo", tide: "Media marea", shoes: "Recomendados", calm: "Alta con mar tranquilo", snorkelQuality: "Aceptable con el mar en calma; el de Sardina cerca es mejor", showers: "No hay", shade: "Poca" },
+            { id: "puerto-nieves", name: "Puerto de las Nieves", category: "Pueblos", municipality: "Agaete", stars: 4, essential: true, time: "1.5h", bestHour: "13:30 (Hora de comer)", price: "Gratis", parking: "Aparcamiento de tierra entrada Agaete", parkingQuery: "Puerto de las Nieves Agaete aparcamiento", difficulty: "Nula", worthDetour: "Sí, parada obligatoria para comer pescado.", tip: "El Dedo de Dios (roca icónica) se rompió en 2005; hoy queda un muñón, no busquéis el dedo entero.", desc: "Pequeño puerto pesquero con paseo marítimo, antigua ermita y restaurantes de pescado fresco.", why: "Es la mejor zona para comer pescado del día recién desembarcado, con vistas al Teide al otro lado del mar en días claros.", curiosity: "Durante siglos fue el puerto principal de la isla para el comercio con Tenerife, antes de que Las Palmas tomara el relevo.", photoTip: "El muelle de piedra con las barcas de pescadores y el Teide al fondo, a media tarde con luz suave.", type: "village", walk: "El muelle de piedra, la antigua ermita y el paseo marítimo.", buy: "Pescado y conservas en las tiendas del puerto.", eat: "Pescado fresco del día en cualquiera de los restaurantes del muelle." },
+            { id: "guayedra", name: "Mirador de Guayedra", category: "Miradores", municipality: "Agaete", stars: 4, essential: true, time: "40 min", bestHour: "18:30 (Atardecer)", price: "Gratis", parking: "Apartadero en el arcén de la GC-200", parkingQuery: "Mirador de Guayedra Agaete", difficulty: "Nula", worthDetour: "Sí, de los atardeceres más espectaculares de la isla.", tip: "Carretera estrecha y sin barandillas en varios tramos; conducir despacio.", desc: "Mirador sobre la pared de acantilados vírgenes del noroeste, con la playa de Guayedra al fondo.", why: "Vistas de acantilados sin urbanizar de más de 300m que caen directos al mar, muy poco frecuentadas por el turismo masivo.", curiosity: "La playa de Guayedra, a la que baja un sendero desde aquí, solo es accesible a pie o en 4x4.", photoTip: "Con el sol bajo, la pared de acantilados se tiñe de ocres y rojizos: llegar 20-30 min antes del ocaso.", type: "nature", orientation: "Orientado al oeste/noroeste, hacia el mar — ideal para el atardecer.", withClouds: "No demasiado; con niebla se pierde la vista de los acantilados.", crowd: "Poco frecuentado; tranquilo casi cualquier día.", avoid: "Carretera estrecha y sin barandillas en varios tramos: no paréis en curvas ciegas." },
+            { id: "finca-laja", name: "Finca La Laja / Los Berrazales", category: "Pueblos", municipality: "Agaete (Valle)", stars: 4, essential: true, time: "1h", bestHour: "15:30 (Con reserva previa)", price: "Desde 8€ (cata)", parking: "Aparcamiento propio de la finca", parkingQuery: "Finca La Laja Los Berrazales Valle de Agaete", difficulty: "Nula", worthDetour: "Sí, es la única plantación de café de Europa.", tip: "Reservar la visita/cata con 2-3 días de antelación por teléfono o web.", desc: "Plantación de café y frutas tropicales en el fértil Valle de Agaete, con visitas guiadas y cata.", why: "Es la única zona de Europa donde se cultiva café de forma comercial, gracias al microclima húmedo del valle.", curiosity: "El valle también produce mango, aguacate, guayaba y otras frutas tropicales gracias a los nacientes de agua de la zona.", photoTip: "Los bancales verdes de cultivo con las montañas del valle al fondo, mejor luz a media tarde.", type: "attraction", reservation: "Sí, reservar la visita/cata con 2-3 días de antelación por teléfono o web." },
+            { id: "teror", name: "Teror y Basílica del Pino", category: "Pueblos", municipality: "Teror", stars: 5, essential: true, time: "1h", bestHour: "08:15 (Pueblo vacío y desayuno)", price: "Gratis", parking: "Parking subterráneo de Teror", parkingQuery: "Parking subterraneo Teror", difficulty: "Nula", worthDetour: "Sí, imprescindible del viaje.", tip: "Ir a primera hora entre semana; los domingos hay mercadillo y se llena mucho.", desc: "Pueblo colonial de balcones de madera canaria y la Basílica de Nuestra Señora del Pino, patrona de la isla.", why: "El casco histórico mejor conservado de la isla, con arquitectura canaria tradicional casi intacta alrededor de la plaza.", curiosity: "Según la tradición, la Virgen del Pino se apareció aquí sobre un pino en 1481; el árbol original ya no existe.", photoTip: "La fachada de la Basílica desde la Plaza del Pino a primera hora, sin gente ni coches todavía.", type: "village", walk: "Plaza del Pino, la Basílica y las calles con balcones de madera canaria de alrededor.", buy: "Chorizo de Teror y quesos locales en los puestos de la plaza (más variedad los domingos de mercadillo).", eat: "Bocadillo de chorizo de Teror recién hecho, típico del desayuno dominical.", avoid: "Evitar el domingo a media mañana si buscáis tranquilidad: hay mercadillo y se llena mucho." },
+            { id: "tejeda", name: "Tejeda", category: "Pueblos", municipality: "Tejeda", stars: 5, essential: true, time: "1.5h", bestHour: "12:30", price: "Gratis", parking: "Aparcamiento municipal de Tejeda", parkingQuery: "Aparcamiento municipal Tejeda Gran Canaria", difficulty: "Nula", worthDetour: "Sí, imprescindible del viaje.", tip: "Comprad el bienmesabe en Dulcería Nublo; se agota pronto en temporada alta.", desc: "Uno de los pueblos más bonitos de España, encajado bajo el Roque Nublo y el Roque Bentayga.", why: "Casas blancas escalonadas sobre un balcón natural con vistas directas a los roques sagrados de la isla.", curiosity: "Su nombre viene de 'tejer', por la tradición local de cestería y trabajos artesanales con fibras vegetales.", photoTip: "Desde el mirador del Pico del Timón, a la salida del pueblo, se ve todo el caserío escalonado con el Roque Nublo detrás.", type: "village", walk: "El caserío escalonado y el mirador del Pico del Timón, a la salida del pueblo.", buy: "Bienmesabe en Dulcería Nublo (se agota pronto en temporada alta).", eat: "Bienmesabe y repostería de almendra, típica de la zona." },
+            { id: "mirador-cilla", name: "Mirador de La Cilla (Artenara)", category: "Miradores", municipality: "Artenara", stars: 4, essential: true, time: "45 min", bestHour: "16:00", price: "Gratis", parking: "Entrada del pueblo de Artenara", parkingQuery: "Mirador de la Cilla Artenara", difficulty: "Nula", worthDetour: "Sí, muy cerca de Tejeda camino de la cumbre.", tip: "Justo al lado hay un restaurante-cueva (Arte-Gaía) con las mismas vistas.", desc: "Balcón panorámico en Artenara, el pueblo más alto de la isla, con vistas al Roque Bentayga y Tejeda.", why: "Una de las panorámicas más amplias de la cumbre, tras cruzar un túnel excavado directamente en la montaña.", curiosity: "Artenara conserva viviendas-cueva habitadas hasta hoy; es el municipio con mayor densidad de casas-cueva de la isla.", photoTip: "El Roque Bentayga enmarcado por el valle, con luz de media tarde suavizando las sombras de la roca.", type: "nature", orientation: "Mirando al valle y al Roque Bentayga, luz lateral por la tarde.", withClouds: "Con niebla ligera el ambiente gana dramatismo, aunque se pierde algo de definición del roque.", crowd: "Tranquilo, poca afluencia turística." },
+            { id: "tamadaba", name: "Pinar de Tamadaba", category: "Senderismo", municipality: "Artenara / Agaete", stars: 4, essential: true, time: "1.5h", bestHour: "08:30", price: "Gratis", parking: "Área recreativa de Tamadaba", parkingQuery: "Area recreativa Pinar de Tamadaba", difficulty: "Fácil-Media", worthDetour: "Sí, si vais a hacer la ruta oeste de la isla.", tip: "Carretera de acceso estrecha y con curvas; conducir despacio y tocar el claxon en las ciegas.", desc: "Bosque de pino canario centenario en el corazón de un Parque Natural, con miradores directos al mar.", why: "Pinos milenarios de gran porte con vistas aéreas al Atlántico desde varios miradores accesibles a pie.", curiosity: "El pino canario es capaz de rebrotar tras un incendio gracias a yemas protegidas bajo su corteza gruesa.", photoTip: "El mirador de Los Berrazales dentro del pinar, con los troncos rojizos en primer plano y el mar al fondo.", type: "nature", crowd: "Poco masificado salvo fines de semana soleados.", avoid: "No adelantéis en las curvas ciegas de la carretera de acceso; tocad el claxon." },
+            { id: "mirador-balcon", name: "Mirador del Balcón", category: "Miradores", municipality: "La Aldea de San Nicolás", stars: 4, essential: true, time: "30 min", bestHour: "12:30", price: "Gratis", parking: "Aparcamiento del Mirador del Balcón", parkingQuery: "Mirador del Balcon La Aldea", difficulty: "Nula", worthDetour: "Sí, parada rápida y muy espectacular.", tip: "Justo antes/después hay varios túneles en la GC-2; encended las luces del coche.", desc: "Pasarela sobre los acantilados verticales del oeste de la isla, conocidos como la 'Cola de Dragón'.", why: "Una de las vistas de acantilado más impresionantes de Canarias, con caída vertical de cientos de metros al mar.", curiosity: "Esta carretera (GC-200) fue durante décadas la única vía de acceso a La Aldea, esculpida a pico en la roca.", photoTip: "Con el sol alto (mediodía) el mar cambia de turquesa a azul intenso justo bajo el acantilado.", type: "nature", orientation: "Mirando al oeste, sobre los acantilados verticales.", withClouds: "No, mejor con cielo despejado para apreciar el color del mar.", crowd: "Parada habitual de rutas turísticas; puede haber grupos a mediodía.", avoid: "No os asoméis fuera de la pasarela protegida." },
+            { id: "bandama", name: "Caldera de Bandama", category: "Miradores", municipality: "Santa Brígida / Las Palmas", stars: 4, essential: true, time: "1h (borde) / 2h (bajada)", bestHour: "08:30", price: "Gratis", parking: "Parking Pico de Bandama", parkingQuery: "Pico de Bandama parking", difficulty: "Fácil (borde) / Media (bajada)", worthDetour: "Sí, a 15 min de la capital y muy fácil.", tip: "Se puede solo asomarse al borde (10 min) o bajar al fondo del cráter (ruta de 1h).", desc: "Cráter volcánico de 1.000m de diámetro y 200m de profundidad, con un cono adyacente (Pico de Bandama).", why: "Uno de los volcanes mejor conservados de la isla, formado hace apenas 3.000-5.000 años, muy reciente en términos geológicos.", curiosity: "En el fondo del cráter hay una pequeña finca agrícola que sigue cultivándose desde hace generaciones.", photoTip: "Desde el borde del Pico de Bandama a primera hora, con la luz rasante marcando bien las paredes del cráter.", type: "nature", orientation: "El borde permite vistas de 360° sobre el cráter y hacia la costa.", withClouds: "No especialmente; se disfruta mejor con el cráter totalmente visible.", crowd: "Tranquilo a primera hora; se anima a media mañana con visitas guiadas.", avoid: "Si bajáis al fondo del cráter, no os salgáis del camino marcado (hay fincas privadas)." },
+            { id: "jardin-botanico", name: "Jardín Botánico Viera y Clavijo", category: "Pueblos", municipality: "Tafira (Las Palmas)", stars: 4, essential: true, time: "1.5h", bestHour: "11:00", price: "Gratis", parking: "Parking del acceso inferior", parkingQuery: "Jardin Botanico Viera y Clavijo parking", difficulty: "Baja", worthDetour: "Sí, muy fácil de combinar con Bandama y Arucas.", tip: "El jardín tiene mucha pendiente; llevad calzado cómodo.", desc: "El jardín botánico más grande de España, dedicado a la flora endémica de Macaronesia (Canarias, Madeira, Azores).", why: "Reúne en un mismo espacio la práctica totalidad de especies vegetales endémicas de las islas atlánticas.", curiosity: "Se construyó a partir de 1952 aprovechando un barranco natural, respetando su topografía original.", photoTip: "El estanque con dragos canarios reflejados, cerca de la entrada, es el rincón más fotogénico.", type: "attraction", reservation: "No hace falta reserva; entrada libre y gratuita.", crowd: "Tranquilo entre semana; algo más concurrido los fines de semana por la mañana." },
+            { id: "bochinche-chato", name: "Bochinche El Chato", category: "Restaurantes", municipality: "San Mateo / Tafira (Sataute)", stars: 4, essential: false, time: "1.5h", bestHour: "14:00", price: "€", parking: "Aparcamiento del local", parkingQuery: "Bochinche El Chato Sataute parking", difficulty: "N/A", worthDetour: "Sí, si vais camino de Bandama o Arucas.", tip: "Reservar con antelación en fin de semana; se llena de locales.", desc: "Bochinche tradicional canario con carne de fiesta, quesos y papas con mojo en ambiente rústico.", why: "Cocina de producto local sin artificios, con las recetas de siempre y precios de barrio.", curiosity: "'Bochinche' es la palabra canaria para un bar-restaurante informal y de toda la vida, sin grandes lujos.", photoTip: "La terraza exterior entre viñedos, si el día está despejado, es la imagen más típica del lugar.", type: "restaurant", mustOrder: "Carne de fiesta y papas con mojo.", reservation: "Recomendable en fin de semana; se llena de gente local." },
+            { id: "faro-maspalomas", name: "Faro de Maspalomas", category: "Miradores", municipality: "San Bartolomé de Tirajana", stars: 3, essential: false, time: "30 min", bestHour: "19:00 (Atardecer)", price: "Gratis", parking: "Parking subterráneo de Meloneras", parkingQuery: "Parking subterraneo Meloneras", difficulty: "Nula", worthDetour: "Solo si ya estáis en Maspalomas; no merece un viaje aparte.", tip: "Combina con el paseo de la Charca protegida, muy tranquilo al atardecer.", desc: "Faro histórico de 1890 junto al paseo marítimo de Meloneras, frente a la Charca de Maspalomas.", why: "Buen cierre de la tarde de dunas, con el paseo iluminado y restaurantes frente al mar.", curiosity: "Fue diseñado por el mismo ingeniero (Gustave Eiffel colaboró en faros similares de la época) siguiendo el estilo de faros de hierro del XIX.", photoTip: "El faro iluminado justo tras la puesta de sol, con el cielo todavía en tonos morados.", type: "nature", orientation: "Mirando al sur, sobre el paseo marítimo de Meloneras.", withClouds: "No aporta gran diferencia; es un paseo urbano más que un mirador natural.", crowd: "Animado al atardecer, con ambiente de paseo y restaurantes." },
+            { id: "vegueta", name: "Vegueta y Plaza de Santa Ana", category: "Pueblos", municipality: "Las Palmas de Gran Canaria", stars: 5, essential: true, time: "2h", bestHour: "10:00", price: "Gratis", parking: "Parking San Bernardo o Mercado de Vegueta", parkingQuery: "Parking San Bernardo Las Palmas", difficulty: "Nula", worthDetour: "Sí, imprescindible del viaje.", tip: "Ir en guagua o a pie; el aparcamiento en Vegueta es muy limitado.", desc: "Barrio fundacional de Las Palmas (1478), Conjunto Histórico-Artístico con la Catedral, Casa de Colón y calles coloniales.", why: "El casco colonial mejor conservado de Canarias, con la primera catedral construida en las islas.", curiosity: "Los famosos perros de bronce ('canes') de la Plaza de Santa Ana dan nombre, según una teoría, al propio archipiélago Canario.", photoTip: "La Plaza de Santa Ana con los perros de bronce y la fachada de la Catedral al fondo, a media mañana.", type: "village", walk: "Plaza de Santa Ana, la Catedral, Casa de Colón y las calles coloniales de alrededor; la Calle Mayor de Triana está a un paseo corto.", buy: "Artesanía canaria en la tienda de la Casa de Colón.", eat: "Tapas de autor en Triciclo o Dorotea, muy cerca." },
+            { id: "deliciosa-marta", name: "Restaurante Deliciosa Marta", category: "Restaurantes", municipality: "Las Palmas (Triana)", stars: 5, essential: true, time: "2h", bestHour: "20:30", price: "€€€€", parking: "Parking San Bernardo", parkingQuery: "Parking San Bernardo Las Palmas", difficulty: "N/A", worthDetour: "Sí, la cena especial del viaje: reservar con 1-2 meses de antelación.", tip: "Reserva obligatoria con mucha antelación; es de los restaurantes más solicitados de la capital.", desc: "Cocina de autor de referencia en Las Palmas, en un local íntimo del barrio de Triana.", why: "Técnica depurada y producto canario de primera para una cena especial de cierre de viaje.", curiosity: "Su gnocchi de trufa y el solomillo Rossini son de los platos más pedidos desde hace años.", photoTip: "El interior íntimo con velas es más bonito de vivir que de fotografiar; guardad el móvil y disfrutad la cena.", type: "restaurant", mustOrder: "Gnocchi de trufa y solomillo Rossini.", reservation: "Obligatoria, con 1-2 meses de antelación." },
+            { id: "mercado-puerto", name: "Mercado del Puerto", category: "Pueblos", municipality: "Las Palmas (La Isleta)", stars: 3, essential: false, time: "1h", bestHour: "12:00", price: "Gratis (entrada)", parking: "Parking público de La Isleta", parkingQuery: "Mercado del Puerto Las Palmas parking", difficulty: "Nula", worthDetour: "Solo si os pilla de paso al aeropuerto; ideal para compras de última hora.", tip: "Buen sitio para comprar queso de Flor de Guía y vino canario antes de volar.", desc: "Mercado tradicional de abastos en La Isleta, con puestos de pescado, quesos y vinos locales.", why: "Perfecto para las últimas compras gastronómicas del viaje sin ir a una tienda turística.", curiosity: "Sigue siendo el mercado de referencia del barrio marinero de La Isleta desde principios del siglo XX.", photoTip: "Los puestos de pescado fresco recién descargado, primera hora de la mañana.", type: "village", walk: "Los puestos de pescado, queso y vino del mercado de abastos.", buy: "Queso de Flor de Guía y vino canario para el regreso.", eat: "Picoteo de tapas de despedida en los puestos del propio mercado." },
+            { id: "canteras", name: "Playa de Las Canteras", category: "Playas", municipality: "Las Palmas de Gran Canaria", stars: 5, essential: true, time: "Libre", bestHour: "09:00 / 19:00", price: "Gratis", parking: "Calles de La Puntilla o parkings públicos", parkingQuery: "Parking La Puntilla Las Canteras", difficulty: "Nula", worthDetour: "Sí, es la playa base del viaje.", tip: "La Barra (arrecife natural) solo se descubre en bajamar; consultad la tabla de mareas.", desc: "Playa urbana de 3km en pleno centro de Las Palmas, con arrecife natural (La Barra) que la protege del oleaje.", why: "Considerada una de las mejores playas urbanas del mundo, con zonas de baño tranquilo y zona de surf en los extremos.", curiosity: "La Barra es un arrecife de arenisca fósil que actúa como rompeolas natural, creando una piscina protegida de 3km.", photoTip: "Desde la pasarela de La Cícer al amanecer, con los surfistas entrando al agua y la luz rasante.", type: "beach", beachType: "Playa urbana con arrecife natural (La Barra)", surface: "Arena", waves: "Tranquila dentro de La Barra; oleaje en los extremos (zona de surf)", tide: "Bajamar para descubrir La Barra", shoes: "No necesarios en la arena; recomendados para pisar La Barra", calm: "Alta en la zona protegida", snorkelQuality: "Bueno, sobre todo en La Barra durante la bajamar", showers: "Sí, varias en el paseo marítimo", shade: "Escasa en la arena; sí bajo las palmeras del paseo" },
+            { id: "aeropuerto-lpa", name: "Aeropuerto de Gran Canaria (LPA)", category: "Pueblos", municipality: "Telde", stars: 3, essential: false, time: "Según vuelo", bestHour: "-", price: "-", parking: "Terminal / Rent a Car", parkingQuery: "Rent a Car Aeropuerto de Gran Canaria", difficulty: "Nula", worthDetour: "Punto de llegada y salida del viaje.", tip: "Llegar con 2h de margen para el vuelo de vuelta; el depósito debe entregarse lleno.", desc: "Aeropuerto principal de la isla, en Telde, a unos 25-30 min de Las Palmas.", why: "Punto de entrada y salida de la ruta: aquí se recoge y se entrega el coche de alquiler.", curiosity: "Es el tercer aeropuerto con más tráfico de España, clave para la conexión entre islas y con la península.", photoTip: "No es un punto fotográfico; aprovechad para las últimas fotos del viaje mientras esperáis el vuelo.", type: "logistics" }
         ];
 
         const RESTAURANTS = [
@@ -537,11 +632,11 @@
                 ifLate: "Saltar la caminata completa por El Confital y ver el atardecer desde el mirador inicial de La Puntilla.",
                 photoTop: "Pista de tierra de El Confital al atardecer frente al horizonte (Usar gran angular a las 19:15).",
                 timeline: [
-                    { time: "10:45 - 11:30", title: "Aterrizaje y Coche Europcar", desc: "Aterrizaje Vueling VY 3042. Recogida del coche en terminal de Europcar.", drive: "25 min por GC-1 a La Isleta", parking: "Aparcamiento cercano a C. Gordillo 30", maps: "Aeropuerto de Gran Canaria" },
-                    { time: "12:30 - 13:45", title: "Check-in & Instalación", desc: "Alojamiento en Sun Akademie (C. Gordillo 30). Desempaquetado rápido.", drive: "0 min", parking: "A pie", maps: "Calle Gordillo 30 Las Palmas" },
-                    { time: "14:00 - 15:30", title: "Almuerzo de Bienvenida", desc: "Pescado fresco recién desembarcado a la espalda en Amigo Camilo.", drive: "0 min (A pie)", parking: "A pie", maps: "Restaurante Amigo Camilo Las Palmas" },
-                    { time: "16:00 - 18:00", title: "Paseo por Las Canteras", desc: "Caminata de reconocimiento desde La Puntilla hacia La Barra.", drive: "0 min", parking: "A pie", maps: "La Puntilla Las Canteras" },
-                    { time: "18:30 - 20:30", title: "Atardecer en El Confital", desc: "Paseo por la pasarela protegida de tierra entre malpaís volcánico.", drive: "5 min en coche / 15 min a pie", parking: "Aparcamiento de tierra de El Confital", maps: "Playa del Confital Las Palmas" }
+                    { time: "10:45 - 11:30", title: "Aterrizaje y Coche Europcar", desc: "Aterrizaje Vueling VY 3042. Recogida del coche en terminal de Europcar.", drive: "-", km: 0, parking: "Aparcamiento cercano a C. Gordillo 30", maps: "Aeropuerto de Gran Canaria", placeId: "aeropuerto-lpa" },
+                    { time: "12:30 - 13:45", title: "Check-in & Instalación", desc: "Alojamiento en Sun Akademie (C. Gordillo 30). Desempaquetado rápido.", drive: "25 min por GC-1 a La Isleta", km: 22, parking: "A pie", maps: "Calle Gordillo 30 Las Palmas", placeId: null },
+                    { time: "14:00 - 15:30", title: "Almuerzo de Bienvenida", desc: "Pescado fresco recién desembarcado a la espalda en Amigo Camilo.", drive: "0 min (A pie)", km: 0, parking: "A pie", maps: "Restaurante Amigo Camilo Las Palmas", placeId: "amigo-camilo" },
+                    { time: "16:00 - 18:00", title: "Paseo por Las Canteras", desc: "Caminata de reconocimiento desde La Puntilla hacia La Barra.", drive: "0 min (A pie)", km: 0, parking: "A pie", maps: "La Puntilla Las Canteras", placeId: "canteras" },
+                    { time: "18:30 - 20:30", title: "Atardecer en El Confital", desc: "Paseo por la pasarela protegida de tierra entre malpaís volcánico.", drive: "5 min en coche / 15 min a pie", km: 2, parking: "Aparcamiento de tierra de El Confital", maps: "Playa del Confital Las Palmas", placeId: "confital" }
                 ]
             },
             2: {
@@ -567,16 +662,16 @@
                 dinner: "Tasca La Picadita (Gáldar) o tapeo en La Bodeguita de la Pepa (La Isleta).",
                 nightPlan: "Cerveza artesanal en las terrazas bajo los laureles de la Plaza de Santiago en Gáldar.",
                 gasStation: "Repostar en gasolinera de la autovía GC-2 si hiciera falta.",
-                compras: "Comprar café de Agaete en Finca Los Bermejales.",
+                compras: "Comprar café de Agaete en Finca La Laja / Los Berrazales.",
                 timeFree: "Paseo por el Charco de San Lorenzo o piscinas de Roque Prieto.",
                 ifLate: "Eliminar el paseo por el casco histórico de Gáldar y centrarse en Agaete y Guayedra.",
                 photoTop: "Acantilados de Guayedra desde el mirador con luz dorada de 19:00 (Gran angular).",
                 timeline: [
-                    { time: "08:15 - 10:30", title: "Snorkel en Sardina del Norte", desc: "Inmersión matutina en el santuario marino. Nadar a la izquierda del muelle viejo.", drive: "30 min por GC-2", parking: "Rampa muelle viejo Sardina (Llegar < 09:15)", maps: "Playa de Sardina del Norte" },
-                    { time: "11:00 - 12:30", title: "Piscinas Naturales de El Agujero", desc: "Baño en los grandes charcos volcánicos abiertos al océano.", drive: "15 min por GC-202", parking: "Avenida marítima El Agujero", maps: "Piscinas Naturales El Agujero Gáldar" },
-                    { time: "13:00 - 15:00", title: "Almuerzo Marinero en Agaete", desc: "Chocos y pescado fresco en Bar Terraza Angor o Cofradía de Pescadores.", drive: "15 min por GC-2", parking: "Aparcamiento de tierra entrada Agaete", maps: "Puerto de las Nieves Agaete" },
-                    { time: "15:30 - 17:30", title: "Valle de Agaete y Finca Los Bermejales", desc: "Visita y cata de café en la única plantación de café de Europa.", drive: "10 min por GC-231", parking: "Finca Los Bermejales", maps: "Finca Los Bermejales Valle de Agaete" },
-                    { time: "18:00 - 19:30", title: "Atardecer en Mirador de Guayedra", desc: "Contemplar la puesta de sol sobre la pared de acantilados del noroeste.", drive: "10 min por GC-200", parking: "Apartadero arcén GC-200", maps: "Mirador de Guayedra Agaete" }
+                    { time: "08:15 - 10:30", title: "Snorkel en Sardina del Norte", desc: "Inmersión matutina en el santuario marino. Nadar a la izquierda del muelle viejo.", drive: "30 min por GC-2", km: 33, parking: "Rampa muelle viejo Sardina (Llegar < 09:15)", maps: "Playa de Sardina del Norte", placeId: "sardina" },
+                    { time: "11:00 - 12:30", title: "Piscinas Naturales de El Agujero", desc: "Baño en los grandes charcos volcánicos abiertos al océano.", drive: "15 min por GC-202", km: 8, parking: "Avenida marítima El Agujero", maps: "Piscinas Naturales El Agujero Gáldar", placeId: "agujero" },
+                    { time: "13:00 - 15:00", title: "Almuerzo Marinero en Agaete", desc: "Chocos y pescado fresco en Bar Terraza Angor o Cofradía de Pescadores.", drive: "15 min por GC-2", km: 12, parking: "Aparcamiento de tierra entrada Agaete", maps: "Puerto de las Nieves Agaete", placeId: "puerto-nieves" },
+                    { time: "15:30 - 17:30", title: "Valle de Agaete y Finca La Laja / Los Berrazales", desc: "Visita y cata de café en la única plantación de café de Europa.", drive: "10 min por GC-231", parking: "Finca La Laja / Los Berrazales", maps: "Finca La Laja Los Berrazales Valle de Agaete", placeId: "finca-laja", km: 4 },
+                    { time: "18:00 - 19:30", title: "Atardecer en Mirador de Guayedra", desc: "Contemplar la puesta de sol sobre la pared de acantilados del noroeste.", drive: "10 min por GC-200", km: 5, parking: "Apartadero arcén GC-200", maps: "Mirador de Guayedra Agaete", placeId: "guayedra" }
                 ]
             },
             3: {
@@ -607,11 +702,11 @@
                 ifLate: "Saltarse la visita a Artenara e ir directamente desde Tejeda al Pico de las Nieves.",
                 photoTop: "Roque Bentayga y Teide desde la cima del Roque Nublo (Usar gran angular a las 11:00).",
                 timeline: [
-                    { time: "07:45 - 08:30", title: "Subida por Teror & Desayuno", desc: "Llegada temprana a Teror vacia. Desayuno estrella de chorizo de Teror en la Plaza del Pino.", drive: "30 min por GC-21", parking: "Parking subterráneo de Teror (Vacío a las 08:15)", maps: "Teror Gran Canaria" },
-                    { time: "09:15 - 11:45", title: "Senderismo al Roque Nublo", desc: "Ruta de 3 km ida/vuelta desde La Goleta antes de la masificación de mediodía.", drive: "35 min por GC-15/GC-600", parking: "Aparcamiento La Goleta (CRÍTICO: llegar < 09:30)", maps: "Aparcamiento La Goleta Roque Nublo" },
-                    { time: "12:15 - 14:30", title: "Pueblo de Tejeda & Almuerzo", desc: "Paseo por uno de los pueblos más bonitos de España. Dulcería Nublo y almuerzo.", drive: "15 min por GC-60", parking: "Aparcamiento municipal de Tejeda", maps: "Tejeda Gran Canaria" },
-                    { time: "15:00 - 17:00", title: "Artenara y Mirador La Cilla", desc: "Vistas espectaculares tras cruzar el túnel excavado en la montaña.", drive: "15 min por GC-210", parking: "Entrada del pueblo de Artenara", maps: "Mirador de La Cilla Artenara" },
-                    { time: "17:30 - 19:30", title: "Atardecer en Pico de las Nieves", desc: "Punto más alto de Gran Canaria (1.949 m) contemplando el mar de nubes frente al Teide.", drive: "25 min por GC-130", parking: "Mirador del Pico de las Nieves", maps: "Pico de las Nieves Gran Canaria" }
+                    { time: "07:45 - 08:30", title: "Subida por Teror & Desayuno", desc: "Llegada temprana a Teror vacia. Desayuno estrella de chorizo de Teror en la Plaza del Pino.", drive: "30 min por GC-21", km: 22, parking: "Parking subterráneo de Teror (Vacío a las 08:15)", maps: "Teror Gran Canaria", placeId: "teror" },
+                    { time: "09:15 - 11:45", title: "Senderismo al Roque Nublo", desc: "Ruta de 3 km ida/vuelta desde La Goleta antes de la masificación de mediodía.", drive: "35 min por GC-15/GC-600", km: 28, parking: "Aparcamiento La Goleta (CRÍTICO: llegar < 09:30)", maps: "Aparcamiento La Goleta Roque Nublo", placeId: "roque-nublo" },
+                    { time: "12:15 - 14:30", title: "Pueblo de Tejeda & Almuerzo", desc: "Paseo por uno de los pueblos más bonitos de España. Dulcería Nublo y almuerzo.", drive: "15 min por GC-60", km: 8, parking: "Aparcamiento municipal de Tejeda", maps: "Tejeda Gran Canaria", placeId: "tejeda" },
+                    { time: "15:00 - 17:00", title: "Artenara y Mirador La Cilla", desc: "Vistas espectaculares tras cruzar el túnel excavado en la montaña.", drive: "15 min por GC-210", km: 12, parking: "Entrada del pueblo de Artenara", maps: "Mirador de La Cilla Artenara", placeId: "mirador-cilla" },
+                    { time: "17:30 - 19:30", title: "Atardecer en Pico de las Nieves", desc: "Punto más alto de Gran Canaria (1.949 m) contemplando el mar de nubes frente al Teide.", drive: "25 min por GC-130", km: 18, parking: "Mirador del Pico de las Nieves", maps: "Pico de las Nieves Gran Canaria", placeId: "pico-nieves" }
                 ]
             },
             4: {
@@ -642,10 +737,10 @@
                 ifLate: "Eliminar el tramo a La Aldea de San Nicolás y quedarse relajando en Tamadaba y Agaete.",
                 photoTop: "Acantilado 'Cola de Dragón' desde el Mirador del Balcón (12:30 con luz cenital).",
                 timeline: [
-                    { time: "08:30 - 11:30", title: "Pinar de Tamadaba & Llanos de la Mimbre", desc: "Paseo entre pinos canarios milenarios con vistas aéreas directas al océano.", drive: "45 min por GC-2 / GC-216", parking: "Área recreativa Tamadaba", maps: "Pinar de Tamadaba" },
-                    { time: "12:00 - 13:30", title: "Mirador del Balcón y La Aldea", desc: "Pasarela de cristal sobre los acantilados verticales (Acceso por túneles GC-2).", drive: "25 min por túneles GC-2", parking: "Aparcamiento Mirador del Balcón", maps: "Mirador del Balcon La Aldea" },
-                    { time: "14:00 - 16:00", title: "Almuerzo Marinero en Agaete", desc: "Pescado del día en el muelle de Puerto de las Nieves.", drive: "20 min", parking: "Aparcamiento de tierra Puerto de las Nieves", maps: "Bar Terraza Angor Agaete" },
-                    { time: "16:30 - 19:30", title: "Piscinas Naturales de Las Salinas", desc: "Baño en las 3 pozas volcánicas interconectadas por túneles submarinos.", drive: "5 min", parking: "Aparcamiento habilitado Las Salinas", maps: "Las Salinas de Agaete" }
+                    { time: "08:30 - 11:30", title: "Pinar de Tamadaba & Llanos de la Mimbre", desc: "Paseo entre pinos canarios milenarios con vistas aéreas directas al océano.", drive: "45 min por GC-2 / GC-216", km: 40, parking: "Área recreativa Tamadaba", maps: "Pinar de Tamadaba", placeId: "tamadaba" },
+                    { time: "12:00 - 13:30", title: "Mirador del Balcón y La Aldea", desc: "Pasarela de cristal sobre los acantilados verticales (Acceso por túneles GC-2).", drive: "25 min por túneles GC-2", km: 18, parking: "Aparcamiento Mirador del Balcón", maps: "Mirador del Balcon La Aldea", placeId: "mirador-balcon" },
+                    { time: "14:00 - 16:00", title: "Almuerzo Marinero en Agaete", desc: "Pescado del día en el muelle de Puerto de las Nieves.", drive: "20 min", km: 15, parking: "Aparcamiento de tierra Puerto de las Nieves", maps: "Bar Terraza Angor Agaete", placeId: "puerto-nieves" },
+                    { time: "16:30 - 19:30", title: "Piscinas Naturales de Las Salinas", desc: "Baño en las 3 pozas volcánicas interconectadas por túneles submarinos.", drive: "5 min", km: 2, parking: "Aparcamiento habilitado Las Salinas", maps: "Las Salinas de Agaete", placeId: "las-salinas" }
                 ]
             },
             5: {
@@ -676,11 +771,11 @@
                 ifLate: "Saltarse la subida al Pico de Bandama y centrarse en Jardín Botánico y Arucas.",
                 photoTop: "Fachada neogótica de cantería azul de la Iglesia de Arucas desde la plaza (14:00).",
                 timeline: [
-                    { time: "08:30 - 10:30", title: "Caldera de Bandama", desc: "Borde del gigantesco cráter volcánico de 200m de profundidad.", drive: "20 min por GC-800", parking: "Pico de Bandama (Fácil a primera hora)", maps: "Caldera de Bandama" },
-                    { time: "11:00 - 13:00", title: "Jardín Botánico Viera y Clavijo", desc: "El jardín botánico más grande de España con flora macaronésica.", drive: "15 min por GC-110", parking: "Parking del acceso inferior (Tafira)", maps: "Jardin Botanico Viera y Clavijo" },
-                    { time: "13:30 - 15:00", title: "Arucas Monumental (¡Iglesia Abierta HOY!)", desc: "Visita a la Iglesia neogótica de cantería azul (Cerrada lunes; abierta hoy martes).", drive: "20 min por GC-3", parking: "Parking Parque Municipal Arucas", maps: "Iglesia de San Juan Bautista Arucas" },
-                    { time: "15:00 - 16:30", title: "Almuerzo en Bochinche / Arucas", desc: "Comida canaria auténtica en Bochinche El Chato o Tasca Jamón Jamón.", drive: "10 min", parking: "Aparcamiento del local", maps: "Bochinche El Chato" },
-                    { time: "17:00 - 18:30", title: "Los Tilos de Moya & Firgas", desc: "Sendero circular fácil de 1,8 km por laurisilva y paseo de las fuentes en Firgas.", drive: "15 min por GC-75", parking: "Centro de Interpretación de Los Tilos", maps: "Los Tilos de Moya" }
+                    { time: "08:30 - 10:30", title: "Caldera de Bandama", desc: "Borde del gigantesco cráter volcánico de 200m de profundidad.", drive: "20 min por GC-800", km: 12, parking: "Pico de Bandama (Fácil a primera hora)", maps: "Caldera de Bandama", placeId: "bandama" },
+                    { time: "11:00 - 13:00", title: "Jardín Botánico Viera y Clavijo", desc: "El jardín botánico más grande de España con flora macaronésica.", drive: "15 min por GC-110", km: 6, parking: "Parking del acceso inferior (Tafira)", maps: "Jardin Botanico Viera y Clavijo", placeId: "jardin-botanico" },
+                    { time: "13:30 - 15:00", title: "Arucas Monumental (¡Iglesia Abierta HOY!)", desc: "Visita a la Iglesia neogótica de cantería azul (Cerrada lunes; abierta hoy martes).", drive: "20 min por GC-3", km: 14, parking: "Parking Parque Municipal Arucas", maps: "Iglesia de San Juan Bautista Arucas", placeId: "arucas-casco" },
+                    { time: "15:00 - 16:30", title: "Almuerzo en Bochinche / Arucas", desc: "Comida canaria auténtica en Bochinche El Chato o Tasca Jamón Jamón.", drive: "10 min", km: 6, parking: "Aparcamiento del local", maps: "Bochinche El Chato", placeId: "bochinche-chato" },
+                    { time: "17:00 - 18:30", title: "Los Tilos de Moya & Firgas", desc: "Sendero circular fácil de 1,8 km por laurisilva y paseo de las fuentes en Firgas.", drive: "15 min por GC-75", km: 10, parking: "Centro de Interpretación de Los Tilos", maps: "Los Tilos de Moya", placeId: "tilos-moya" }
                 ]
             },
             6: {
@@ -711,11 +806,11 @@
                 ifLate: "Saltarse el snorkel en El Cabrón e ir directo a comer a Guayadeque.",
                 photoTop: "Dunas de Maspalomas con luz dorada del atardecer desde el gran médano central (18:45).",
                 timeline: [
-                    { time: "08:00 - 09:30", title: "Barranco de Las Vacas (Madrugón)", desc: "Tobas de colores geológicas. Indispensable llegar 08:30 para aparcar en las 5 plazas del arcén.", drive: "35 min por GC-1 / GC-550", parking: "Arcén km 14 GC-550 (CRÍTICO: 5 plazas)", maps: "Tobas de Colores de Agüimes" },
-                    { time: "10:00 - 12:00", title: "Snorkel en Reserva Marina El Cabrón", desc: "Inmersión en los mejores fondos marinos de la isla (Arinaga).", drive: "20 min por GC-1", parking: "Aparcamiento de tierra Playa del Cabrón", maps: "Playa del Cabron Arinaga" },
-                    { time: "12:30 - 15:00", title: "Barranco de Guayadeque & Cueva Vega", desc: "Almuerzo auténtico en cueva natural en Restaurante Cueva Vega (Abierto hoy mié).", drive: "20 min por GC-100", parking: "Aparcamiento de Cueva Vega", maps: "Restaurante Cueva Vega Guayadeque" },
-                    { time: "16:30 - 18:30", title: "Dunas de Maspalomas", desc: "Recorrido a pie saliendo desde el Mirador del Hotel Riu Palace.", drive: "30 min por GC-1", parking: "Mirador Riu Palace Maspalomas", maps: "Dunas de Maspalomas" },
-                    { time: "18:30 - 20:00", title: "Faro de Maspalomas & Atardecer", desc: "Paseo marítimo bordeando la charca protegida y el faro histórico.", drive: "5 min o a pie", parking: "Parking subterráneo Meloneras", maps: "Faro de Maspalomas" }
+                    { time: "08:00 - 09:30", title: "Barranco de Las Vacas (Madrugón)", desc: "Tobas de colores geológicas. Indispensable llegar 08:30 para aparcar en las 5 plazas del arcén.", drive: "35 min por GC-1 / GC-550", km: 25, parking: "Arcén km 14 GC-550 (CRÍTICO: 5 plazas)", maps: "Tobas de Colores de Agüimes", placeId: "las-vacas" },
+                    { time: "10:00 - 12:00", title: "Snorkel en Reserva Marina El Cabrón", desc: "Inmersión en los mejores fondos marinos de la isla (Arinaga).", drive: "20 min por GC-1", km: 14, parking: "Aparcamiento de tierra Playa del Cabrón", maps: "Playa del Cabron Arinaga", placeId: "el-cabron" },
+                    { time: "12:30 - 15:00", title: "Barranco de Guayadeque & Cueva Vega", desc: "Almuerzo auténtico en cueva natural en Restaurante Cueva Vega (Abierto hoy mié).", drive: "20 min por GC-100", km: 16, parking: "Aparcamiento de Cueva Vega", maps: "Restaurante Cueva Vega Guayadeque", placeId: "cueva-vega" },
+                    { time: "16:30 - 18:30", title: "Dunas de Maspalomas", desc: "Recorrido a pie saliendo desde el Mirador del Hotel Riu Palace.", drive: "30 min por GC-1", km: 28, parking: "Mirador Riu Palace Maspalomas", maps: "Dunas de Maspalomas", placeId: "dunas-maspalomas" },
+                    { time: "18:30 - 20:00", title: "Faro de Maspalomas & Atardecer", desc: "Paseo marítimo bordeando la charca protegida y el faro histórico.", drive: "5 min o a pie", km: 3, parking: "Parking subterráneo Meloneras", maps: "Faro de Maspalomas", placeId: "faro-maspalomas" }
                 ]
             },
             7: {
@@ -746,10 +841,10 @@
                 ifLate: "Eliminar las compras en Triana y centrarse en Vegueta y la cena.",
                 photoTop: "Plaza de Santa Ana con los perros de bronce y la catedral gótica al fondo (11:30).",
                 timeline: [
-                    { time: "09:00 - 12:30", title: "Vegueta y Triana Histórico", desc: "Plaza Santa Ana, Casa de Colón, calles coloniales y Mercado de Vegueta.", drive: "15 min en guagua (líneas 1/12) desde La Isleta", parking: "Si vais en coche: Parking San Bernardo o Mercado Vegueta (limitado)", maps: "Plaza de Santa Ana Las Palmas" },
-                    { time: "13:00 - 15:00", title: "Almuerzo de Tapas Creativas", desc: "Gastronomía canaria reinventada en Triciclo o Dorotea.", drive: "0 min (A pie)", parking: "A pie", maps: "Restaurante Triciclo Las Palmas" },
-                    { time: "15:30 - 18:00", title: "Snorkel en La Barra de Las Canteras", desc: "Nadar al arrecife natural desde Playa Chica durante la bajamar.", drive: "15 min en guagua de vuelta a La Isleta", parking: "A pie desde el apartamento", maps: "Playa Chica Las Canteras" },
-                    { time: "20:30 - 23:00", title: "Cena Homenaje de Despedida", desc: "Experiencia gastronómica de autor en Deliciosa Marta.", drive: "15 min en guagua o taxi", parking: "Si vais en coche: Parking San Bernardo", maps: "Restaurante Deliciosa Marta" }
+                    { time: "09:00 - 12:30", title: "Vegueta y Triana Histórico", desc: "Plaza Santa Ana, Casa de Colón, calles coloniales y Mercado de Vegueta.", drive: "15 min en guagua (líneas 1/12) desde La Isleta", km: 5, parking: "Si vais en coche: Parking San Bernardo o Mercado Vegueta (limitado)", maps: "Plaza de Santa Ana Las Palmas", placeId: "vegueta" },
+                    { time: "13:00 - 15:00", title: "Almuerzo de Tapas Creativas", desc: "Gastronomía canaria reinventada en Triciclo o Dorotea.", drive: "0 min (A pie)", km: 0, parking: "A pie", maps: "Restaurante Triciclo Las Palmas", placeId: "triciclo" },
+                    { time: "15:30 - 18:00", title: "Snorkel en La Barra de Las Canteras", desc: "Nadar al arrecife natural desde Playa Chica durante la bajamar.", drive: "15 min en guagua de vuelta a La Isleta", km: 5, parking: "A pie desde el apartamento", maps: "Playa Chica Las Canteras", placeId: "canteras" },
+                    { time: "20:30 - 23:00", title: "Cena Homenaje de Despedida", desc: "Experiencia gastronómica de autor en Deliciosa Marta.", drive: "15 min en guagua o taxi", km: 3, parking: "Si vais en coche: Parking San Bernardo", maps: "Restaurante Deliciosa Marta", placeId: "deliciosa-marta" }
                 ]
             },
             8: {
@@ -780,11 +875,11 @@
                 ifLate: "Ir directamente del Mercado del Puerto al aeropuerto sin paseo extra.",
                 photoTop: "Pantalla curva gigante Deep Sea del Acuario Poema del Mar (11:00).",
                 timeline: [
-                    { time: "09:00 - 09:45", title: "Check-out y Desplazamiento", desc: "Cierre de equipaje y trayecto corto al Muelle Sanapú (a 5 min de La Isleta).", drive: "5 min", parking: "Aparcamiento Muelle Sanapú / CC El Muelle", maps: "Acuario Poema del Mar" },
-                    { time: "10:00 - 12:30", title: "Acuario Poema del Mar", desc: "Visita al acuario de referencia mundial con la ventana marina curva más grande del planeta.", drive: "0 min", parking: "Parking del recinto", maps: "Acuario Poema del Mar" },
-                    { time: "12:45 - 14:30", title: "Mercado del Puerto & Compras", desc: "Picoteo de despedida y compra de Queso de Flor de Guía y vinos de la tierra.", drive: "3 min", parking: "Parking público de La Isleta", maps: "Mercado del Puerto Las Palmas" },
-                    { time: "15:00 - 17:00", title: "Último Paseo en Las Canteras", desc: "Despedida en las aguas de La Puntilla.", drive: "0 min (A pie)", parking: "A pie", maps: "Playa de Las Canteras" },
-                    { time: "18:00 - 19:00", title: "Trayecto y Devolución Europcar", desc: "Regreso por la GC-1, llenar depósito y entrega en Europcar a las 19:00.", drive: "20 min por GC-1", parking: "Rent a Car Aeropuerto LPA", maps: "Aeropuerto de Gran Canaria" }
+                    { time: "09:00 - 09:45", title: "Check-out y Desplazamiento", desc: "Cierre de equipaje y trayecto corto al Muelle Sanapú (a 5 min de La Isleta).", drive: "5 min", km: 3, parking: "Aparcamiento Muelle Sanapú / CC El Muelle", maps: "Acuario Poema del Mar", placeId: null },
+                    { time: "10:00 - 12:30", title: "Acuario Poema del Mar", desc: "Visita al acuario de referencia mundial con la ventana marina curva más grande del planeta.", drive: "0 min", km: 0, parking: "Parking del recinto", maps: "Acuario Poema del Mar", placeId: "poema-mar" },
+                    { time: "12:45 - 14:30", title: "Mercado del Puerto & Compras", desc: "Picoteo de despedida y compra de Queso de Flor de Guía y vinos de la tierra.", drive: "3 min", km: 2, parking: "Parking público de La Isleta", maps: "Mercado del Puerto Las Palmas", placeId: "mercado-puerto" },
+                    { time: "15:00 - 17:00", title: "Último Paseo en Las Canteras", desc: "Despedida en las aguas de La Puntilla.", drive: "0 min (A pie)", km: 0, parking: "A pie", maps: "Playa de Las Canteras", placeId: "canteras" },
+                    { time: "18:00 - 19:00", title: "Trayecto y Devolución Europcar", desc: "Regreso por la GC-1, llenar depósito y entrega en Europcar a las 19:00.", drive: "20 min por GC-1", km: 20, parking: "Rent a Car Aeropuerto LPA", maps: "Aeropuerto de Gran Canaria", placeId: "aeropuerto-lpa" }
                 ]
             }
         };
@@ -833,6 +928,85 @@
                 btn.className = "filter-chip px-3 py-1.5 rounded-full text-xs font-bold border border-rose-300 bg-rose-100 text-rose-800 dark:bg-rose-900/40 dark:text-rose-300";
             }
             renderPlaces();
+        }
+
+        // --- Estado de cada parada: pendiente / en curso / visitado (se guarda solo) ---
+        const STOP_STATUSES = ['pending', 'progress', 'done'];
+        const STOP_STATUS_META = {
+            pending: { icon: '○', label: 'Pendiente', cls: 'bg-slate-100 dark:bg-slate-700 text-slate-500 dark:text-slate-300' },
+            progress: { icon: '🟡', label: 'En curso', cls: 'bg-amber-100 dark:bg-amber-900/40 text-amber-700 dark:text-amber-300' },
+            done: { icon: '✅', label: 'Visitado', cls: 'bg-emerald-100 dark:bg-emerald-900/40 text-emerald-700 dark:text-emerald-300' }
+        };
+        function getStopStatus(dayNum, stepIndex) {
+            const v = localStorage.getItem(`stop_st_${dayNum}_${stepIndex}`);
+            return STOP_STATUSES.includes(v) ? v : 'pending';
+        }
+        function cycleStopStatus(dayNum, stepIndex, event) {
+            if (event) event.stopPropagation();
+            const current = getStopStatus(dayNum, stepIndex);
+            const next = STOP_STATUSES[(STOP_STATUSES.indexOf(current) + 1) % STOP_STATUSES.length];
+            localStorage.setItem(`stop_st_${dayNum}_${stepIndex}`, next);
+            // Re-renderizar cualquier vista visible que dependa de este estado
+            if (typeof loadHoyDay === 'function' && currentDay === dayNum) loadHoyDay(dayNum);
+            const accTimeline = document.getElementById(`acc-timeline-${dayNum}`);
+            if (accTimeline) renderTimelineStops(dayNum, `acc-timeline-${dayNum}`);
+            if (document.getElementById('modoViajeOverlay') && !document.getElementById('modoViajeOverlay').classList.contains('hidden') && mvDay === dayNum) renderMvStep();
+        }
+        function stopStatusBtnHtml(dayNum, stepIndex) {
+            const st = getStopStatus(dayNum, stepIndex);
+            const meta = STOP_STATUS_META[st];
+            return `<button onclick="cycleStopStatus(${dayNum}, ${stepIndex}, event)" class="shrink-0 flex items-center gap-1 px-2 py-1 rounded-lg text-[10px] font-extrabold ${meta.cls}" title="Toca para cambiar el estado">${meta.icon} ${meta.label}</button>`;
+        }
+
+        // --- Duración de visita a partir del rango horario "HH:MM - HH:MM" ---
+        function computeDuration(timeRange) {
+            const parts = timeRange.split('-');
+            if (parts.length !== 2) return '';
+            const [h1, m1] = parts[0].trim().split(':').map(Number);
+            const [h2, m2] = parts[1].trim().split(':').map(Number);
+            const mins = (h2 * 60 + m2) - (h1 * 60 + m1);
+            if (mins <= 0) return '';
+            return mins >= 60 ? `${Math.floor(mins / 60)}h${mins % 60 ? ' ' + (mins % 60) + 'm' : ''}` : `${mins} min`;
+        }
+
+        // --- Renderizador unificado de paradas: usado en "Hoy" y en "Itinerario" ---
+        // Muestra cada parada con su estado, ficha del lugar (si existe) y conector
+        // hacia la siguiente parada (🚗 tiempo · km, luego ⏱ tiempo de visita de la siguiente).
+        function renderTimelineStops(dayNum, containerId) {
+            const container = document.getElementById(containerId);
+            if (!container) return;
+            const data = HOY_DAYS_DATA[dayNum];
+            if (!data || !data.timeline) return;
+
+            container.innerHTML = data.timeline.map((t, idx) => {
+                const place = t.placeId ? ALL_PLACES.find(p => p.id === t.placeId) : null;
+                const duration = computeDuration(t.time);
+                const mapsQuery = encodeURIComponent(t.maps || t.title + ' Gran Canaria');
+                const parkingQuery = encodeURIComponent((place && place.parkingQuery) || t.parking || (t.maps + ' aparcamiento'));
+                const connector = idx > 0 ? `
+                    <div class="flex items-center gap-2 pl-1 py-1.5 text-[11px] font-bold text-slate-400 dark:text-slate-500">
+                        <span class="text-base leading-none">↓</span>
+                        <span>🚗 ${t.drive}${(t.km !== undefined && t.km !== null && t.km !== 0) ? ' · ' + t.km + ' km' : ''}</span>
+                    </div>` : '';
+                return `
+                    ${connector}
+                    <div class="p-3.5 bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm space-y-2">
+                        <div class="flex items-start justify-between gap-2">
+                            <div class="min-w-0 flex-1 ${place ? 'cursor-pointer' : ''}" ${place ? `onclick="openPlaceDetail('${place.id}')"` : ''}>
+                                <span class="text-[11px] font-extrabold text-ocean-600 dark:text-ocean-400">${t.time}${duration ? ' · ⏱ ' + duration : ''}</span>
+                                <h4 class="font-bold text-slate-900 dark:text-white text-sm leading-tight mt-0.5">${t.title}${place ? ' <span class="text-ocean-500 dark:text-ocean-400 font-semibold">▸ ver ficha</span>' : ''}</h4>
+                            </div>
+                            ${stopStatusBtnHtml(dayNum, idx)}
+                        </div>
+                        <p class="text-xs text-slate-600 dark:text-slate-300">${t.desc}</p>
+                        <p class="text-[11px] text-slate-500 dark:text-slate-400">🅿️ ${t.parking}</p>
+                        <div class="flex gap-2 pt-1">
+                            <a href="https://www.google.com/maps/search/?api=1&query=${mapsQuery}" target="_blank" onclick="event.stopPropagation()" class="flex-1 text-center py-2 bg-indigo-600 text-white font-bold text-[11px] rounded-xl hover:bg-indigo-700 transition">🗺️ Cómo llegar</a>
+                            <a href="https://www.google.com/maps/search/?api=1&query=${parkingQuery}" target="_blank" onclick="event.stopPropagation()" class="flex-1 text-center py-2 bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-200 font-bold text-[11px] rounded-xl hover:bg-slate-200 dark:hover:bg-slate-600 transition">🅿️ Parking</a>
+                        </div>
+                    </div>
+                `;
+            }).join('');
         }
 
         // --- Día sugerido según la fecha real del dispositivo ---
@@ -984,7 +1158,8 @@
 
             // iOS Safari no soporta beforeinstallprompt: mostrar el botón igualmente con instrucciones
             const isIOS = /iphone|ipad|ipod/.test(navigator.userAgent.toLowerCase());
-            const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
+            let isStandalone = false;
+            try { isStandalone = (window.matchMedia && window.matchMedia('(display-mode: standalone)').matches) || window.navigator.standalone; } catch (e) {}
             if (isIOS && !isStandalone) {
                 document.getElementById('installBtn').classList.remove('hidden');
             }
@@ -999,6 +1174,146 @@
             }
         }
 
+        // --- MODO VIAJE: guía paso a paso del día ---
+        let mvDay = 1;
+        let mvStepIndex = 0;
+        let mvActivePanel = null;
+
+        function startModoViaje() {
+            mvDay = currentDay || getSuggestedDay();
+            const saved = parseInt(localStorage.getItem(`mv_step_day${mvDay}`) || '0', 10);
+            const data = HOY_DAYS_DATA[mvDay];
+            mvStepIndex = (data && saved < data.timeline.length) ? saved : 0;
+            mvActivePanel = null;
+            document.getElementById('modoViajeOverlay').classList.remove('hidden');
+            document.getElementById('modoViajeOverlay').classList.add('flex');
+            renderMvStep();
+        }
+
+        function exitModoViaje() {
+            document.getElementById('modoViajeOverlay').classList.add('hidden');
+            document.getElementById('modoViajeOverlay').classList.remove('flex');
+        }
+
+        function findPlaceByMapsQuery(mapsQuery) {
+            // Fallback por compatibilidad; las paradas ya llevan `placeId` directo (ver renderMvStep).
+            if (!mapsQuery) return null;
+            const q = mapsQuery.toLowerCase();
+            return ALL_PLACES.find(p => q.includes(p.name.toLowerCase()) || p.name.toLowerCase().includes(q.split(' ')[0]));
+        }
+
+        // Botón de estado para Modo Viaje (mismo ciclo de estados que el resto de la app,
+        // con estilos adaptados al fondo oscuro fijo de esta pantalla)
+        function mvStopStatusBtnHtml(dayNum, stepIndex) {
+            const st = getStopStatus(dayNum, stepIndex);
+            const meta = STOP_STATUS_META[st];
+            const mvCls = {
+                pending: 'bg-slate-100 dark:bg-white/10 text-slate-600 dark:text-slate-200',
+                progress: 'bg-amber-100 dark:bg-amber-500/20 text-amber-700 dark:text-amber-300',
+                done: 'bg-emerald-100 dark:bg-emerald-500/20 text-emerald-700 dark:text-emerald-300'
+            }[st];
+            return `<button onclick="cycleStopStatus(${dayNum}, ${stepIndex}, event)" class="shrink-0 flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-[11px] font-extrabold ${mvCls}" title="Toca para cambiar el estado">${meta.icon} ${meta.label}</button>`;
+        }
+
+        function renderMvStep() {
+            const data = HOY_DAYS_DATA[mvDay];
+            if (!data) return;
+            const steps = data.timeline;
+            const step = steps[mvStepIndex];
+
+            document.getElementById('modoViajeDayTitle').innerText = `Día ${mvDay} · ${data.title}`;
+
+            // Dots de progreso
+            document.getElementById('modoViajeDots').innerHTML = steps.map((s, i) =>
+                `<div class="flex-1 h-1.5 rounded-full ${i <= mvStepIndex ? 'bg-ocean-400' : 'bg-white/15'}"></div>`
+            ).join('');
+
+            const duration = computeDuration(step.time);
+
+            // Vinculación directa por placeId (ya no búsqueda difusa de texto)
+            const place = step.placeId ? ALL_PLACES.find(p => p.id === step.placeId) : findPlaceByMapsQuery(step.maps);
+            const why = place ? place.why : step.desc;
+            const nextStep = steps[mvStepIndex + 1];
+            const mapsQuery = encodeURIComponent(step.maps || step.title + ' Gran Canaria');
+            const parkingQuery = encodeURIComponent((place && place.parkingQuery) || step.parking || (step.maps + ' aparcamiento'));
+
+            document.getElementById('modoViajeStepContent').innerHTML = `
+                <div class="pt-2 flex items-start justify-between gap-2">
+                    <div class="min-w-0">
+                        <span class="inline-block bg-ocean-100 dark:bg-ocean-500/20 text-ocean-700 dark:text-ocean-300 text-xs font-extrabold px-2.5 py-1 rounded-full">🔴 Parada ${mvStepIndex + 1} de ${steps.length}</span>
+                        <h2 class="text-slate-900 dark:text-white text-2xl font-black mt-3 leading-tight ${place ? 'cursor-pointer' : ''}" ${place ? `onclick="openPlaceDetail('${place.id}')"` : ''}>${step.title}${place ? ' <span class="text-ocean-600 dark:text-ocean-300 text-sm font-semibold">▸ ver ficha</span>' : ''}</h2>
+                        <p class="text-slate-500 dark:text-slate-300 text-sm mt-1">${step.time}${duration ? ' · ⏱️ ' + duration : ''}</p>
+                    </div>
+                    <div class="shrink-0 mt-1">${mvStopStatusBtnHtml(mvDay, mvStepIndex)}</div>
+                </div>
+
+                <p class="text-slate-700 dark:text-slate-200 text-sm mt-4">${step.desc}</p>
+
+                <div class="mt-3 p-3.5 bg-ocean-50 dark:bg-white/10 rounded-2xl text-sm text-ocean-800 dark:text-ocean-100">
+                    <strong>🌟 Por qué merece la pena:</strong><br>${why}
+                </div>
+
+                <div class="grid grid-cols-1 gap-2 mt-3">
+                    <div class="p-3 bg-slate-100 dark:bg-white/10 rounded-2xl text-sm text-slate-700 dark:text-slate-200">🚗 <strong>Trayecto:</strong> ${step.drive}${(step.km !== undefined && step.km !== null && step.km !== 0) ? ' · ' + step.km + ' km' : ''}</div>
+                    <div class="p-3 bg-slate-100 dark:bg-white/10 rounded-2xl text-sm text-slate-700 dark:text-slate-200">🅿️ <strong>Aparcar:</strong> ${step.parking}</div>
+                </div>
+
+                ${nextStep ? `<div class="mt-3 p-3 border border-dashed border-slate-200 dark:border-white/20 rounded-2xl text-xs text-slate-500 dark:text-slate-400">➡️ Después: ${nextStep.time} · ${nextStep.title}</div>` : `<div class="mt-3 p-3 border border-dashed border-slate-200 dark:border-white/20 rounded-2xl text-xs text-slate-500 dark:text-slate-400">🌙 Última parada. Después: ${data.nightPlan}</div>`}
+
+                <div class="flex gap-2 mt-4">
+                    <a href="https://www.google.com/maps/search/?api=1&query=${mapsQuery}" target="_blank" class="flex-1 py-3.5 bg-indigo-600 text-white font-extrabold text-sm rounded-2xl text-center shadow-lg">🗺️ Cómo llegar</a>
+                    <a href="https://www.google.com/maps/search/?api=1&query=${parkingQuery}" target="_blank" class="flex-1 py-3.5 bg-slate-100 dark:bg-white/10 text-slate-700 dark:text-white font-extrabold text-sm rounded-2xl text-center shadow-lg">🅿️ Parking</a>
+                </div>
+            `;
+
+            document.getElementById('mvPrevBtn').disabled = mvStepIndex === 0;
+            document.getElementById('mvPrevBtn').classList.toggle('opacity-40', mvStepIndex === 0);
+            document.getElementById('mvNextBtn').innerText = (mvStepIndex === steps.length - 1) ? '✅ Terminar día' : 'Siguiente parada ▶';
+
+            localStorage.setItem(`mv_step_day${mvDay}`, String(mvStepIndex));
+            mvActivePanel = null;
+            document.getElementById('mvPanelContent').classList.add('hidden');
+        }
+
+        function mvNextStep() {
+            const steps = HOY_DAYS_DATA[mvDay].timeline;
+            if (mvStepIndex < steps.length - 1) {
+                mvStepIndex++;
+                renderMvStep();
+            } else {
+                exitModoViaje();
+            }
+        }
+
+        function mvPrevStep() {
+            if (mvStepIndex > 0) {
+                mvStepIndex--;
+                renderMvStep();
+            }
+        }
+
+        function toggleMvPanel(type) {
+            const panel = document.getElementById('mvPanelContent');
+            const data = HOY_DAYS_DATA[mvDay];
+            if (mvActivePanel === type) {
+                panel.classList.add('hidden');
+                mvActivePanel = null;
+                return;
+            }
+            mvActivePanel = type;
+            panel.classList.remove('hidden');
+
+            if (type === 'mochila') {
+                panel.innerHTML = `<strong>🎒 Para hoy en la mochila:</strong><br>` + data.checklist.map(i => `• ${i}`).join('<br>');
+            } else if (type === 'ropa') {
+                panel.innerHTML = `<strong>👕 Ropa de hoy:</strong><br>• Mañana: ${data.outfit.morning}<br>• Abrigo: ${data.outfit.overlay}<br>• Mochila: ${data.outfit.backpack}<br>• Noche: ${data.outfit.night}`;
+            } else if (type === 'comer') {
+                panel.innerHTML = `<strong>🍽️ Comidas de hoy:</strong><br>• Desayuno: ${data.breakfast}<br>• Almuerzo: ${data.lunch}<br>• Cena: ${data.dinner}`;
+            } else if (type === 'tarde') {
+                panel.innerHTML = `<strong>⏰ Si vais con retraso:</strong><br>${data.ifLate}`;
+            }
+        }
+
         function toggleDarkMode() {
             const isDark = document.documentElement.classList.toggle('dark');
             localStorage.setItem('gc_dark_mode', isDark ? 'true' : 'false');
@@ -1006,11 +1321,19 @@
         }
 
         function loadTheme() {
+            // Modo claro es el predeterminado la primera vez que se abre la app.
+            // Solo se activa el oscuro si el usuario lo eligió explícitamente antes.
             const saved = localStorage.getItem('gc_dark_mode');
-            if (saved === 'true' || (!saved && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            if (saved === 'true') {
                 document.documentElement.classList.add('dark');
                 document.getElementById('themeToggleBtn').innerText = '☀️';
+            } else {
+                document.documentElement.classList.remove('dark');
+                document.getElementById('themeToggleBtn').innerText = '🌙';
             }
+        }
+        function isDarkMode() {
+            return document.documentElement.classList.contains('dark');
         }
 
         function switchTab(tabId) {
@@ -1018,14 +1341,24 @@
             document.querySelectorAll('main > section').forEach(sec => sec.classList.add('hidden'));
             document.getElementById(`view-${tabId}`).classList.remove('hidden');
 
-            document.querySelectorAll('.tab-btn').forEach(btn => {
-                btn.className = "tab-btn px-3 py-1.5 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition";
-            });
+            document.querySelectorAll('.bottom-tab-btn').forEach(btn => btn.classList.remove('active'));
             const activeBtn = document.getElementById(`tab-${tabId}`);
-            if (activeBtn) {
-                activeBtn.className = "tab-btn px-3 py-1.5 rounded-lg bg-ocean-500 text-white font-bold shadow-sm transition";
+            const moreBtn = document.getElementById('tab-more');
+            const primaryTabs = ['hoy', 'itinerario', 'explorador', 'maleta'];
+            if (activeBtn && primaryTabs.includes(tabId)) {
+                activeBtn.classList.add('active');
+            } else if (moreBtn) {
+                // Secciones accedidas desde "Más" (reservas, comida, playas, consejos, info)
+                moreBtn.classList.add('active');
             }
             window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function openMoreSheet() {
+            document.getElementById('moreSheetOverlay').classList.remove('hidden');
+        }
+        function closeMoreSheet(e) {
+            document.getElementById('moreSheetOverlay').classList.add('hidden');
         }
 
         function loadHoyDay(dayNum) {
@@ -1084,7 +1417,7 @@
 
                 <!-- Backpack Checklist Interactive Card -->
                 <div class="p-4 bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm space-y-2">
-                    <h3 class="font-extrabold text-sm text-slate-900 dark:text-white flex items-center gap-1.5">🎒 Checklist para la Mochila de Hoy</h3>
+                    <h3 class="font-extrabold text-sm text-slate-900 dark:text-white flex items-center gap-1.5">🎒 Qué llevar hoy</h3>
                     <div class="grid grid-cols-2 sm:grid-cols-3 gap-2 text-xs">
                         ${data.checklist.map((item, idx) => {
                             const checkId = `hoy_chk_${dayNum}_${idx}`;
@@ -1127,23 +1460,13 @@
                     <p>📸 <strong>Foto TOP del Día:</strong> ${data.photoTop}</p>
                 </div>
 
-                <!-- Complete Day Timeline -->
-                <div class="p-4 bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm space-y-3">
-                    <h3 class="font-extrabold text-sm text-slate-900 dark:text-white">📍 Cronograma Detallado del Día</h3>
-                    <div class="space-y-3 pl-2 border-l-2 border-dashed border-ocean-300 dark:border-ocean-700 text-xs">
-                        ${data.timeline.map(t => `
-                            <div class="relative pl-4 space-y-0.5">
-                                <div class="absolute -left-[21px] top-1 w-2.5 h-2.5 rounded-full bg-ocean-500"></div>
-                                <span class="font-extrabold text-ocean-600 dark:text-ocean-400 text-[11px]">${t.time}</span>
-                                <h4 class="font-bold text-slate-900 dark:text-white text-sm">${t.title}</h4>
-                                <p class="text-slate-600 dark:text-slate-300">${t.desc}</p>
-                                <p class="text-[11px] text-slate-500">🚗 ${t.drive} | 🅿️ ${t.parking}</p>
-                                <a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(t.maps || t.title + ' Gran Canaria')}" target="_blank" class="inline-flex items-center gap-1 text-[11px] font-bold text-indigo-600 dark:text-indigo-400 hover:underline mt-1">🗺️ Abrir en Google Maps</a>
-                            </div>
-                        `).join('')}
-                    </div>
+                <!-- Complete Day Timeline (interactive, con fichas, estado y siguiente parada) -->
+                <div class="space-y-2">
+                    <h3 class="font-extrabold text-sm text-slate-900 dark:text-white px-1 flex items-center gap-1.5">📍 Paradas del Día · toca una para ver su ficha</h3>
+                    <div id="hoy-timeline-${dayNum}" class="space-y-1"></div>
                 </div>
             `;
+            renderTimelineStops(dayNum, `hoy-timeline-${dayNum}`);
         }
 
         function toggleCheck(id) {
@@ -1231,34 +1554,168 @@
             }
 
             container.innerHTML = filtered.map(p => `
-                <div class="p-4 bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm flex flex-col justify-between space-y-3">
-                    <div class="space-y-2">
-                        <div class="flex justify-between items-start">
-                            <h3 class="font-extrabold text-base text-slate-900 dark:text-white pr-2">${p.name}</h3>
-                            <div class="flex items-center gap-1 shrink-0">
-                                <button onclick="toggleFavorite('${p.id}')" class="text-lg leading-none" title="Marcar como favorito">${isFavorite(p.id) ? '❤️' : '🤍'}</button>
-                                <span class="px-2 py-0.5 bg-amber-100 text-amber-800 text-xs font-extrabold rounded-lg">⭐ ${p.stars}.0</span>
-                            </div>
-                        </div>
-                        <div class="flex flex-wrap gap-1.5 text-[11px] font-bold">
+                <div class="place-card p-4 bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm active:scale-[0.98] transition cursor-pointer" onclick="openPlaceDetail('${p.id}')">
+                    <div class="flex justify-between items-start gap-2">
+                        <h3 class="font-extrabold text-base text-slate-900 dark:text-white leading-tight">${p.name}</h3>
+                        <button onclick="event.stopPropagation(); toggleFavorite('${p.id}')" class="text-lg leading-none shrink-0" title="Marcar como favorito">${isFavorite(p.id) ? '❤️' : '🤍'}</button>
+                    </div>
+                    <div class="flex flex-wrap gap-1.5 text-[11px] font-bold mt-1.5">
+                        <span class="px-2 py-0.5 bg-ocean-50 text-ocean-700 dark:bg-ocean-950/60 dark:text-ocean-300 rounded-md">📍 ${p.municipality}</span>
+                        ${p.essential ? '<span class="px-2 py-0.5 bg-amber-100 text-amber-900 rounded-md">⭐ Top</span>' : ''}
+                    </div>
+                    <p class="text-xs text-slate-500 dark:text-slate-400 mt-2 line-clamp-2">${p.desc}</p>
+                    <div class="flex items-center justify-between mt-3 text-[11px] font-bold text-slate-500 dark:text-slate-400">
+                        <span>⏱️ ${p.time} · 🌅 ${p.bestHour}</span>
+                        <span class="text-ocean-600 dark:text-ocean-400">Ver ficha ▸</span>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function openPlaceDetail(id) {
+            const p = ALL_PLACES.find(x => x.id === id);
+            if (!p) return;
+            const content = document.getElementById('placeDetailContent');
+            const isLogistics = p.type === 'logistics';
+
+            // --- Bloque de datos clave, distinto según el tipo de lugar ---
+            let factsHtml = '';
+            if (p.type === 'restaurant') {
+                factsHtml = `
+                    <div class="grid grid-cols-2 gap-2 text-xs text-slate-700 dark:text-slate-300">
+                        <div class="p-2.5 bg-slate-50 dark:bg-slate-800 rounded-xl">💰 <strong>Precio</strong><br>${p.price}</div>
+                        <div class="p-2.5 bg-slate-50 dark:bg-slate-800 rounded-xl">🕒 <strong>Horario</strong><br>${p.bestHour}</div>
+                        <div class="p-2.5 bg-slate-50 dark:bg-slate-800 rounded-xl">⏱️ <strong>Tiempo de comida</strong><br>${p.time}</div>
+                        <div class="p-2.5 bg-slate-50 dark:bg-slate-800 rounded-xl">📅 <strong>Reserva</strong><br>${p.reservation || '—'}</div>
+                    </div>
+                    ${p.mustOrder ? `<div class="p-3 bg-emerald-50 dark:bg-emerald-950/30 border-l-2 border-emerald-400 text-emerald-900 dark:text-emerald-200 text-xs rounded-r-xl">🍴 <strong>Qué pedir sí o sí:</strong> ${p.mustOrder}</div>` : ''}
+                `;
+            } else if (p.type === 'beach') {
+                factsHtml = `
+                    <div class="grid grid-cols-2 gap-2 text-xs text-slate-700 dark:text-slate-300">
+                        <div class="p-2.5 bg-slate-50 dark:bg-slate-800 rounded-xl">🏖️ <strong>Tipo</strong><br>${p.beachType || p.category}</div>
+                        <div class="p-2.5 bg-slate-50 dark:bg-slate-800 rounded-xl">🪨 <strong>Superficie</strong><br>${p.surface || '—'}</div>
+                        <div class="p-2.5 bg-slate-50 dark:bg-slate-800 rounded-xl">🌊 <strong>Oleaje</strong><br>${p.waves || '—'}</div>
+                        <div class="p-2.5 bg-slate-50 dark:bg-slate-800 rounded-xl">🌙 <strong>Marea recomendada</strong><br>${p.tide || '—'}</div>
+                        <div class="p-2.5 bg-slate-50 dark:bg-slate-800 rounded-xl">🤿 <strong>Snorkel</strong><br>${p.snorkelQuality || '—'}</div>
+                        <div class="p-2.5 bg-slate-50 dark:bg-slate-800 rounded-xl">🥿 <strong>Escarpines</strong><br>${p.shoes || '—'}</div>
+                        <div class="p-2.5 bg-slate-50 dark:bg-slate-800 rounded-xl">🚿 <strong>Duchas</strong><br>${p.showers || '—'}</div>
+                        <div class="p-2.5 bg-slate-50 dark:bg-slate-800 rounded-xl">⛱️ <strong>Sombra</strong><br>${p.shade || '—'}</div>
+                        <div class="p-2.5 bg-slate-50 dark:bg-slate-800 rounded-xl">😌 <strong>Tranquilidad</strong><br>${p.calm || '—'}</div>
+                    </div>
+                    <div class="grid grid-cols-2 gap-2 text-xs text-slate-700 dark:text-slate-300">
+                        <div class="p-2.5 bg-slate-50 dark:bg-slate-800 rounded-xl">⏱️ <strong>Tiempo</strong><br>${p.time}</div>
+                        <div class="p-2.5 bg-slate-50 dark:bg-slate-800 rounded-xl">🌅 <strong>Mejor hora</strong><br>${p.bestHour}</div>
+                    </div>
+                `;
+            } else if (p.type === 'village') {
+                factsHtml = `
+                    <div class="grid grid-cols-2 gap-2 text-xs text-slate-700 dark:text-slate-300">
+                        <div class="p-2.5 bg-slate-50 dark:bg-slate-800 rounded-xl">⏱️ <strong>Tiempo recomendado</strong><br>${p.time}</div>
+                        <div class="p-2.5 bg-slate-50 dark:bg-slate-800 rounded-xl">🌅 <strong>Mejor hora</strong><br>${p.bestHour}</div>
+                    </div>
+                    ${p.walk ? `<div class="p-2.5 bg-slate-50 dark:bg-slate-800 rounded-xl text-xs text-slate-700 dark:text-slate-300">🚶 <strong>Qué recorrer:</strong> ${p.walk}</div>` : ''}
+                    ${p.eat ? `<div class="p-2.5 bg-slate-50 dark:bg-slate-800 rounded-xl text-xs text-slate-700 dark:text-slate-300">🍽️ <strong>Qué comer:</strong> ${p.eat}</div>` : ''}
+                    ${p.buy ? `<div class="p-2.5 bg-slate-50 dark:bg-slate-800 rounded-xl text-xs text-slate-700 dark:text-slate-300">🛍️ <strong>Qué comprar:</strong> ${p.buy}</div>` : ''}
+                `;
+            } else if (p.type === 'attraction') {
+                factsHtml = `
+                    <div class="grid grid-cols-2 gap-2 text-xs text-slate-700 dark:text-slate-300">
+                        <div class="p-2.5 bg-slate-50 dark:bg-slate-800 rounded-xl">⏱️ <strong>Tiempo</strong><br>${p.time}</div>
+                        <div class="p-2.5 bg-slate-50 dark:bg-slate-800 rounded-xl">🌅 <strong>Mejor hora</strong><br>${p.bestHour}</div>
+                        <div class="p-2.5 bg-slate-50 dark:bg-slate-800 rounded-xl">💰 <strong>Precio</strong><br>${p.price}</div>
+                        <div class="p-2.5 bg-slate-50 dark:bg-slate-800 rounded-xl">📅 <strong>Reserva</strong><br>${p.reservation || 'No necesaria'}</div>
+                    </div>
+                `;
+            } else if (p.type === 'logistics') {
+                factsHtml = `
+                    <div class="grid grid-cols-2 gap-2 text-xs text-slate-700 dark:text-slate-300">
+                        <div class="p-2.5 bg-slate-50 dark:bg-slate-800 rounded-xl">⏱️ <strong>Tiempo</strong><br>${p.time}</div>
+                        <div class="p-2.5 bg-slate-50 dark:bg-slate-800 rounded-xl">💰 <strong>Precio</strong><br>${p.price}</div>
+                    </div>
+                `;
+            } else {
+                // nature (senderismo / miradores)
+                factsHtml = `
+                    <div class="grid grid-cols-2 gap-2 text-xs text-slate-700 dark:text-slate-300">
+                        <div class="p-2.5 bg-slate-50 dark:bg-slate-800 rounded-xl">⏱️ <strong>Tiempo recomendado</strong><br>${p.time}</div>
+                        <div class="p-2.5 bg-slate-50 dark:bg-slate-800 rounded-xl">🌅 <strong>Mejor hora</strong><br>${p.bestHour}</div>
+                        <div class="p-2.5 bg-slate-50 dark:bg-slate-800 rounded-xl">🥾 <strong>Dificultad</strong><br>${p.difficulty}</div>
+                        <div class="p-2.5 bg-slate-50 dark:bg-slate-800 rounded-xl">💰 <strong>Precio</strong><br>${p.price}</div>
+                    </div>
+                    ${(p.orientation || p.withClouds) ? `
+                    <div class="grid grid-cols-1 gap-2 text-xs text-slate-700 dark:text-slate-300">
+                        ${p.orientation ? `<div class="p-2.5 bg-slate-50 dark:bg-slate-800 rounded-xl">🧭 <strong>Orientación:</strong> ${p.orientation}</div>` : ''}
+                        ${p.withClouds ? `<div class="p-2.5 bg-slate-50 dark:bg-slate-800 rounded-xl">☁️ <strong>¿Merece la pena con nubes?</strong> ${p.withClouds}</div>` : ''}
+                    </div>` : ''}
+                `;
+            }
+
+            content.innerHTML = `
+                <div class="w-10 h-1.5 bg-slate-300 dark:bg-slate-700 rounded-full mx-auto mb-1"></div>
+                <div class="flex justify-between items-start gap-2">
+                    <div>
+                        <div class="flex flex-wrap gap-1.5 text-[11px] font-bold mb-1.5">
                             <span class="px-2 py-0.5 bg-ocean-50 text-ocean-700 dark:bg-ocean-950/60 dark:text-ocean-300 rounded-md">📍 ${p.municipality}</span>
                             <span class="px-2 py-0.5 bg-slate-100 text-slate-700 dark:bg-slate-700 dark:text-slate-300 rounded-md">${p.category}</span>
                             ${p.essential ? '<span class="px-2 py-0.5 bg-amber-100 text-amber-900 rounded-md">⭐ Imprescindible</span>' : ''}
                         </div>
-                        <div class="grid grid-cols-2 gap-1.5 text-xs text-slate-600 dark:text-slate-400 bg-slate-50 dark:bg-slate-700/40 p-2.5 rounded-xl">
-                            <div>⏱️ <strong>Tiempo:</strong> ${p.time}</div>
-                            <div>🌅 <strong>Hora:</strong> ${p.bestHour}</div>
-                            <div>💰 <strong>Precio:</strong> ${p.price}</div>
-                            <div>🥾 <strong>Dificultad:</strong> ${p.difficulty}</div>
-                        </div>
-                        <p class="text-xs text-slate-500">🅿️ <strong>Parking:</strong> ${p.parking}</p>
-                        <div class="p-2.5 bg-amber-50 dark:bg-amber-950/30 border-l-2 border-amber-400 text-amber-900 dark:text-amber-200 text-xs rounded-r-lg">
-                            💡 <strong>Consejo Local:</strong> ${p.tip}
-                        </div>
+                        <h2 class="text-xl font-black text-slate-900 dark:text-white leading-tight">${p.name}</h2>
                     </div>
-                    <a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(p.name + ' ' + p.municipality + ' Gran Canaria')}" target="_blank" class="w-full py-2 bg-indigo-50 dark:bg-indigo-950/50 text-indigo-700 dark:text-indigo-300 font-bold text-xs rounded-xl text-center hover:bg-indigo-100 transition border border-indigo-200 dark:border-indigo-800">🗺️ Abrir en Google Maps</a>
+                    <button onclick="toggleFavorite('${p.id}'); openPlaceDetail('${p.id}');" class="text-2xl leading-none shrink-0" title="Marcar como favorito">${isFavorite(p.id) ? '❤️' : '🤍'}</button>
                 </div>
-            `).join('');
+
+                <p class="text-sm text-slate-600 dark:text-slate-300">${p.desc}</p>
+
+                ${!isLogistics ? `
+                <div class="p-3 bg-ocean-50 dark:bg-ocean-950/30 border-l-2 border-ocean-400 rounded-r-xl text-sm text-ocean-900 dark:text-ocean-200">
+                    <strong>🌟 Por qué merece la pena:</strong> ${p.why}
+                </div>` : ''}
+
+                ${factsHtml}
+
+                <div class="p-2.5 bg-slate-50 dark:bg-slate-800 rounded-xl text-xs text-slate-700 dark:text-slate-300">
+                    🅿️ <strong>Dónde aparcar:</strong> ${p.parking}
+                </div>
+
+                ${(!isLogistics && p.worthDetour) ? `
+                <div class="p-2.5 bg-teal-50 dark:bg-teal-950/30 rounded-xl text-xs text-teal-900 dark:text-teal-200">
+                    🧭 <strong>¿Merece la pena desviarse?</strong> ${p.worthDetour}
+                </div>` : ''}
+
+                ${p.crowd ? `
+                <div class="p-2.5 bg-indigo-50 dark:bg-indigo-950/30 rounded-xl text-xs text-indigo-900 dark:text-indigo-200">
+                    👥 <strong>Afluencia:</strong> ${p.crowd}
+                </div>` : ''}
+
+                <div class="p-3 bg-amber-50 dark:bg-amber-950/30 border-l-2 border-amber-400 text-amber-900 dark:text-amber-200 text-xs rounded-r-xl">
+                    💡 <strong>Consejo local:</strong> ${p.tip}
+                </div>
+
+                ${p.avoid ? `
+                <div class="p-3 bg-red-50 dark:bg-red-950/30 border-l-2 border-red-400 text-red-900 dark:text-red-200 text-xs rounded-r-xl">
+                    🚫 <strong>Qué no hacer:</strong> ${p.avoid}
+                </div>` : ''}
+
+                ${!isLogistics ? `
+                <div class="p-3 bg-violet-50 dark:bg-violet-950/30 border-l-2 border-violet-400 text-violet-900 dark:text-violet-200 text-xs rounded-r-xl">
+                    ✨ <strong>Curiosidad:</strong> ${p.curiosity}
+                </div>
+
+                <div class="p-3 bg-rose-50 dark:bg-rose-950/30 border-l-2 border-rose-400 text-rose-900 dark:text-rose-200 text-xs rounded-r-xl">
+                    📸 <strong>Mejor foto:</strong> ${p.photoTip}
+                </div>` : ''}
+
+                <div class="flex gap-2">
+                    <a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(p.name + ' ' + p.municipality + ' Gran Canaria')}" target="_blank" class="flex-1 py-3.5 bg-indigo-600 text-white font-extrabold text-sm rounded-2xl text-center hover:bg-indigo-700 transition shadow-lg">🗺️ Cómo llegar</a>
+                    <a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(p.parkingQuery || (p.parking + ' ' + p.municipality + ' Gran Canaria'))}" target="_blank" class="flex-1 py-3.5 bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-200 font-extrabold text-sm rounded-2xl text-center hover:bg-slate-200 dark:hover:bg-slate-600 transition">🅿️ Parking</a>
+                </div>
+            `;
+            document.getElementById('placeDetailOverlay').classList.remove('hidden');
+        }
+
+        function closePlaceDetail(e) {
+            document.getElementById('placeDetailOverlay').classList.add('hidden');
         }
 
         function setFilter(cat, btn) {
@@ -1290,14 +1747,15 @@
 
             container.innerHTML = Object.keys(HOY_DAYS_DATA).map(key => {
                 const day = HOY_DAYS_DATA[key];
+                const doneCount = day.timeline.filter((_, idx) => getStopStatus(Number(key), idx) === 'done').length;
                 return `
                     <div class="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm overflow-hidden">
-                        <button onclick="toggleAccordion('acc-day-${key}')" class="w-full p-4 text-left flex justify-between items-center hover:bg-slate-50 dark:hover:bg-slate-700/50 transition">
+                        <button onclick="toggleAccordion('acc-day-${key}', ${key})" class="w-full p-4 text-left flex justify-between items-center hover:bg-slate-50 dark:hover:bg-slate-700/50 transition">
                             <div>
-                                <span class="text-xs font-bold text-ocean-600 dark:text-ocean-400">Día ${key} • ${day.date}</span>
+                                <span class="text-xs font-bold text-ocean-600 dark:text-ocean-400">Día ${key} • ${day.date} · ✅ ${doneCount}/${day.timeline.length}</span>
                                 <h3 class="font-extrabold text-base text-slate-900 dark:text-white">${day.title}</h3>
                             </div>
-                            <span class="text-xl text-slate-400">▼</span>
+                            <span class="text-xl text-slate-400 acc-chevron-${key}">▼</span>
                         </button>
                         <div id="acc-day-${key}" class="hidden p-4 border-t border-slate-100 dark:border-slate-700 bg-slate-50/50 dark:bg-slate-800/50 space-y-3 text-xs">
                             <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 font-bold text-slate-700 dark:text-slate-300">
@@ -1306,18 +1764,28 @@
                                 <div>⚡ ${day.fatigue}</div>
                                 <div>💰 ${day.budget}</div>
                             </div>
+                            <div class="flex flex-wrap gap-1.5">
+                                ${day.checklist.map(i => `<span class="px-2 py-0.5 bg-ocean-50 dark:bg-ocean-950/40 text-ocean-700 dark:text-ocean-300 rounded-md font-bold">🎒 ${i}</span>`).join('')}
+                            </div>
                             <p class="text-slate-600 dark:text-slate-300"><strong>🥐 Desayuno:</strong> ${day.breakfast}</p>
                             <p class="text-slate-600 dark:text-slate-300"><strong>🍽️ Almuerzo:</strong> ${day.lunch}</p>
                             <p class="text-slate-600 dark:text-slate-300"><strong>🍷 Cena:</strong> ${day.dinner}</p>
-                            <button onclick="switchTab('hoy'); loadHoyDay(${key});" class="px-3 py-1.5 bg-ocean-500 text-white font-bold rounded-lg hover:bg-ocean-600 transition">⚡ Ver Hoja de Ruta Completa de este Día</button>
+                            <button onclick="switchTab('hoy'); loadHoyDay(${key});" class="w-full px-3 py-2 bg-ocean-500 text-white font-bold rounded-lg hover:bg-ocean-600 transition text-center">⚡ Ver Hoja de Ruta Completa de este Día</button>
+                            <div class="pt-1">
+                                <h4 class="font-extrabold text-slate-900 dark:text-white text-xs mb-1.5 px-0.5">📍 Paradas · toca una para ver su ficha</h4>
+                                <div id="acc-timeline-${key}" class="space-y-1"></div>
+                            </div>
                         </div>
                     </div>
                 `;
             }).join('');
         }
 
-        function toggleAccordion(id) {
+        function toggleAccordion(id, dayNum) {
             const el = document.getElementById(id);
+            if (el && el.classList.contains('hidden') && dayNum) {
+                renderTimelineStops(dayNum, `acc-timeline-${dayNum}`);
+            }
             if (el) {
                 el.classList.toggle('hidden');
             }
@@ -1326,7 +1794,7 @@
         function registerServiceWorker() {
             if ('serviceWorker' in navigator) {
                 const swCode = `
-                    const CACHE_NAME = 'gc-guide-v2026';
+                    const CACHE_NAME = 'gc-guide-v2028-final';
                     self.addEventListener('install', e => {
                         e.waitUntil(caches.open(CACHE_NAME).then(c => c.addAll(['./'])));
                     });
