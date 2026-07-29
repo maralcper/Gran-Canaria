@@ -163,6 +163,13 @@
 
             <div id="ahora-mismo-container"></div>
 
+            <div class="grid grid-cols-2 gap-2">
+                <a href="https://www.google.com/maps/dir/?api=1&destination=Calle%20Gordillo%2030%2C%20Las%20Palmas%20de%20Gran%20Canaria&travelmode=driving" target="_blank" class="flex items-center justify-center gap-2 py-3.5 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl font-bold text-sm text-slate-700 dark:text-slate-200 shadow-sm active:scale-95 transition">
+                    🏠 Volver al Apto
+                </a>
+                <div id="carLocationContainer" class="flex gap-1.5"></div>
+            </div>
+
             <div id="hoy-container" class="space-y-4">
                 <!-- Injected via JavaScript loadHoyDay() -->
             </div>
@@ -471,8 +478,12 @@
 
     <!-- FICHA DETALLE DE LUGAR -->
     <div id="placeDetailOverlay" class="hidden fixed inset-0 z-[95] bg-black/60 no-print" onclick="closePlaceDetail(event)">
-        <div class="absolute bottom-0 left-0 right-0 top-10 sm:top-16 bg-white dark:bg-slate-900 rounded-t-3xl overflow-y-auto max-w-2xl mx-auto" onclick="event.stopPropagation()">
-            <div id="placeDetailContent" class="p-5 pb-10 space-y-4"></div>
+        <div class="absolute bottom-0 left-0 right-0 top-10 sm:top-16 bg-white dark:bg-slate-900 rounded-t-3xl overflow-y-auto max-w-2xl mx-auto flex flex-col" onclick="event.stopPropagation()">
+            <div class="sticky top-0 z-10 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md flex items-center justify-center pt-2.5 pb-1.5 shrink-0">
+                <div class="w-10 h-1.5 bg-slate-300 dark:bg-slate-700 rounded-full"></div>
+                <button onclick="closePlaceDetail()" class="absolute right-3 top-2 w-9 h-9 flex items-center justify-center rounded-full bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-300 text-lg leading-none" title="Cerrar">✕</button>
+            </div>
+            <div id="placeDetailContent" class="p-5 pt-1 pb-10 space-y-4"></div>
         </div>
     </div>
 
@@ -489,10 +500,10 @@
         <div id="modoViajeStepContent" class="flex-1 overflow-y-auto px-4 pb-4"></div>
         <div class="shrink-0 border-t border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900 px-3 pt-2" style="padding-bottom: calc(env(safe-area-inset-bottom) + 0.5rem);">
             <div class="grid grid-cols-4 gap-1.5 mb-2">
-                <button onclick="toggleMvPanel('mochila')" class="mv-quick-btn flex flex-col items-center gap-0.5 py-2 rounded-xl bg-slate-100 dark:bg-white/10 text-slate-700 dark:text-white text-[10px] font-bold">🎒 Mochila</button>
-                <button onclick="toggleMvPanel('ropa')" class="mv-quick-btn flex flex-col items-center gap-0.5 py-2 rounded-xl bg-slate-100 dark:bg-white/10 text-slate-700 dark:text-white text-[10px] font-bold">👕 Ropa</button>
-                <button onclick="toggleMvPanel('comer')" class="mv-quick-btn flex flex-col items-center gap-0.5 py-2 rounded-xl bg-slate-100 dark:bg-white/10 text-slate-700 dark:text-white text-[10px] font-bold">🍽️ Comer</button>
-                <button onclick="toggleMvPanel('tarde')" class="mv-quick-btn flex flex-col items-center gap-0.5 py-2 rounded-xl bg-slate-100 dark:bg-white/10 text-slate-700 dark:text-white text-[10px] font-bold">⏰ Voy tarde</button>
+                <button onclick="toggleMvPanel('mochila')" class="mv-quick-btn flex flex-col items-center gap-0.5 py-2.5 rounded-xl min-h-[44px] justify-center bg-slate-100 dark:bg-white/10 text-slate-700 dark:text-white text-[10px] font-bold">🎒 Mochila</button>
+                <button onclick="toggleMvPanel('ropa')" class="mv-quick-btn flex flex-col items-center gap-0.5 py-2.5 rounded-xl min-h-[44px] justify-center bg-slate-100 dark:bg-white/10 text-slate-700 dark:text-white text-[10px] font-bold">👕 Ropa</button>
+                <button onclick="toggleMvPanel('comer')" class="mv-quick-btn flex flex-col items-center gap-0.5 py-2.5 rounded-xl min-h-[44px] justify-center bg-slate-100 dark:bg-white/10 text-slate-700 dark:text-white text-[10px] font-bold">🍽️ Comer</button>
+                <button onclick="toggleMvPanel('tarde')" class="mv-quick-btn flex flex-col items-center gap-0.5 py-2.5 rounded-xl min-h-[44px] justify-center bg-slate-100 dark:bg-white/10 text-slate-700 dark:text-white text-[10px] font-bold">⏰ Voy tarde</button>
             </div>
             <div id="mvPanelContent" class="hidden mb-2 p-3 bg-slate-100 dark:bg-white/10 rounded-xl text-slate-700 dark:text-white text-xs space-y-1"></div>
             <div class="flex gap-2">
@@ -894,6 +905,8 @@
         // Fechas reales del viaje (para el widget "Ahora mismo" y la barra de progreso)
         const TRIP_START = new Date(2026, 8, 11); // 11 Sep 2026
         const TRIP_END = new Date(2026, 8, 18);   // 18 Sep 2026
+        const APARTMENT_ADDRESS = "Calle Gordillo 30, Las Palmas de Gran Canaria";
+        const ENCODED_APARTMENT = encodeURIComponent(APARTMENT_ADDRESS);
 
         function initApp() {
             loadTheme();
@@ -904,6 +917,7 @@
             renderItinerarioAccordion();
             renderAhoraMismo();
             renderTripProgress();
+            renderCarLocationButton();
             loadHoyDay(getSuggestedDay());
             registerServiceWorker();
             setupInstallPrompt();
@@ -955,7 +969,7 @@
         function stopStatusBtnHtml(dayNum, stepIndex) {
             const st = getStopStatus(dayNum, stepIndex);
             const meta = STOP_STATUS_META[st];
-            return `<button onclick="cycleStopStatus(${dayNum}, ${stepIndex}, event)" class="shrink-0 flex items-center gap-1 px-2 py-1 rounded-lg text-[10px] font-extrabold ${meta.cls}" title="Toca para cambiar el estado">${meta.icon} ${meta.label}</button>`;
+            return `<button onclick="cycleStopStatus(${dayNum}, ${stepIndex}, event)" class="shrink-0 flex items-center gap-1 px-2.5 py-2 min-h-[36px] rounded-lg text-[10px] font-extrabold active:scale-95 transition ${meta.cls}" title="Toca para cambiar el estado">${meta.icon} ${meta.label}</button>`;
         }
 
         // --- Duración de visita a partir del rango horario "HH:MM - HH:MM" ---
@@ -1172,6 +1186,56 @@
             } else {
                 alert('Para instalar la app:\n\niOS (Safari): toca Compartir 📤 → "Añadir a pantalla de inicio".\n\nAndroid (Chrome): toca el menú ⋮ → "Instalar aplicación" o "Añadir a pantalla de inicio".');
             }
+        }
+
+        // --- Ubicación del coche (Geolocalización, 1 toque para guardar y para volver) ---
+        function getCarLocation() {
+            try {
+                const raw = localStorage.getItem('car_location');
+                return raw ? JSON.parse(raw) : null;
+            } catch (e) { return null; }
+        }
+
+        function renderCarLocationButton() {
+            const container = document.getElementById('carLocationContainer');
+            if (!container) return;
+            const loc = getCarLocation();
+            if (!loc) {
+                container.innerHTML = `
+                    <button onclick="saveCarLocation()" id="carLocationBtn" class="flex-1 flex items-center justify-center gap-2 py-3.5 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl font-bold text-sm text-slate-700 dark:text-slate-200 shadow-sm active:scale-95 transition">
+                        📍 Guardar Coche
+                    </button>`;
+            } else {
+                const savedAgo = new Date(loc.timestamp).toLocaleString('es-ES', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' });
+                container.innerHTML = `
+                    <a href="https://www.google.com/maps/dir/?api=1&destination=${loc.lat},${loc.lng}&travelmode=walking" target="_blank" title="Guardado ${savedAgo}" class="flex-1 flex items-center justify-center gap-2 py-3.5 bg-emerald-50 dark:bg-emerald-950/30 border border-emerald-300 dark:border-emerald-800 rounded-2xl font-bold text-sm text-emerald-700 dark:text-emerald-300 shadow-sm active:scale-95 transition">
+                        🏎️ ¿Dónde aparqué?
+                    </a>
+                    <button onclick="saveCarLocation()" title="Guardar de nuevo aquí" class="shrink-0 w-12 flex items-center justify-center bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl text-slate-500 dark:text-slate-300 text-lg active:scale-95 transition">
+                        ↻
+                    </button>`;
+            }
+        }
+
+        function saveCarLocation() {
+            if (!navigator.geolocation) {
+                alert('Este navegador no permite acceder a la ubicación GPS.');
+                return;
+            }
+            const btn = document.getElementById('carLocationBtn');
+            if (btn) btn.innerHTML = '📡 Localizando...';
+            navigator.geolocation.getCurrentPosition(
+                (pos) => {
+                    const loc = { lat: pos.coords.latitude, lng: pos.coords.longitude, timestamp: Date.now() };
+                    localStorage.setItem('car_location', JSON.stringify(loc));
+                    renderCarLocationButton();
+                },
+                (err) => {
+                    alert('No se pudo obtener la ubicación. Comprueba que el GPS y los permisos de ubicación estén activados.');
+                    renderCarLocationButton();
+                },
+                { enableHighAccuracy: true, timeout: 10000 }
+            );
         }
 
         // --- MODO VIAJE: guía paso a paso del día ---
@@ -1652,7 +1716,6 @@
             }
 
             content.innerHTML = `
-                <div class="w-10 h-1.5 bg-slate-300 dark:bg-slate-700 rounded-full mx-auto mb-1"></div>
                 <div class="flex justify-between items-start gap-2">
                     <div>
                         <div class="flex flex-wrap gap-1.5 text-[11px] font-bold mb-1.5">
@@ -1794,12 +1857,37 @@
         function registerServiceWorker() {
             if ('serviceWorker' in navigator) {
                 const swCode = `
-                    const CACHE_NAME = 'gc-guide-v2028-final';
+                    const CACHE_NAME = 'gc-guide-v2028-final-2';
+                    const PRECACHE = [
+                        './',
+                        'https://cdn.tailwindcss.com',
+                        'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap'
+                    ];
                     self.addEventListener('install', e => {
-                        e.waitUntil(caches.open(CACHE_NAME).then(c => c.addAll(['./'])));
+                        self.skipWaiting();
+                        e.waitUntil(caches.open(CACHE_NAME).then(c => Promise.all(
+                            PRECACHE.map(url => fetch(url, { mode: 'no-cors' }).then(r => c.put(url, r)).catch(() => {}))
+                        )));
+                    });
+                    self.addEventListener('activate', e => {
+                        e.waitUntil(caches.keys().then(keys => Promise.all(
+                            keys.filter(k => k !== CACHE_NAME).map(k => caches.delete(k))
+                        )).then(() => self.clients.claim()));
                     });
                     self.addEventListener('fetch', e => {
-                        e.respondWith(caches.match(e.request).then(r => r || fetch(e.request)));
+                        if (e.request.method !== 'GET') return;
+                        e.respondWith(
+                            caches.match(e.request).then(cached => {
+                                const network = fetch(e.request).then(res => {
+                                    if (res && res.status === 200) {
+                                        const clone = res.clone();
+                                        caches.open(CACHE_NAME).then(c => c.put(e.request, clone));
+                                    }
+                                    return res;
+                                }).catch(() => cached);
+                                return cached || network;
+                            })
+                        );
                     });
                 `;
                 const blob = new Blob([swCode], { type: 'application/javascript' });
