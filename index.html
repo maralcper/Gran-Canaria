@@ -1218,12 +1218,20 @@
         }
 
         function saveCarLocation() {
+            // La API de Geolocalización solo funciona en "contexto seguro" (HTTPS o localhost).
+            // Si el archivo se abre directamente (file://) o desde http:// sin certificado, el navegador la bloquea.
+            if (window.isSecureContext === false) {
+                alert('El GPS no funciona abriendo el archivo directamente. Sube esta guía a un hosting con HTTPS (o instálala como app desde ahí) y funcionará.');
+                return;
+            }
             if (!navigator.geolocation) {
                 alert('Este navegador no permite acceder a la ubicación GPS.');
                 return;
             }
-            const btn = document.getElementById('carLocationBtn');
-            if (btn) btn.innerHTML = '📡 Localizando...';
+            const container = document.getElementById('carLocationContainer');
+            if (container) {
+                container.innerHTML = `<div class="flex-1 flex items-center justify-center gap-2 py-3.5 bg-slate-50 dark:bg-slate-800 rounded-2xl font-bold text-sm text-slate-500 dark:text-slate-400">📡 Localizando...</div>`;
+            }
             navigator.geolocation.getCurrentPosition(
                 (pos) => {
                     const loc = { lat: pos.coords.latitude, lng: pos.coords.longitude, timestamp: Date.now() };
@@ -1231,10 +1239,14 @@
                     renderCarLocationButton();
                 },
                 (err) => {
-                    alert('No se pudo obtener la ubicación. Comprueba que el GPS y los permisos de ubicación estén activados.');
+                    let msg = 'No se pudo obtener la ubicación.';
+                    if (err.code === 1) msg = 'Has denegado el permiso de ubicación. Actívalo en los ajustes del navegador/app para este sitio y vuelve a intentarlo.';
+                    else if (err.code === 2) msg = 'La posición no está disponible ahora mismo. Comprueba que el GPS del teléfono esté activado.';
+                    else if (err.code === 3) msg = 'Se agotó el tiempo esperando al GPS. Inténtalo de nuevo (mejor al aire libre).';
+                    alert(msg);
                     renderCarLocationButton();
                 },
-                { enableHighAccuracy: true, timeout: 10000 }
+                { enableHighAccuracy: true, timeout: 12000, maximumAge: 0 }
             );
         }
 
