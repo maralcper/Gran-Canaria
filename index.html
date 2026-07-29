@@ -163,12 +163,9 @@
 
             <div id="ahora-mismo-container"></div>
 
-            <div class="grid grid-cols-2 gap-2">
-                <a href="https://www.google.com/maps/dir/?api=1&destination=Calle%20Gordillo%2030%2C%20Las%20Palmas%20de%20Gran%20Canaria&travelmode=driving" target="_blank" class="flex items-center justify-center gap-2 py-3.5 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl font-bold text-sm text-slate-700 dark:text-slate-200 shadow-sm active:scale-95 transition">
-                    🏠 Volver al Apto
-                </a>
-                <div id="carLocationContainer" class="flex gap-1.5"></div>
-            </div>
+            <a href="https://www.google.com/maps/dir/?api=1&destination=Calle%20Gordillo%2030%2C%20Las%20Palmas%20de%20Gran%20Canaria&travelmode=driving" target="_blank" class="flex items-center justify-center gap-2 py-3.5 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl font-bold text-sm text-slate-700 dark:text-slate-200 shadow-sm active:scale-95 transition">
+                🏠 Volver al Apto
+            </a>
 
             <div id="hoy-container" class="space-y-4">
                 <!-- Injected via JavaScript loadHoyDay() -->
@@ -917,7 +914,6 @@
             renderItinerarioAccordion();
             renderAhoraMismo();
             renderTripProgress();
-            renderCarLocationButton();
             loadHoyDay(getSuggestedDay());
             registerServiceWorker();
             setupInstallPrompt();
@@ -1188,68 +1184,6 @@
             }
         }
 
-        // --- Ubicación del coche (Geolocalización, 1 toque para guardar y para volver) ---
-        function getCarLocation() {
-            try {
-                const raw = localStorage.getItem('car_location');
-                return raw ? JSON.parse(raw) : null;
-            } catch (e) { return null; }
-        }
-
-        function renderCarLocationButton() {
-            const container = document.getElementById('carLocationContainer');
-            if (!container) return;
-            const loc = getCarLocation();
-            if (!loc) {
-                container.innerHTML = `
-                    <button onclick="saveCarLocation()" id="carLocationBtn" class="flex-1 flex items-center justify-center gap-2 py-3.5 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl font-bold text-sm text-slate-700 dark:text-slate-200 shadow-sm active:scale-95 transition">
-                        📍 Guardar Coche
-                    </button>`;
-            } else {
-                const savedAgo = new Date(loc.timestamp).toLocaleString('es-ES', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' });
-                container.innerHTML = `
-                    <a href="https://www.google.com/maps/dir/?api=1&destination=${loc.lat},${loc.lng}&travelmode=walking" target="_blank" title="Guardado ${savedAgo}" class="flex-1 flex items-center justify-center gap-2 py-3.5 bg-emerald-50 dark:bg-emerald-950/30 border border-emerald-300 dark:border-emerald-800 rounded-2xl font-bold text-sm text-emerald-700 dark:text-emerald-300 shadow-sm active:scale-95 transition">
-                        🏎️ ¿Dónde aparqué?
-                    </a>
-                    <button onclick="saveCarLocation()" title="Guardar de nuevo aquí" class="shrink-0 w-12 flex items-center justify-center bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl text-slate-500 dark:text-slate-300 text-lg active:scale-95 transition">
-                        ↻
-                    </button>`;
-            }
-        }
-
-        function saveCarLocation() {
-            // La API de Geolocalización solo funciona en "contexto seguro" (HTTPS o localhost).
-            // Si el archivo se abre directamente (file://) o desde http:// sin certificado, el navegador la bloquea.
-            if (window.isSecureContext === false) {
-                alert('El GPS no funciona abriendo el archivo directamente. Sube esta guía a un hosting con HTTPS (o instálala como app desde ahí) y funcionará.');
-                return;
-            }
-            if (!navigator.geolocation) {
-                alert('Este navegador no permite acceder a la ubicación GPS.');
-                return;
-            }
-            const container = document.getElementById('carLocationContainer');
-            if (container) {
-                container.innerHTML = `<div class="flex-1 flex items-center justify-center gap-2 py-3.5 bg-slate-50 dark:bg-slate-800 rounded-2xl font-bold text-sm text-slate-500 dark:text-slate-400">📡 Localizando...</div>`;
-            }
-            navigator.geolocation.getCurrentPosition(
-                (pos) => {
-                    const loc = { lat: pos.coords.latitude, lng: pos.coords.longitude, timestamp: Date.now() };
-                    localStorage.setItem('car_location', JSON.stringify(loc));
-                    renderCarLocationButton();
-                },
-                (err) => {
-                    let msg = 'No se pudo obtener la ubicación.';
-                    if (err.code === 1) msg = 'Has denegado el permiso de ubicación. Actívalo en los ajustes del navegador/app para este sitio y vuelve a intentarlo.';
-                    else if (err.code === 2) msg = 'La posición no está disponible ahora mismo. Comprueba que el GPS del teléfono esté activado.';
-                    else if (err.code === 3) msg = 'Se agotó el tiempo esperando al GPS. Inténtalo de nuevo (mejor al aire libre).';
-                    alert(msg);
-                    renderCarLocationButton();
-                },
-                { enableHighAccuracy: true, timeout: 12000, maximumAge: 0 }
-            );
-        }
-
         // --- MODO VIAJE: guía paso a paso del día ---
         let mvDay = 1;
         let mvStepIndex = 0;
@@ -1407,9 +1341,6 @@
                 document.documentElement.classList.remove('dark');
                 document.getElementById('themeToggleBtn').innerText = '🌙';
             }
-        }
-        function isDarkMode() {
-            return document.documentElement.classList.contains('dark');
         }
 
         function switchTab(tabId) {
